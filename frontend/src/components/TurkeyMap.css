@@ -1,0 +1,44 @@
+.turkey-map-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  text-align: center;
+}
+
+.turkey-map-container h2 {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+.turkey-map {
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  display: inline-block;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .turkey-map-container {
+    margin: 2rem auto;
+    padding: 1rem;
+  }
+
+  .turkey-map-container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .turkey-map {
+    width: 100%;
+  }
+} 
