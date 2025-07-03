@@ -46,6 +46,11 @@ function App() {
 
   const handleBroadcastClick = (broadcast) => {
     if (broadcast.formData) {
+      // Sadece aktif yayınlar için senaryo oluşturulabilir
+      if (!broadcast.formData.active) {
+        alert('Senaryo sadece aktif yayınlar için oluşturulabilir. Lütfen önce yayını aktif hale getirin.');
+        return;
+      }
       setSelectedBroadcast(broadcast.formData);
       setScenarioModalOpen(true);
     }
@@ -281,83 +286,135 @@ function App() {
                 Henüz kayıtlı yayın bulunmuyor
               </p>
             ) : (
-              broadcasts.map((broadcast, index) => (
-                <div
-                  key={broadcast.id || index}
-                  onClick={() => handleBroadcastClick(broadcast)}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '12px',
-                    margin: '8px 0',
-                    backgroundColor: 'white',
-                    border: '1px solid #ddd',
-                    borderRadius: '6px',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                    minHeight: '50px'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = '#e3f2fd';
-                    e.target.style.borderColor = '#007bff';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.backgroundColor = 'white';
-                    e.target.style.borderColor = '#ddd';
-                  }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
-                    <input
-                      type="checkbox"
-                      readOnly
-                      checked={broadcast.formData?.active || false}
-                      style={{ marginRight: '12px' }}
-                    />
-                    <div style={{ fontWeight: 'bold', minWidth: '150px' }}>
-                      {broadcast.formData?.name || `Yayın ${index + 1}`}
+              broadcasts.map((broadcast, index) => {
+                const isActive = broadcast.formData?.active || false;
+                const isClickable = isActive; // Sadece aktif yayınlar tıklanabilir
+                
+                return (
+                  <div
+                    key={broadcast.id || index}
+                    onClick={() => isClickable && handleBroadcastClick(broadcast)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '12px',
+                      margin: '8px 0',
+                      backgroundColor: isActive ? 'white' : '#f8f9fa',
+                      border: `1px solid ${isActive ? '#ddd' : '#e9ecef'}`,
+                      borderRadius: '6px',
+                      cursor: isClickable ? 'pointer' : 'not-allowed',
+                      transition: 'all 0.2s ease',
+                      minHeight: '50px',
+                      opacity: isActive ? 1 : 0.7,
+                      position: 'relative'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (isClickable) {
+                        e.target.style.backgroundColor = '#e3f2fd';
+                        e.target.style.borderColor = '#007bff';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (isClickable) {
+                        e.target.style.backgroundColor = 'white';
+                        e.target.style.borderColor = '#ddd';
+                      }
+                    }}
+                  >
+                    {/* Aktif olmayan yayınlar için overlay */}
+                    {!isActive && (
+                      <div style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: 'rgba(108, 117, 125, 0.1)',
+                        borderRadius: '6px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '12px',
+                        color: '#6c757d',
+                        fontWeight: 'bold',
+                        pointerEvents: 'none'
+                      }}>
+                        <span style={{
+                          backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                          padding: '4px 8px',
+                          borderRadius: '4px',
+                          border: '1px solid #dee2e6'
+                        }}>
+                          Senaryo için önce aktif hale getirin
+                        </span>
+                      </div>
+                    )}
+                    
+                    <div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
+                      <input
+                        type="checkbox"
+                        readOnly
+                        checked={isActive}
+                        style={{ marginRight: '12px' }}
+                      />
+                      <div style={{ fontWeight: 'bold', minWidth: '150px' }}>
+                        {broadcast.formData?.name || `Yayın ${index + 1}`}
+                      </div>
+                      <div style={{ flex: 1, fontSize: '14px', color: '#666' }}>
+                        Genlik: {broadcast.formData?.amplitude || 0} | 
+                        PRI: {broadcast.formData?.pri || 0} | 
+                        Yön: {broadcast.formData?.direction || 0}° | 
+                        Pulse Width: {broadcast.formData?.pulseWidth || 0}
+                      </div>
                     </div>
-                    <div style={{ flex: 1, fontSize: '14px', color: '#666' }}>
-                      Genlik: {broadcast.formData?.amplitude || 0} | 
-                      PRI: {broadcast.formData?.pri || 0} | 
-                      Yön: {broadcast.formData?.direction || 0}° | 
-                      Pulse Width: {broadcast.formData?.pulseWidth || 0}
-                    </div>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    {broadcast.formData?.tcpSent ? (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', zIndex: 10 }}>
+                      {broadcast.formData?.tcpSent ? (
+                        <span style={{
+                          padding: '4px 8px',
+                          backgroundColor: '#007bff',
+                          color: 'white',
+                          borderRadius: '4px',
+                          fontSize: '12px'
+                        }}>
+                          TCP Gönderildi
+                        </span>
+                      ) : (
+                        <span style={{
+                          padding: '4px 8px',
+                          backgroundColor: '#ffc107',
+                          color: 'black',
+                          borderRadius: '4px',
+                          fontSize: '12px'
+                        }}>
+                          TCP Gönderilmedi
+                        </span>
+                      )}
                       <span style={{
                         padding: '4px 8px',
-                        backgroundColor: '#007bff',
+                        backgroundColor: isActive ? '#28a745' : '#dc3545',
                         color: 'white',
                         borderRadius: '4px',
                         fontSize: '12px'
                       }}>
-                        TCP Gönderildi
+                        {isActive ? 'Aktif' : 'Deaktif'}
                       </span>
-                    ) : (
-                      <span style={{
-                        padding: '4px 8px',
-                        backgroundColor: '#ffc107',
-                        color: 'black',
-                        borderRadius: '4px',
-                        fontSize: '12px'
-                      }}>
-                        TCP Gönderilmedi
-                      </span>
-                    )}
-                    <span style={{
-                      padding: '4px 8px',
-                      backgroundColor: broadcast.formData?.active ? '#28a745' : '#dc3545',
-                      color: 'white',
-                      borderRadius: '4px',
-                      fontSize: '12px'
-                    }}>
-                      {broadcast.formData?.active ? 'Aktif' : 'Deaktif'}
-                    </span>
+                      {isActive && (
+                        <span style={{
+                          padding: '4px 8px',
+                          backgroundColor: '#17a2b8',
+                          color: 'white',
+                          borderRadius: '4px',
+                          fontSize: '10px',
+                          fontWeight: 'bold'
+                        }}>
+                          Senaryo Eklenebilir
+                        </span>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))
+                );
+              })
             )}
           </div>
         </div>
