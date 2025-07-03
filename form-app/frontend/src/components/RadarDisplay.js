@@ -4,14 +4,6 @@ import './RadarDisplay.css';
 const RadarDisplay = ({ broadcasts = [], onBroadcastUpdated }) => {
   const [hoveredBroadcast, setHoveredBroadcast] = useState(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [selectedBroadcast, setSelectedBroadcast] = useState(null);
-  const [showScenarioModal, setShowScenarioModal] = useState(false);
-  const [scenarioData, setScenarioData] = useState({
-    finalAmplitude: '',
-    finalDirection: '',
-    duration: '',
-    updateFrequency: ''
-  });
 
   // Radar dimensions
   const size = 600;
@@ -103,61 +95,6 @@ const RadarDisplay = ({ broadcasts = [], onBroadcastUpdated }) => {
     });
   };
 
-  const handleBroadcastClick = (broadcast) => {
-    setSelectedBroadcast(broadcast);
-    setScenarioData({
-      finalAmplitude: '',
-      finalDirection: '',
-      duration: '',
-      updateFrequency: ''
-    });
-    setShowScenarioModal(true);
-  };
-
-  const handleScenarioSubmit = async () => {
-    if (!selectedBroadcast || !scenarioData.finalAmplitude || !scenarioData.finalDirection || 
-        !scenarioData.duration || !scenarioData.updateFrequency) {
-      alert('Lütfen tüm alanları doldurun.');
-      return;
-    }
-
-    try {
-      const response = await fetch('http://localhost:8080/api/forms/scenario', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          broadcastId: selectedBroadcast.id,
-          finalAmplitude: parseFloat(scenarioData.finalAmplitude),
-          finalDirection: parseFloat(scenarioData.finalDirection),
-          duration: parseFloat(scenarioData.duration),
-          updateFrequency: parseFloat(scenarioData.updateFrequency)
-        }),
-      });
-
-      if (response.ok) {
-        alert('Senaryo başarıyla oluşturuldu!');
-        setShowScenarioModal(false);
-        setSelectedBroadcast(null);
-        // Broadcast listesini güncelle
-        if (onBroadcastUpdated) {
-          onBroadcastUpdated();
-        }
-      } else {
-        alert('Senaryo oluşturulurken hata oluştu.');
-      }
-    } catch (error) {
-      console.error('Error creating scenario:', error);
-      alert('Senaryo oluşturulurken hata oluştu.');
-    }
-  };
-
-  const handleCloseModal = () => {
-    setShowScenarioModal(false);
-    setSelectedBroadcast(null);
-  };
-
   return (
     <div className="radar-container">
       <svg 
@@ -203,8 +140,6 @@ const RadarDisplay = ({ broadcasts = [], onBroadcastUpdated }) => {
               className={pointClass}
               onMouseEnter={() => setHoveredBroadcast(broadcast)}
               onMouseLeave={() => setHoveredBroadcast(null)}
-              onClick={() => handleBroadcastClick(broadcast)}
-              style={{ cursor: 'pointer' }}
             />
           );
         })}
@@ -212,98 +147,28 @@ const RadarDisplay = ({ broadcasts = [], onBroadcastUpdated }) => {
 
       {/* Tooltip */}
       {hoveredBroadcast && (
-        <div 
+        <div
           className="broadcast-tooltip"
           style={{
             left: mousePos.x + 10,
-            top: mousePos.y - 10
+            top: mousePos.y - 10,
+            position: 'absolute',
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            color: 'white',
+            padding: '8px 12px',
+            borderRadius: '4px',
+            fontSize: '12px',
+            pointerEvents: 'none',
+            whiteSpace: 'nowrap',
+            zIndex: 1000
           }}
         >
-          <div className="tooltip-title">{hoveredBroadcast.formData.name}</div>
-          <div className="tooltip-content">
-            <div>Yön: {hoveredBroadcast.formData.direction}°</div>
-            <div>Genlik: {hoveredBroadcast.formData.amplitude}</div>
-            <div>PRI: {hoveredBroadcast.formData.pri}</div>
-            <div>Pulse Width: {hoveredBroadcast.formData.pulseWidth}</div>
-            <div>Durum: {hoveredBroadcast.formData.active ? 'Aktif' : 'Deaktif'}</div>
-            <div>TCP: {hoveredBroadcast.formData.tcpSent ? 'Gönderildi' : 'Gönderilmedi'}</div>
-          </div>
-        </div>
-      )}
-
-      {/* Senaryo Modal */}
-      {showScenarioModal && selectedBroadcast && (
-        <div className="scenario-modal-overlay">
-          <div className="scenario-modal">
-            <div className="scenario-modal-header">
-              <h3>Senaryo Oluştur - {selectedBroadcast.formData.name}</h3>
-              <button className="modal-close-btn" onClick={handleCloseModal}>×</button>
-            </div>
-            
-            <div className="scenario-modal-content">
-              <div className="current-values">
-                <h4>Mevcut Değerler:</h4>
-                <p>Genlik: {selectedBroadcast.formData.amplitude}</p>
-                <p>Yön: {selectedBroadcast.formData.direction}°</p>
-              </div>
-
-              <div className="scenario-form">
-                <div className="form-group">
-                  <label>Final Genlik:</label>
-                  <input
-                    type="number"
-                    value={scenarioData.finalAmplitude}
-                    onChange={(e) => setScenarioData({...scenarioData, finalAmplitude: e.target.value})}
-                    placeholder="Final genlik değeri"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Final Yön (derece):</label>
-                  <input
-                    type="number"
-                    value={scenarioData.finalDirection}
-                    onChange={(e) => setScenarioData({...scenarioData, finalDirection: e.target.value})}
-                    placeholder="Final yön değeri (0-360)"
-                    min="0"
-                    max="360"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Süre (saniye):</label>
-                  <input
-                    type="number"
-                    value={scenarioData.duration}
-                    onChange={(e) => setScenarioData({...scenarioData, duration: e.target.value})}
-                    placeholder="Toplam süre"
-                    min="1"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Güncellenme Sıklığı (saniye):</label>
-                  <input
-                    type="number"
-                    value={scenarioData.updateFrequency}
-                    onChange={(e) => setScenarioData({...scenarioData, updateFrequency: e.target.value})}
-                    placeholder="Kaç saniyede bir güncellensin"
-                    min="0.1"
-                    step="0.1"
-                  />
-                </div>
-              </div>
-
-              <div className="scenario-modal-actions">
-                <button className="scenario-cancel-btn" onClick={handleCloseModal}>
-                  İptal
-                </button>
-                <button className="scenario-submit-btn" onClick={handleScenarioSubmit}>
-                  Senaryo Başlat
-                </button>
-              </div>
-            </div>
-          </div>
+          <div><strong>{hoveredBroadcast.formData.name}</strong></div>
+          <div>Yön: {hoveredBroadcast.formData.direction}°</div>
+          <div>Genlik: {hoveredBroadcast.formData.amplitude}</div>
+          <div>PRI: {hoveredBroadcast.formData.pri}</div>
+          <div>Pulse Width: {hoveredBroadcast.formData.pulseWidth}</div>
+          <div>Durum: {hoveredBroadcast.formData.active ? 'Aktif' : 'Deaktif'}</div>
         </div>
       )}
     </div>
