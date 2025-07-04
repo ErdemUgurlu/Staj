@@ -4,6 +4,7 @@ import com.formapp.backend.model.Broadcast;
 import com.formapp.backend.model.FormSubmission;
 import com.formapp.backend.model.Scenario;
 import com.formapp.backend.model.ActivityLog;
+import com.formapp.backend.model.Message;
 import com.formapp.backend.service.FormStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/forms")
@@ -344,6 +346,74 @@ public class FormController {
             } else {
                 return ResponseEntity.notFound().build();
             }
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    // Message endpoints
+    @PostMapping("/message")
+    public ResponseEntity<Message> saveMessage(@RequestBody Map<String, Object> messageData) {
+        try {
+            String messageName = (String) messageData.get("messageName");
+            String messageType = (String) messageData.get("type");
+            Boolean saveMessage = (Boolean) messageData.get("saveMessage");
+            Boolean sendMessage = (Boolean) messageData.get("sendMessage");
+            
+            // Convert message parameters to JSON string
+            String parameters = formStorageService.convertMapToJson(messageData);
+            
+            Message message = null;
+            if (saveMessage != null && saveMessage) {
+                // Save message to database
+                message = formStorageService.saveMessage(messageName, messageType, parameters);
+            }
+            
+            // Send to TCP if requested
+            if (sendMessage != null && sendMessage) {
+                // TODO: Send to TCP (dummy for now)
+                System.out.println("TCP DUMMY: Sending " + messageType + " message: " + messageName);
+                System.out.println("Message parameters: " + parameters);
+                
+                // If message was saved, mark it as sent
+                if (message != null) {
+                    message.setSent(true);
+                    message = formStorageService.updateMessage(message);
+                }
+            }
+            
+            return ResponseEntity.ok(message);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+    
+    @GetMapping("/messages")
+    public ResponseEntity<List<Message>> getAllMessages() {
+        try {
+            List<Message> messages = formStorageService.getAllMessages();
+            return ResponseEntity.ok(messages);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+    
+    @GetMapping("/messages/{type}")
+    public ResponseEntity<List<Message>> getMessagesByType(@PathVariable String type) {
+        try {
+            List<Message> messages = formStorageService.getMessagesByType(type);
+            return ResponseEntity.ok(messages);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+    
+    @DeleteMapping("/message/{id}")
+    public ResponseEntity<String> deleteMessage(@PathVariable String id) {
+        try {
+            formStorageService.deleteMessage(id);
+            return ResponseEntity.ok("Message deleted successfully");
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }

@@ -360,8 +360,8 @@ button:disabled {
   padding: 1rem;
   background: #f8f9fa;
   border-radius: 8px;
-  height: 300px;
-  max-height: 300px;
+  height: 500px;
+  max-height: 500px;
 }
 
 .broadcast-item {
@@ -424,7 +424,6 @@ button:disabled {
 
 .broadcast-status {
   display: flex;
-  gap: 8px;
   align-items: center;
 }
 
@@ -434,7 +433,7 @@ button:disabled {
   font-size: 0.75rem;
   font-weight: 500;
   white-space: nowrap;
-  margin-left: auto;
+  margin-left: 8px;
 }
 
 .status-badge.active {
@@ -899,4 +898,243 @@ button:disabled {
 .save-buttons button:disabled {
   background-color: #6c757d;
   cursor: not-allowed;
+}
+
+.yayin-ekle-btn,
+.yayin-baslat-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s;
+  color: white;
+}
+
+.yayin-ekle-btn {
+  background-color: #007bff;
+}
+
+.yayin-ekle-btn:hover {
+  background-color: #0056b3;
+}
+
+.yayin-baslat-btn {
+  background-color: #28a745;
+}
+
+.yayin-baslat-btn:hover {
+  background-color: #218838;
+}
+
+.send-only-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background 0.3s ease;
+  min-width: 120px;
+}
+
+.send-only-btn:hover {
+  background: #5a6268;
+}
+
+.send-only-btn:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+/* New message type buttons */
+.yayin-durdur-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.yayin-durdur-btn:hover {
+  background-color: #c0392b;
+}
+
+.yayin-sil-btn {
+  background-color: #9b59b6;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.yayin-sil-btn:hover {
+  background-color: #8e44ad;
+}
+
+.yayin-yon-guncelle-btn {
+  background-color: #f39c12;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.yayin-yon-guncelle-btn:hover {
+  background-color: #e67e22;
+}
+
+.yayin-genlik-guncelle-btn {
+  background-color: #1abc9c;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.yayin-genlik-guncelle-btn:hover {
+  background-color: #16a085;
+}
+
+/* Save Only Button */
+.save-only-btn {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  margin: 0 5px;
+}
+
+.save-only-btn:hover {
+  background-color: #5a6268;
+}
+
+.save-only-btn:disabled {
+  background-color: #adb5bd;
+  cursor: not-allowed;
+}
+
+/* Send Saved Message Button */
+.send-saved-message-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.3s ease;
+  margin-left: 8px;
+}
+
+.send-saved-message-btn:hover {
+  background-color: #218838;
+}
+
+.send-saved-message-btn:disabled {
+  background-color: #94d3a2;
+  cursor: not-allowed;
+}
+
+/* Dropdown Styles */
+.dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-trigger {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.dropdown-trigger:hover {
+  background-color: #0056b3;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  min-width: 200px;
+  overflow: hidden;
+}
+
+.dropdown-item {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+}
+
+.dropdown-item.yayin-ekle-color:hover {
+  background-color: rgba(68, 138, 255, 0.1);
+  color: #448aff;
+}
+
+.dropdown-item.yayin-baslat-color:hover {
+  background-color: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+}
+
+.dropdown-item.yayin-durdur-color:hover {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+}
+
+.dropdown-item.yayin-sil-color:hover {
+  background-color: rgba(138, 43, 226, 0.1);
+  color: #8a2be2;
+}
+
+.dropdown-item.yayin-yon-guncelle-color:hover {
+  background-color: rgba(255, 152, 0, 0.1);
+  color: #ff9800;
+}
+
+.dropdown-item.yayin-genlik-guncelle-color:hover {
+  background-color: rgba(32, 201, 151, 0.1);
+  color: #20c997;
 } 

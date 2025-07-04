@@ -116,6 +116,17 @@ const RadarDisplay = ({ broadcasts = [], onBroadcastUpdated }) => {
         {axisLines}
         {angleLabels}
 
+        {/* Center emoji */}
+                  <text
+          x={center}
+          y={center}
+          textAnchor="middle"
+          dominantBaseline="middle"
+          style={{ fontSize: '24px' }}
+        >
+          📡
+        </text>
+
         {/* Broadcast points */}
         {broadcastPoints.map((broadcast) => {
           const formData = broadcast.formData;

@@ -4,11 +4,14 @@ import com.formapp.backend.model.FormSubmission;
 import com.formapp.backend.model.Scenario;
 import com.formapp.backend.model.ActivityLog;
 import com.formapp.backend.model.Broadcast;
+import com.formapp.backend.model.Message;
 import com.formapp.backend.repository.ActivityLogRepository;
 import com.formapp.backend.repository.BroadcastRepository;
 import com.formapp.backend.repository.ScenarioRepository;
+import com.formapp.backend.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -33,6 +36,11 @@ public class FormStorageService {
     
     @Autowired
     private ScenarioRepository scenarioRepository;
+    
+    @Autowired
+    private MessageRepository messageRepository;
+    
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public FormSubmission saveForm(String formType, Object formData) {
         String id = UUID.randomUUID().toString();
@@ -314,5 +322,36 @@ public class FormStorageService {
 
     public List<Broadcast> getTcpSentBroadcasts() {
         return broadcastRepository.findByTcpSent(true);
+    }
+
+    // Message methods
+    public Message saveMessage(String messageName, String messageType, String parameters) {
+        Message message = new Message(messageName, messageType, parameters);
+        return messageRepository.save(message);
+    }
+    
+    public Message updateMessage(Message message) {
+        return messageRepository.save(message);
+    }
+    
+    public List<Message> getAllMessages() {
+        return messageRepository.findAll();
+    }
+    
+    public List<Message> getMessagesByType(String messageType) {
+        return messageRepository.findByMessageType(messageType);
+    }
+    
+    public void deleteMessage(String id) {
+        messageRepository.deleteById(id);
+    }
+    
+    public String convertMapToJson(Map<String, Object> map) {
+        try {
+            return objectMapper.writeValueAsString(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "{}";
+        }
     }
 } 

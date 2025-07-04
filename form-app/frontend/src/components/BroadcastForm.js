@@ -2,45 +2,64 @@ import React, { useState, useEffect } from 'react';
 import './Forms.css';
 
 const BroadcastForm = ({ onFormSubmitted }) => {
-  const [broadcasts, setBroadcasts] = useState([]);
   const [selectedBroadcasts, setSelectedBroadcasts] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSendingMultiple, setIsSendingMultiple] = useState(false);
   const [activityLogs, setActivityLogs] = useState([]);
-  const [updateFormData, setUpdateFormData] = useState({
-    id: '',
-    name: '',
+  const [messages, setMessages] = useState([]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  
+  // Modal states
+  const [isYayinEkleModalOpen, setIsYayinEkleModalOpen] = useState(false);
+  const [isYayinBaslatModalOpen, setIsYayinBaslatModalOpen] = useState(false);
+  const [isYayinDurdurModalOpen, setIsYayinDurdurModalOpen] = useState(false);
+  const [isYayinSilModalOpen, setIsYayinSilModalOpen] = useState(false);
+  const [isYayinYonGuncelleModalOpen, setIsYayinYonGuncelleModalOpen] = useState(false);
+  const [isYayinGenlikGuncelleModalOpen, setIsYayinGenlikGuncelleModalOpen] = useState(false);
+  
+  // Form data for yayinEkle message
+  const [yayinEkleFormData, setYayinEkleFormData] = useState({
+    messageName: '',
+    yayinId: '',
     amplitude: 0,
     pri: 0,
     direction: 0,
     pulseWidth: 0,
   });
-  const [formData, setFormData] = useState({
-    name: '',
-    amplitude: 0,
-    pri: 0,
-    direction: 0,
-    pulseWidth: 0,
+  
+  // Form data for yayinBaslat message
+  const [yayinBaslatFormData, setYayinBaslatFormData] = useState({
+    messageName: '',
+    yayinId: '',
   });
-  const [showSaveOptions, setShowSaveOptions] = useState(false);
-  const [isNewBroadcast, setIsNewBroadcast] = useState(false);
-  const [newBroadcastName, setNewBroadcastName] = useState('');
 
-  const fetchBroadcasts = async () => {
-    try {
-      const response = await fetch('http://localhost:8080/api/forms/type/Broadcast');
-      if (response.ok) {
-        const data = await response.json();
-        setBroadcasts(data);
-      } else {
-        console.error('Error fetching broadcasts:', await response.text());
-      }
-    } catch (error) {
-      console.error('Error fetching broadcasts:', error);
-    }
-  };
+  // Form data for yayinDurdur message
+  const [yayinDurdurFormData, setYayinDurdurFormData] = useState({
+    messageName: '',
+    yayinId: '',
+  });
+
+  // Form data for yayinSil message
+  const [yayinSilFormData, setYayinSilFormData] = useState({
+    messageName: '',
+    yayinId: '',
+  });
+
+  // Form data for yayinYonGuncelle message
+  const [yayinYonGuncelleFormData, setYayinYonGuncelleFormData] = useState({
+    messageName: '',
+    yayinId: '',
+    newDirection: 0,
+  });
+
+  // Form data for yayinGenlikGuncelle message
+  const [yayinGenlikGuncelleFormData, setYayinGenlikGuncelleFormData] = useState({
+    messageName: '',
+    yayinId: '',
+    newAmplitude: 0,
+  });
+
+
 
   const fetchActivityLogs = async () => {
     try {
@@ -56,39 +75,55 @@ const BroadcastForm = ({ onFormSubmitted }) => {
     }
   };
 
+  const fetchMessages = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/api/forms/messages');
+      if (response.ok) {
+        const data = await response.json();
+        setMessages(data);
+      } else {
+        console.error('Error fetching messages:', await response.text());
+      }
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+    }
+  };
+
   useEffect(() => {
-    fetchBroadcasts();
     fetchActivityLogs();
-  }, []); // Only run once on mount
+    fetchMessages();
+  }, []);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isDropdownOpen && !event.target.closest('.dropdown-container')) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isDropdownOpen]);
 
   const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleString('tr-TR', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit'
-    });
+    try {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('tr-TR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    } catch {
+      return 'Bilinmiyor';
+    }
   };
 
-  const getCreationDate = (broadcastId) => {
-    const createLog = activityLogs.find(log => 
-      log.entityId === broadcastId && 
-      log.action === 'CREATE' && 
-      log.entityType === 'BROADCAST'
-    );
-    return createLog ? formatDate(createLog.timestamp) : '';
-  };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: name === 'name' ? value : Number(value)
-    }));
-  };
 
   const handleCheckboxChange = (broadcastId) => {
     setSelectedBroadcasts(prev => {
@@ -100,352 +135,541 @@ const BroadcastForm = ({ onFormSubmitted }) => {
     });
   };
 
-  const handleSendSelected = async () => {
-    if (selectedBroadcasts.length === 0) return;
-    
-    setIsSendingMultiple(true);
-    try {
-      const promises = selectedBroadcasts.map(id => 
-        fetch(`http://localhost:8080/api/forms/broadcast/${id}/send`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        })
-      );
-      
-      await Promise.all(promises);
-      await fetchBroadcasts();
-      setSelectedBroadcasts([]);
-      if (onFormSubmitted) onFormSubmitted();
-    } catch (error) {
-      console.error('Error sending selected broadcasts:', error);
-      alert('Yayınlar gönderilirken bir hata oluştu: ' + error.message);
-    }
-    setIsSendingMultiple(false);
-  };
-
-  const handleActivateSelected = async () => {
-    if (selectedBroadcasts.length === 0) return;
-    
-    // Sadece TCP'ye gönderilmiş ve aktif olmayan yayınları filtrele
-    const validBroadcasts = selectedBroadcasts.filter(id => {
-      const broadcast = broadcasts.find(b => b.id === id);
-      return broadcast && broadcast.formData.tcpSent && !broadcast.formData.active;
-    });
-
-    if (validBroadcasts.length === 0) {
-      alert('Sadece TCP\'ye gönderilmiş ve deaktif yayınlar aktif edilebilir!');
-      return;
-    }
-    
-    setIsSendingMultiple(true);
-    try {
-      const promises = validBroadcasts.map(async id => {
-        // TCP başlatma mesajı gönder ve yayını aktif et
-        await fetch(`http://localhost:8080/api/forms/broadcast/${id}/activate`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        });
-      });
-      
-      await Promise.all(promises);
-      await fetchBroadcasts();
-      setSelectedBroadcasts([]);
-      if (onFormSubmitted) onFormSubmitted();
-    } catch (error) {
-      console.error('Error activating selected broadcasts:', error);
-      alert('Yayınlar aktif edilirken bir hata oluştu: ' + error.message);
-    }
-    setIsSendingMultiple(false);
-  };
-
-  const handleDeactivateSelected = async () => {
-    if (selectedBroadcasts.length === 0) return;
-    
-    // Sadece aktif yayınları filtrele
-    const validBroadcasts = selectedBroadcasts.filter(id => {
-      const broadcast = broadcasts.find(b => b.id === id);
-      return broadcast && broadcast.formData.active;
-    });
-
-    if (validBroadcasts.length === 0) {
-      alert('Sadece aktif yayınlar deaktif edilebilir!');
-      return;
-    }
-    
-    setIsSendingMultiple(true);
-    try {
-      const promises = validBroadcasts.map(async id => {
-        // TCP durdurma mesajı gönder ve yayını deaktif et
-        await fetch(`http://localhost:8080/api/forms/broadcast/${id}/deactivate`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        });
-      });
-      
-      await Promise.all(promises);
-      await fetchBroadcasts();
-      setSelectedBroadcasts([]);
-      if (onFormSubmitted) onFormSubmitted();
-    } catch (error) {
-      console.error('Error deactivating selected broadcasts:', error);
-      alert('Yayınlar deaktif edilirken bir hata oluştu: ' + error.message);
-    }
-    setIsSendingMultiple(false);
-  };
-
-  const handleUpdateInputChange = (e) => {
+  // Handle YayinEkle form changes
+  const handleYayinEkleInputChange = (e) => {
     const { name, value } = e.target;
-    setUpdateFormData(prev => ({
+    setYayinEkleFormData(prev => ({
       ...prev,
-      [name]: name === 'name' ? value : Number(value)
+      [name]: name === 'messageName' || name === 'yayinId' ? value : Number(value)
     }));
   };
 
-  const handleUpdateSelected = () => {
-    if (selectedBroadcasts.length === 0) return;
-    
-    // Get the first selected broadcast (we'll only update one at a time)
-    const broadcastToUpdate = broadcasts.find(b => b.id === selectedBroadcasts[0]);
-    if (!broadcastToUpdate) return;
-
-    setUpdateFormData({
-      id: broadcastToUpdate.id,
-      name: broadcastToUpdate.formData.name,
-      amplitude: broadcastToUpdate.formData.amplitude,
-      pri: broadcastToUpdate.formData.pri,
-      direction: broadcastToUpdate.formData.direction,
-      pulseWidth: broadcastToUpdate.formData.pulseWidth,
-    });
-    
-    setIsUpdateModalOpen(true);
+  // Handle YayinBaslat form changes
+  const handleYayinBaslatInputChange = (e) => {
+    const { name, value } = e.target;
+    setYayinBaslatFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
-  const handleUpdateSubmit = async (e) => {
-    e.preventDefault();
-    setShowSaveOptions(true);
+  // Handle YayinDurdur form changes
+  const handleYayinDurdurInputChange = (e) => {
+    const { name, value } = e.target;
+    setYayinDurdurFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
-  const handleSaveOption = async (createNew) => {
-    setIsNewBroadcast(createNew);
-    if (createNew) {
-      setShowSaveOptions(false);
-      // Show new broadcast name input - it will be handled in the UI
-    } else {
-      // Update existing broadcast
-      await handleSaveChanges();
-    }
+  // Handle YayinSil form changes
+  const handleYayinSilInputChange = (e) => {
+    const { name, value } = e.target;
+    setYayinSilFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
-  const handleSaveChanges = async () => {
+  // Handle YayinYonGuncelle form changes
+  const handleYayinYonGuncelleInputChange = (e) => {
+    const { name, value } = e.target;
+    setYayinYonGuncelleFormData(prev => ({
+      ...prev,
+      [name]: name === 'messageName' || name === 'yayinId' ? value : Number(value)
+    }));
+  };
+
+  // Handle YayinGenlikGuncelle form changes
+  const handleYayinGenlikGuncelleInputChange = (e) => {
+    const { name, value } = e.target;
+    setYayinGenlikGuncelleFormData(prev => ({
+      ...prev,
+      [name]: name === 'messageName' || name === 'yayinId' ? value : Number(value)
+    }));
+  };
+
+  // Send YayinEkle message
+  const handleYayinEkleSubmit = async (action) => {
+    setIsSubmitting(true);
     try {
-      setIsSubmitting(true);
-      const selectedBroadcast = broadcasts.find(b => b.id === selectedBroadcasts[0]);
-      
-      if (isNewBroadcast && !newBroadcastName.trim()) {
-        alert('Lütfen yeni yayın için bir isim girin.');
-        return;
-      }
-
-      // Prepare the data in the correct format
-      const payload = {
-        id: isNewBroadcast ? '' : selectedBroadcast.id,
-        name: isNewBroadcast ? newBroadcastName : updateFormData.name,
-        amplitude: parseFloat(updateFormData.amplitude),
-        pri: parseFloat(updateFormData.pri),
-        direction: parseFloat(updateFormData.direction),
-        pulseWidth: parseFloat(updateFormData.pulseWidth),
-        active: selectedBroadcast ? selectedBroadcast.formData.active : true,
-        tcpSent: selectedBroadcast ? selectedBroadcast.formData.tcpSent : false
+      const messageData = {
+        type: 'yayinEkle',
+        messageName: yayinEkleFormData.messageName,
+        yayinId: yayinEkleFormData.yayinId,
+        amplitude: yayinEkleFormData.amplitude,
+        pri: yayinEkleFormData.pri,
+        direction: yayinEkleFormData.direction,
+        pulseWidth: yayinEkleFormData.pulseWidth,
+        saveMessage: action === 'saveAndSend' || action === 'saveOnly',
+        sendMessage: action === 'saveAndSend' || action === 'sendOnly'
       };
 
-      const response = await fetch(`http://localhost:8080/api/forms/broadcast${isNewBroadcast ? '' : `/${selectedBroadcast.id}`}`, {
-        method: isNewBroadcast ? 'POST' : 'PUT',
+      const response = await fetch('http://localhost:8080/api/forms/message', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(messageData),
       });
 
       if (response.ok) {
-        fetchBroadcasts();
-        setIsUpdateModalOpen(false);
-        setShowSaveOptions(false);
-        setIsNewBroadcast(false);
-        setNewBroadcastName('');
-        setUpdateFormData({
-          id: '',
-          name: '',
+        let alertMessage = '';
+        if (action === 'saveAndSend') alertMessage = 'Mesaj kaydedildi ve gönderildi!';
+        else if (action === 'saveOnly') alertMessage = 'Mesaj kaydedildi!';
+        else alertMessage = 'Mesaj gönderildi!';
+        
+        alert(alertMessage);
+        setIsYayinEkleModalOpen(false);
+        setYayinEkleFormData({
+          messageName: '',
+          yayinId: '',
           amplitude: 0,
           pri: 0,
           direction: 0,
           pulseWidth: 0,
         });
-        onFormSubmitted();
+        
+        // Refresh messages if saved
+        if (action === 'saveAndSend' || action === 'saveOnly') {
+          await fetchMessages();
+        }
+        
+        if (onFormSubmitted) onFormSubmitted();
       } else {
         const errorText = await response.text();
-        console.error('Error response:', errorText);
-        alert('Yayın güncellenirken bir hata oluştu: ' + errorText);
+        alert('Mesaj gönderilirken bir hata oluştu: ' + errorText);
       }
     } catch (error) {
-      console.error('Error updating broadcast:', error);
-      alert('Yayın güncellenirken bir hata oluştu: ' + error.message);
-    } finally {
-      setIsSubmitting(false);
+      console.error('Error sending yayinEkle message:', error);
+      alert('Mesaj gönderilirken bir hata oluştu: ' + error.message);
     }
+    setIsSubmitting(false);
+  };
+
+  // Send YayinBaslat message
+  const handleYayinBaslatSubmit = async (action) => {
+    setIsSubmitting(true);
+    try {
+      const messageData = {
+        type: 'yayinBaslat',
+        messageName: yayinBaslatFormData.messageName,
+        yayinId: yayinBaslatFormData.yayinId,
+        saveMessage: action === 'saveAndSend' || action === 'saveOnly',
+        sendMessage: action === 'saveAndSend' || action === 'sendOnly'
+      };
+
+      const response = await fetch('http://localhost:8080/api/forms/message', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(messageData),
+      });
+
+      if (response.ok) {
+        let alertMessage = '';
+        if (action === 'saveAndSend') alertMessage = 'Mesaj kaydedildi ve gönderildi!';
+        else if (action === 'saveOnly') alertMessage = 'Mesaj kaydedildi!';
+        else alertMessage = 'Mesaj gönderildi!';
+        
+        alert(alertMessage);
+        setIsYayinBaslatModalOpen(false);
+        setYayinBaslatFormData({
+          messageName: '',
+          yayinId: '',
+        });
+        
+        // Refresh messages if saved
+        if (action === 'saveAndSend' || action === 'saveOnly') {
+          await fetchMessages();
+        }
+        
+        if (onFormSubmitted) onFormSubmitted();
+      } else {
+        const errorText = await response.text();
+        alert('Mesaj gönderilirken bir hata oluştu: ' + errorText);
+      }
+    } catch (error) {
+      console.error('Error sending yayinBaslat message:', error);
+      alert('Mesaj gönderilirken bir hata oluştu: ' + error.message);
+    }
+    setIsSubmitting(false);
+  };
+
+  // Send YayinDurdur message
+  const handleYayinDurdurSubmit = async (saveAndSend) => {
+    setIsSubmitting(true);
+    try {
+      const messageData = {
+        type: 'yayinDurdur',
+        messageName: yayinDurdurFormData.messageName,
+        yayinId: yayinDurdurFormData.yayinId,
+        saveMessage: saveAndSend
+      };
+
+      const response = await fetch('http://localhost:8080/api/forms/message', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(messageData),
+      });
+
+      if (response.ok) {
+        alert(saveAndSend ? 'Mesaj kaydedildi ve gönderildi!' : 'Mesaj gönderildi!');
+        setIsYayinDurdurModalOpen(false);
+        setYayinDurdurFormData({
+          messageName: '',
+          yayinId: '',
+        });
+        
+        // Refresh messages if saved
+        if (saveAndSend) {
+          await fetchMessages();
+        }
+        
+        if (onFormSubmitted) onFormSubmitted();
+      } else {
+        const errorText = await response.text();
+        alert('Mesaj gönderilirken bir hata oluştu: ' + errorText);
+      }
+    } catch (error) {
+      console.error('Error sending yayinDurdur message:', error);
+      alert('Mesaj gönderilirken bir hata oluştu: ' + error.message);
+    }
+    setIsSubmitting(false);
+  };
+
+  // Send YayinSil message
+  const handleYayinSilSubmit = async (saveAndSend) => {
+    setIsSubmitting(true);
+    try {
+      const messageData = {
+        type: 'yayinSil',
+        messageName: yayinSilFormData.messageName,
+        yayinId: yayinSilFormData.yayinId,
+        saveMessage: saveAndSend
+      };
+
+      const response = await fetch('http://localhost:8080/api/forms/message', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(messageData),
+      });
+
+      if (response.ok) {
+        alert(saveAndSend ? 'Mesaj kaydedildi ve gönderildi!' : 'Mesaj gönderildi!');
+        setIsYayinSilModalOpen(false);
+        setYayinSilFormData({
+          messageName: '',
+          yayinId: '',
+        });
+        
+        // Refresh messages if saved
+        if (saveAndSend) {
+          await fetchMessages();
+        }
+        
+        if (onFormSubmitted) onFormSubmitted();
+      } else {
+        const errorText = await response.text();
+        alert('Mesaj gönderilirken bir hata oluştu: ' + errorText);
+      }
+    } catch (error) {
+      console.error('Error sending yayinSil message:', error);
+      alert('Mesaj gönderilirken bir hata oluştu: ' + error.message);
+    }
+    setIsSubmitting(false);
+  };
+
+  // Send YayinYonGuncelle message
+  const handleYayinYonGuncelleSubmit = async (saveAndSend) => {
+    setIsSubmitting(true);
+    try {
+      const messageData = {
+        type: 'yayinYonGuncelle',
+        messageName: yayinYonGuncelleFormData.messageName,
+        yayinId: yayinYonGuncelleFormData.yayinId,
+        newDirection: yayinYonGuncelleFormData.newDirection,
+        saveMessage: saveAndSend
+      };
+
+      const response = await fetch('http://localhost:8080/api/forms/message', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(messageData),
+      });
+
+      if (response.ok) {
+        alert(saveAndSend ? 'Mesaj kaydedildi ve gönderildi!' : 'Mesaj gönderildi!');
+        setIsYayinYonGuncelleModalOpen(false);
+        setYayinYonGuncelleFormData({
+          messageName: '',
+          yayinId: '',
+          newDirection: 0,
+        });
+        
+        // Refresh messages if saved
+        if (saveAndSend) {
+          await fetchMessages();
+        }
+        
+        if (onFormSubmitted) onFormSubmitted();
+      } else {
+        const errorText = await response.text();
+        alert('Mesaj gönderilirken bir hata oluştu: ' + errorText);
+      }
+    } catch (error) {
+      console.error('Error sending yayinYonGuncelle message:', error);
+      alert('Mesaj gönderilirken bir hata oluştu: ' + error.message);
+    }
+    setIsSubmitting(false);
+  };
+
+  // Send YayinGenlikGuncelle message
+  const handleYayinGenlikGuncelleSubmit = async (saveAndSend) => {
+    setIsSubmitting(true);
+    try {
+      const messageData = {
+        type: 'yayinGenlikGuncelle',
+        messageName: yayinGenlikGuncelleFormData.messageName,
+        yayinId: yayinGenlikGuncelleFormData.yayinId,
+        newAmplitude: yayinGenlikGuncelleFormData.newAmplitude,
+        saveMessage: saveAndSend
+      };
+
+      const response = await fetch('http://localhost:8080/api/forms/message', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(messageData),
+      });
+
+      if (response.ok) {
+        alert(saveAndSend ? 'Mesaj kaydedildi ve gönderildi!' : 'Mesaj gönderildi!');
+        setIsYayinGenlikGuncelleModalOpen(false);
+        setYayinGenlikGuncelleFormData({
+          messageName: '',
+          yayinId: '',
+          newAmplitude: 0,
+        });
+        
+        // Refresh messages if saved
+        if (saveAndSend) {
+          await fetchMessages();
+        }
+        
+        if (onFormSubmitted) onFormSubmitted();
+      } else {
+        const errorText = await response.text();
+        alert('Mesaj gönderilirken bir hata oluştu: ' + errorText);
+      }
+    } catch (error) {
+      console.error('Error sending yayinGenlikGuncelle message:', error);
+      alert('Mesaj gönderilirken bir hata oluştu: ' + error.message);
+    }
+    setIsSubmitting(false);
+  };
+
+  // Send saved message that wasn't sent before
+  const handleSendSavedMessage = async (message) => {
+    setIsSubmitting(true);
+    try {
+      const messageData = {
+        ...JSON.parse(message.parameters),
+        type: message.messageType,
+        messageName: message.messageName,
+        saveMessage: false, // Don't save again, just send
+        sendMessage: true   // Only send via TCP
+      };
+
+      const response = await fetch('http://localhost:8080/api/forms/message', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(messageData),
+      });
+
+      if (response.ok) {
+        alert('Mesaj TCP üzerinden gönderildi!');
+        await fetchMessages(); // Refresh to update sent status
+        if (onFormSubmitted) onFormSubmitted();
+      } else {
+        const errorText = await response.text();
+        alert('Mesaj gönderilirken bir hata oluştu: ' + errorText);
+      }
+    } catch (error) {
+      console.error('Error sending saved message:', error);
+      alert('Mesaj gönderilirken bir hata oluştu: ' + error.message);
+    }
+    setIsSubmitting(false);
   };
 
   const handleDeleteSelected = async () => {
     if (selectedBroadcasts.length === 0) return;
     
+    if (!window.confirm(`${selectedBroadcasts.length} mesajı silmek istediğinizden emin misiniz?`)) {
+      return;
+    }
+    
     setIsSendingMultiple(true);
     try {
       const promises = selectedBroadcasts.map(async id => {
-        // TCP silme mesajı gönder ve veritabanından sil
-        await fetch(`http://localhost:8080/api/forms/${id}`, {
+        await fetch(`http://localhost:8080/api/forms/message/${id}`, {
           method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          }
         });
       });
       
       await Promise.all(promises);
-      await fetchBroadcasts();
+      await fetchMessages();
       setSelectedBroadcasts([]);
+      if (onFormSubmitted) onFormSubmitted();
     } catch (error) {
-      console.error('Error deleting selected broadcasts:', error);
-      alert('Yayınlar silinirken bir hata oluştu: ' + error.message);
+      console.error('Error deleting selected messages:', error);
+      alert('Mesajlar silinirken bir hata oluştu: ' + error.message);
     }
     setIsSendingMultiple(false);
-  };
-
-  const handleSubmit = async (shouldSendTcp) => {
-    setIsSubmitting(true);
-    try {
-      const endpoint = shouldSendTcp ? '/api/forms/broadcast/send' : '/api/forms/broadcast/save';
-      const response = await fetch(`http://localhost:8080${endpoint}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          id: '',
-          name: formData.name,
-          amplitude: parseFloat(formData.amplitude),
-          pri: parseFloat(formData.pri),
-          direction: parseFloat(formData.direction),
-          pulseWidth: parseFloat(formData.pulseWidth),
-          active: true,
-          tcpSent: shouldSendTcp
-        }),
-      });
-
-      if (response.ok) {
-        setFormData({
-          name: '',
-          amplitude: 0,
-          pri: 0,
-          direction: 0,
-          pulseWidth: 0,
-        });
-        setIsModalOpen(false);
-        await fetchBroadcasts();
-      } else {
-        const errorText = await response.text();
-        console.error('Error response:', errorText);
-        alert('Yayın oluşturulurken bir hata oluştu: ' + errorText);
-      }
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      alert('Yayın oluşturulurken bir hata oluştu: ' + error.message);
-    }
-    setIsSubmitting(false);
   };
 
   return (
     <div className="broadcast-container">
       <div className="broadcasts-header">
-        <h2>Kayıtlı Mesajlar ({broadcasts.length})</h2>
+        <h2>Kayıtlı Mesajlar ({messages.length})</h2>
         <div className="header-buttons">
-          <button 
-            className="new-broadcast-btn"
-            onClick={() => setIsModalOpen(true)}
-          >
-            Yeni Yayın Oluştur
-          </button>
-          <button 
-            className="send-selected-btn"
-            onClick={handleSendSelected}
-            disabled={selectedBroadcasts.length === 0 || isSendingMultiple}
-          >
-            {isSendingMultiple ? 'Gönderiliyor...' : `Yayın Ekle (${selectedBroadcasts.length})`}
-          </button>
-          <button 
-            className="activate-selected-btn"
-            onClick={handleActivateSelected}
-            disabled={selectedBroadcasts.length === 0 || isSendingMultiple}
-          >
-            {isSendingMultiple ? 'İşleniyor...' : `Yayın Aktif Et (${selectedBroadcasts.length})`}
-          </button>
-          <button 
-            className="update-selected-btn"
-            onClick={handleUpdateSelected}
-            disabled={selectedBroadcasts.length === 0 || isSendingMultiple}
-          >
-            {isSendingMultiple ? 'İşleniyor...' : `Yayın Güncelle (${selectedBroadcasts.length})`}
-          </button>
-          <button 
-            className="deactivate-selected-btn"
-            onClick={handleDeactivateSelected}
-            disabled={selectedBroadcasts.length === 0 || isSendingMultiple}
-          >
-            {isSendingMultiple ? 'İşleniyor...' : `Yayın Deaktif Et (${selectedBroadcasts.length})`}
-          </button>
+          <div className="dropdown-container">
+            <button 
+              className="dropdown-trigger"
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            >
+              Yayın ▼
+            </button>
+            {isDropdownOpen && (
+              <div className="dropdown-menu">
+                <button 
+                  className="dropdown-item yayin-ekle-color"
+                  onClick={() => {
+                    setIsYayinEkleModalOpen(true);
+                    setIsDropdownOpen(false);
+                  }}
+                >
+                  📡 Yayın Ekle Mesajı
+                </button>
+                <button 
+                  className="dropdown-item yayin-baslat-color"
+                  onClick={() => {
+                    setIsYayinBaslatModalOpen(true);
+                    setIsDropdownOpen(false);
+                  }}
+                >
+                  ▶️ Yayın Başlat Mesajı
+                </button>
+                <button 
+                  className="dropdown-item yayin-durdur-color"
+                  onClick={() => {
+                    setIsYayinDurdurModalOpen(true);
+                    setIsDropdownOpen(false);
+                  }}
+                >
+                  ⏹️ Yayın Durdur Mesajı
+                </button>
+                <button 
+                  className="dropdown-item yayin-sil-color"
+                  onClick={() => {
+                    setIsYayinSilModalOpen(true);
+                    setIsDropdownOpen(false);
+                  }}
+                >
+                  🗑️ Yayın Sil Mesajı
+                </button>
+                <button 
+                  className="dropdown-item yayin-yon-guncelle-color"
+                  onClick={() => {
+                    setIsYayinYonGuncelleModalOpen(true);
+                    setIsDropdownOpen(false);
+                  }}
+                >
+                  🧭 Yön Güncelle Mesajı
+                </button>
+                <button 
+                  className="dropdown-item yayin-genlik-guncelle-color"
+                  onClick={() => {
+                    setIsYayinGenlikGuncelleModalOpen(true);
+                    setIsDropdownOpen(false);
+                  }}
+                >
+                  📶 Genlik Güncelle Mesajı
+                </button>
+              </div>
+            )}
+          </div>
           <button 
             className="delete-selected-btn"
             onClick={handleDeleteSelected}
             disabled={selectedBroadcasts.length === 0 || isSendingMultiple}
           >
-            {isSendingMultiple ? 'Siliniyor...' : `Yayın Sil (${selectedBroadcasts.length})`}
+            {isSendingMultiple ? 'Siliniyor...' : `Mesaj Sil (${selectedBroadcasts.length})`}
           </button>
         </div>
       </div>
 
       <div className="broadcasts-list">
-        {broadcasts.map((broadcast) => {
-          const broadcastData = broadcast.formData;
-          const creationDate = getCreationDate(broadcast.id);
+        {messages.map((message) => {
+          const creationDate = new Date(message.createdAt).toLocaleDateString('tr-TR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+
+          let parameters = {};
+          try {
+            parameters = JSON.parse(message.parameters);
+          } catch (e) {
+            console.error('Error parsing message parameters:', e);
+          }
           
           return (
-            <div key={broadcast.id} className={`broadcast-item ${broadcastData.active ? 'active' : broadcastData.tcpSent ? 'sent' : 'not-sent'}`}>
+            <div key={message.id} className={`broadcast-item ${message.sent ? 'sent' : 'not-sent'}`}>
               <div className="broadcast-info">
                 <input
                   type="checkbox"
                   className="broadcast-checkbox"
-                  checked={selectedBroadcasts.includes(broadcast.id)}
-                  onChange={() => handleCheckboxChange(broadcast.id)}
+                  checked={selectedBroadcasts.includes(message.id)}
+                  onChange={() => handleCheckboxChange(message.id)}
                 />
-                <span className="broadcast-name">{broadcastData.name}</span>
+                <span className="broadcast-name">{message.messageName}</span>
                 <span className="broadcast-params">
-                  Genlik: {broadcastData.amplitude} | 
-                  PRI: {broadcastData.pri} | 
-                  Yön: {broadcastData.direction} | 
-                  Pulse Width: {broadcastData.pulseWidth}
+                  Tip: {message.messageType} | 
+                  {parameters.yayinId && `Yayın ID: ${parameters.yayinId}`}
+                  {parameters.amplitude && ` | Genlik: ${parameters.amplitude}`}
+                  {parameters.pri && ` | PRI: ${parameters.pri}`}
+                  {parameters.direction && ` | Yön: ${parameters.direction}`}
+                  {parameters.pulseWidth && ` | Pulse Width: ${parameters.pulseWidth}`}
+                  {parameters.newDirection && ` | Yeni Yön: ${parameters.newDirection}`}
+                  {parameters.newAmplitude && ` | Yeni Genlik: ${parameters.newAmplitude}`}
                 </span>
                 <div className="broadcast-status">
                   <span className="broadcast-date">{creationDate}</span>
-                  <span className={`status-badge ${broadcastData.tcpSent ? 'sent' : 'not-sent'}`}>
-                    {broadcastData.tcpSent ? 'TCP Gönderildi' : 'TCP Gönderilmedi'}
+                  <span className={`status-badge ${message.sent ? 'sent' : 'not-sent'}`}>
+                    {message.sent ? 'TCP Gönderildi' : 'TCP Gönderilmedi'}
                   </span>
-                  <span className={`status-badge ${broadcastData.active ? 'active' : 'inactive'}`}>
-                    {broadcastData.active ? 'Aktif' : 'Deaktif'}
-                  </span>
+                  {!message.sent && (
+                    <button 
+                      className="send-saved-message-btn"
+                      onClick={() => handleSendSavedMessage(message)}
+                      disabled={isSubmitting}
+                    >
+                      Gönder
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -453,206 +677,474 @@ const BroadcastForm = ({ onFormSubmitted }) => {
         })}
       </div>
 
-      {/* Update Modal */}
-      {isUpdateModalOpen && (
+      {/* YayinEkle Modal */}
+      {isYayinEkleModalOpen && (
         <div className="modal-overlay">
           <div className="modal-content">
             <div className="modal-header">
-              <h3>Yayın Parametrelerini Güncelle</h3>
+              <h3>Yayın Ekle Mesajı</h3>
               <button 
                 className="close-modal-btn"
-                onClick={() => {
-                  setIsUpdateModalOpen(false);
-                  setShowSaveOptions(false);
-                  setIsNewBroadcast(false);
-                }}
+                onClick={() => setIsYayinEkleModalOpen(false)}
               >
                 ×
               </button>
             </div>
-            <form onSubmit={handleUpdateSubmit} className="broadcast-form">
-              {!showSaveOptions ? (
-                <>
-                  <div className="form-group">
-                    <label>Genlik:</label>
-                    <input
-                      type="number"
-                      name="amplitude"
-                      value={updateFormData.amplitude}
-                      onChange={handleUpdateInputChange}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>PRI:</label>
-                    <input
-                      type="number"
-                      name="pri"
-                      value={updateFormData.pri}
-                      onChange={handleUpdateInputChange}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Yön:</label>
-                    <input
-                      type="number"
-                      name="direction"
-                      value={updateFormData.direction}
-                      onChange={handleUpdateInputChange}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Pulse Width:</label>
-                    <input
-                      type="number"
-                      name="pulseWidth"
-                      value={updateFormData.pulseWidth}
-                      onChange={handleUpdateInputChange}
-                    />
-                  </div>
-                  <div className="modal-actions">
-                    <button 
-                      type="submit"
-                      className="save-btn"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? 'Kaydediliyor...' : 'Devam Et'}
-                    </button>
-                    <button 
-                      type="button"
-                      className="cancel-btn"
-                      onClick={() => setIsUpdateModalOpen(false)}
-                    >
-                      İptal
-                    </button>
-                  </div>
-                </>
-              ) : (
-                <div className="save-options">
-                  <h3>Değişiklikleri nasıl kaydetmek istersiniz?</h3>
-                  <div className="save-buttons">
-                    <button type="button" onClick={() => handleSaveOption(false)}>
-                      Mevcut Yayını Güncelle
-                    </button>
-                    <button type="button" onClick={() => handleSaveOption(true)}>
-                      Yeni Yayın Oluştur
-                    </button>
-                  </div>
-                  {isNewBroadcast && (
-                    <div className="form-group">
-                      <label>Yeni Yayın İsmi:</label>
-                      <input
-                        type="text"
-                        name="name"
-                        value={newBroadcastName}
-                        onChange={(e) => setNewBroadcastName(e.target.value)}
-                        placeholder="Yeni yayın ismini girin"
-                        required
-                      />
-                      <div className="save-buttons">
-                        <button type="button" onClick={handleSaveChanges} disabled={!newBroadcastName.trim()}>
-                          Kaydet
-                        </button>
-                        <button type="button" onClick={() => {
-                          setIsNewBroadcast(false);
-                          setShowSaveOptions(false);
-                        }}>
-                          İptal
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* New Broadcast Modal */}
-      {isModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h3>Yeni Yayın Oluştur</h3>
-              <button 
-                className="close-modal-btn"
-                onClick={() => setIsModalOpen(false)}
-              >
-                ×
-              </button>
-            </div>
-            <form onSubmit={(e) => {
-              e.preventDefault();
-              handleSubmit(false);
-            }} className="broadcast-form">
-                <div className="form-group">
-                <label>Yayın Adı:</label>
-                  <input
+            <div className="broadcast-form">
+              <div className="form-group">
+                <label>Mesaj İsmi:</label>
+                <input
                   type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className="form-group">
+                  name="messageName"
+                  value={yayinEkleFormData.messageName}
+                  onChange={handleYayinEkleInputChange}
+                  placeholder="Mesaj ismini girin"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Yayın ID:</label>
+                <input
+                  type="text"
+                  name="yayinId"
+                  value={yayinEkleFormData.yayinId}
+                  onChange={handleYayinEkleInputChange}
+                  placeholder="Yayın ID'sini girin"
+                  required
+                />
+              </div>
+              <div className="form-group">
                 <label>Genlik:</label>
-                  <input
-                    type="number"
+                <input
+                  type="number"
                   name="amplitude"
-                  value={formData.amplitude}
-                  onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className="form-group">
+                  value={yayinEkleFormData.amplitude}
+                  onChange={handleYayinEkleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
                 <label>PRI:</label>
-                  <input
-                    type="number"
+                <input
+                  type="number"
                   name="pri"
-                  value={formData.pri}
-                  onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className="form-group">
+                  value={yayinEkleFormData.pri}
+                  onChange={handleYayinEkleInputChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
                 <label>Yön:</label>
-                  <input
-                    type="number"
+                <input
+                  type="number"
                   name="direction"
-                  value={formData.direction}
-                  onChange={handleInputChange}
-                    required
-                  />
-                </div>
+                  value={yayinEkleFormData.direction}
+                  onChange={handleYayinEkleInputChange}
+                  required
+                />
+              </div>
               <div className="form-group">
                 <label>Pulse Width:</label>
-                  <input
+                <input
                   type="number"
                   name="pulseWidth"
-                  value={formData.pulseWidth}
-                  onChange={handleInputChange}
+                  value={yayinEkleFormData.pulseWidth}
+                  onChange={handleYayinEkleInputChange}
                   required
                 />
               </div>
               <div className="modal-actions">
                 <button 
-                  type="submit"
-                  className="save-btn"
-                  disabled={isSubmitting}
+                  type="button"
+                  className="save-and-send-btn"
+                  onClick={() => handleYayinEkleSubmit('saveAndSend')}
+                  disabled={isSubmitting || !yayinEkleFormData.messageName.trim() || !yayinEkleFormData.yayinId.trim()}
                 >
-                  {isSubmitting ? 'Kaydediliyor...' : 'Kaydet'}
+                  {isSubmitting ? 'İşleniyor...' : 'Kaydet ve Gönder'}
                 </button>
                 <button 
                   type="button"
-                  className="save-and-send-btn"
-                  onClick={() => handleSubmit(true)}
-                  disabled={isSubmitting}
+                  className="send-only-btn"
+                  onClick={() => handleYayinEkleSubmit('sendOnly')}
+                  disabled={isSubmitting || !yayinEkleFormData.messageName.trim() || !yayinEkleFormData.yayinId.trim()}
                 >
-                  {isSubmitting ? 'Gönderiliyor...' : 'Kaydet ve Yayın Ekle'}
+                  {isSubmitting ? 'İşleniyor...' : 'Yalnızca Gönder'}
+                </button>
+                <button 
+                  type="button"
+                  className="save-only-btn"
+                  onClick={() => handleYayinEkleSubmit('saveOnly')}
+                  disabled={isSubmitting || !yayinEkleFormData.messageName.trim() || !yayinEkleFormData.yayinId.trim()}
+                >
+                  {isSubmitting ? 'İşleniyor...' : 'Yalnızca Kaydet'}
+                </button>
+                <button 
+                  type="button"
+                  className="cancel-btn"
+                  onClick={() => setIsYayinEkleModalOpen(false)}
+                >
+                  İptal
                 </button>
               </div>
-            </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* YayinBaslat Modal */}
+      {isYayinBaslatModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h3>Yayın Başlat Mesajı</h3>
+              <button 
+                className="close-modal-btn"
+                onClick={() => setIsYayinBaslatModalOpen(false)}
+              >
+                ×
+              </button>
+            </div>
+            <div className="broadcast-form">
+              <div className="form-group">
+                <label>Mesaj İsmi:</label>
+                <input
+                  type="text"
+                  name="messageName"
+                  value={yayinBaslatFormData.messageName}
+                  onChange={handleYayinBaslatInputChange}
+                  placeholder="Mesaj ismini girin"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Yayın ID:</label>
+                <input
+                  type="text"
+                  name="yayinId"
+                  value={yayinBaslatFormData.yayinId}
+                  onChange={handleYayinBaslatInputChange}
+                  placeholder="Yayın ID'sini girin"
+                  required
+                />
+              </div>
+              <div className="modal-actions">
+                <button 
+                  type="button"
+                  className="save-and-send-btn"
+                  onClick={() => handleYayinBaslatSubmit('saveAndSend')}
+                  disabled={isSubmitting || !yayinBaslatFormData.messageName.trim() || !yayinBaslatFormData.yayinId.trim()}
+                >
+                  {isSubmitting ? 'İşleniyor...' : 'Kaydet ve Gönder'}
+                </button>
+                <button 
+                  type="button"
+                  className="send-only-btn"
+                  onClick={() => handleYayinBaslatSubmit('sendOnly')}
+                  disabled={isSubmitting || !yayinBaslatFormData.messageName.trim() || !yayinBaslatFormData.yayinId.trim()}
+                >
+                  {isSubmitting ? 'İşleniyor...' : 'Yalnızca Gönder'}
+                </button>
+                <button 
+                  type="button"
+                  className="save-only-btn"
+                  onClick={() => handleYayinBaslatSubmit('saveOnly')}
+                  disabled={isSubmitting || !yayinBaslatFormData.messageName.trim() || !yayinBaslatFormData.yayinId.trim()}
+                >
+                  {isSubmitting ? 'İşleniyor...' : 'Yalnızca Kaydet'}
+                </button>
+                <button 
+                  type="button"
+                  className="cancel-btn"
+                  onClick={() => setIsYayinBaslatModalOpen(false)}
+                >
+                  İptal
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* YayinDurdur Modal */}
+      {isYayinDurdurModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h3>Yayın Durdur Mesajı</h3>
+              <button 
+                className="close-modal-btn"
+                onClick={() => setIsYayinDurdurModalOpen(false)}
+              >
+                ×
+              </button>
+            </div>
+            <div className="broadcast-form">
+              <div className="form-group">
+                <label>Mesaj İsmi:</label>
+                <input
+                  type="text"
+                  name="messageName"
+                  value={yayinDurdurFormData.messageName}
+                  onChange={handleYayinDurdurInputChange}
+                  placeholder="Mesaj ismini girin"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Yayın ID:</label>
+                <input
+                  type="text"
+                  name="yayinId"
+                  value={yayinDurdurFormData.yayinId}
+                  onChange={handleYayinDurdurInputChange}
+                  placeholder="Yayın ID'sini girin"
+                  required
+                />
+              </div>
+              <div className="modal-actions">
+                <button 
+                  type="button"
+                  className="save-and-send-btn"
+                  onClick={() => handleYayinDurdurSubmit(true)}
+                  disabled={isSubmitting || !yayinDurdurFormData.messageName.trim() || !yayinDurdurFormData.yayinId.trim()}
+                >
+                  {isSubmitting ? 'Gönderiliyor...' : 'Kaydet ve Gönder'}
+                </button>
+                <button 
+                  type="button"
+                  className="send-only-btn"
+                  onClick={() => handleYayinDurdurSubmit(false)}
+                  disabled={isSubmitting || !yayinDurdurFormData.messageName.trim() || !yayinDurdurFormData.yayinId.trim()}
+                >
+                  {isSubmitting ? 'Gönderiliyor...' : 'Yalnızca Gönder'}
+                </button>
+                <button 
+                  type="button"
+                  className="cancel-btn"
+                  onClick={() => setIsYayinDurdurModalOpen(false)}
+                >
+                  İptal
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* YayinSil Modal */}
+      {isYayinSilModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h3>Yayın Sil Mesajı</h3>
+              <button 
+                className="close-modal-btn"
+                onClick={() => setIsYayinSilModalOpen(false)}
+              >
+                ×
+              </button>
+            </div>
+            <div className="broadcast-form">
+              <div className="form-group">
+                <label>Mesaj İsmi:</label>
+                <input
+                  type="text"
+                  name="messageName"
+                  value={yayinSilFormData.messageName}
+                  onChange={handleYayinSilInputChange}
+                  placeholder="Mesaj ismini girin"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Yayın ID:</label>
+                <input
+                  type="text"
+                  name="yayinId"
+                  value={yayinSilFormData.yayinId}
+                  onChange={handleYayinSilInputChange}
+                  placeholder="Yayın ID'sini girin"
+                  required
+                />
+              </div>
+              <div className="modal-actions">
+                <button 
+                  type="button"
+                  className="save-and-send-btn"
+                  onClick={() => handleYayinSilSubmit(true)}
+                  disabled={isSubmitting || !yayinSilFormData.messageName.trim() || !yayinSilFormData.yayinId.trim()}
+                >
+                  {isSubmitting ? 'Gönderiliyor...' : 'Kaydet ve Gönder'}
+                </button>
+                <button 
+                  type="button"
+                  className="send-only-btn"
+                  onClick={() => handleYayinSilSubmit(false)}
+                  disabled={isSubmitting || !yayinSilFormData.messageName.trim() || !yayinSilFormData.yayinId.trim()}
+                >
+                  {isSubmitting ? 'Gönderiliyor...' : 'Yalnızca Gönder'}
+                </button>
+                <button 
+                  type="button"
+                  className="cancel-btn"
+                  onClick={() => setIsYayinSilModalOpen(false)}
+                >
+                  İptal
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* YayinYonGuncelle Modal */}
+      {isYayinYonGuncelleModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h3>Yayın Yön Güncelle Mesajı</h3>
+              <button 
+                className="close-modal-btn"
+                onClick={() => setIsYayinYonGuncelleModalOpen(false)}
+              >
+                ×
+              </button>
+            </div>
+            <div className="broadcast-form">
+              <div className="form-group">
+                <label>Mesaj İsmi:</label>
+                <input
+                  type="text"
+                  name="messageName"
+                  value={yayinYonGuncelleFormData.messageName}
+                  onChange={handleYayinYonGuncelleInputChange}
+                  placeholder="Mesaj ismini girin"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Yayın ID:</label>
+                <input
+                  type="text"
+                  name="yayinId"
+                  value={yayinYonGuncelleFormData.yayinId}
+                  onChange={handleYayinYonGuncelleInputChange}
+                  placeholder="Yayın ID'sini girin"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Yeni Yön:</label>
+                <input
+                  type="number"
+                  name="newDirection"
+                  value={yayinYonGuncelleFormData.newDirection}
+                  onChange={handleYayinYonGuncelleInputChange}
+                  required
+                />
+              </div>
+              <div className="modal-actions">
+                <button 
+                  type="button"
+                  className="save-and-send-btn"
+                  onClick={() => handleYayinYonGuncelleSubmit(true)}
+                  disabled={isSubmitting || !yayinYonGuncelleFormData.messageName.trim() || !yayinYonGuncelleFormData.yayinId.trim()}
+                >
+                  {isSubmitting ? 'Gönderiliyor...' : 'Kaydet ve Gönder'}
+                </button>
+                <button 
+                  type="button"
+                  className="send-only-btn"
+                  onClick={() => handleYayinYonGuncelleSubmit(false)}
+                  disabled={isSubmitting || !yayinYonGuncelleFormData.messageName.trim() || !yayinYonGuncelleFormData.yayinId.trim()}
+                >
+                  {isSubmitting ? 'Gönderiliyor...' : 'Yalnızca Gönder'}
+                </button>
+                <button 
+                  type="button"
+                  className="cancel-btn"
+                  onClick={() => setIsYayinYonGuncelleModalOpen(false)}
+                >
+                  İptal
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* YayinGenlikGuncelle Modal */}
+      {isYayinGenlikGuncelleModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h3>Yayın Genlik Güncelle Mesajı</h3>
+              <button 
+                className="close-modal-btn"
+                onClick={() => setIsYayinGenlikGuncelleModalOpen(false)}
+              >
+                ×
+              </button>
+            </div>
+            <div className="broadcast-form">
+              <div className="form-group">
+                <label>Mesaj İsmi:</label>
+                <input
+                  type="text"
+                  name="messageName"
+                  value={yayinGenlikGuncelleFormData.messageName}
+                  onChange={handleYayinGenlikGuncelleInputChange}
+                  placeholder="Mesaj ismini girin"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Yayın ID:</label>
+                <input
+                  type="text"
+                  name="yayinId"
+                  value={yayinGenlikGuncelleFormData.yayinId}
+                  onChange={handleYayinGenlikGuncelleInputChange}
+                  placeholder="Yayın ID'sini girin"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Yeni Genlik:</label>
+                <input
+                  type="number"
+                  name="newAmplitude"
+                  value={yayinGenlikGuncelleFormData.newAmplitude}
+                  onChange={handleYayinGenlikGuncelleInputChange}
+                  required
+                />
+              </div>
+              <div className="modal-actions">
+                <button 
+                  type="button"
+                  className="save-and-send-btn"
+                  onClick={() => handleYayinGenlikGuncelleSubmit(true)}
+                  disabled={isSubmitting || !yayinGenlikGuncelleFormData.messageName.trim() || !yayinGenlikGuncelleFormData.yayinId.trim()}
+                >
+                  {isSubmitting ? 'Gönderiliyor...' : 'Kaydet ve Gönder'}
+                </button>
+                <button 
+                  type="button"
+                  className="send-only-btn"
+                  onClick={() => handleYayinGenlikGuncelleSubmit(false)}
+                  disabled={isSubmitting || !yayinGenlikGuncelleFormData.messageName.trim() || !yayinGenlikGuncelleFormData.yayinId.trim()}
+                >
+                  {isSubmitting ? 'Gönderiliyor...' : 'Yalnızca Gönder'}
+                </button>
+                <button 
+                  type="button"
+                  className="cancel-btn"
+                  onClick={() => setIsYayinGenlikGuncelleModalOpen(false)}
+                >
+                  İptal
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -660,4 +1152,4 @@ const BroadcastForm = ({ onFormSubmitted }) => {
   );
 };
 
-export default BroadcastForm; 
+export default BroadcastForm;

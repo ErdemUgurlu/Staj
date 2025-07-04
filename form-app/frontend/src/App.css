@@ -36,11 +36,12 @@ body {
   padding: 0 20px;
   display: grid;
   gap: 30px;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-template-areas: 
-    "form radar"
-    "broadcast-list broadcast-list"
-    "logs logs";
+    "form"
+    "radar"
+    "broadcast-list"
+    "logs";
 }
 
 .form-section {

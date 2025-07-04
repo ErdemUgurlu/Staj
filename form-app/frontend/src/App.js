@@ -6,33 +6,80 @@ import RadarDisplay from './components/RadarDisplay';
 
 function App() {
   const [broadcasts, setBroadcasts] = useState([]);
+  const [messages, setMessages] = useState([]);
   const [scenarioModalOpen, setScenarioModalOpen] = useState(false);
   const [selectedBroadcast, setSelectedBroadcast] = useState(null);
   const activityLogsRef = useRef(null);
 
-  const fetchBroadcasts = async () => {
+  const fetchMessages = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/forms/type/Broadcast');
+      const response = await fetch('http://localhost:8080/api/forms/messages');
       if (response.ok) {
         const data = await response.json();
-        setBroadcasts(data);
+        setMessages(data);
+        
+        // Convert yayinEkle messages to broadcast format for radar display
+        const yayinEkleMessages = data.filter(msg => msg.messageType === 'yayinEkle');
+        const yayinBaslatMessages = data.filter(msg => msg.messageType === 'yayinBaslat');
+        
+        const broadcastData = yayinEkleMessages
+          .map(msg => {
+            try {
+              const params = JSON.parse(msg.parameters);
+              
+              // Check if there's a corresponding yayinBaslat message for this yayinId
+              const hasBaslatMessage = yayinBaslatMessages.some(baslatMsg => {
+                try {
+                  const baslatParams = JSON.parse(baslatMsg.parameters);
+                  return baslatParams.yayinId === params.yayinId && baslatMsg.sent;
+                } catch (e) {
+                  return false;
+                }
+              });
+              
+              return {
+                id: msg.id,
+                formData: {
+                  id: params.yayinId,
+                  name: msg.messageName,
+                  amplitude: params.amplitude || 0,
+                  direction: params.direction || 0,
+                  pri: params.pri || 0,
+                  pulseWidth: params.pulseWidth || 0,
+                  active: hasBaslatMessage, // Only active if yayinBaslat message exists
+                  tcpSent: msg.sent
+                }
+              };
+            } catch (e) {
+              console.error('Error parsing message parameters:', e);
+              return null;
+            }
+          })
+          .filter(Boolean);
+        
+        setBroadcasts(broadcastData);
       }
     } catch (error) {
-      console.error('Error fetching broadcasts:', error);
+      console.error('Error fetching messages:', error);
     }
   };
 
+  const fetchBroadcasts = async () => {
+    // This is kept for backwards compatibility but now uses fetchMessages
+    await fetchMessages();
+  };
+
   useEffect(() => {
-    fetchBroadcasts();
+    fetchMessages();
     
-    // Refresh broadcasts every 5 seconds
-    const interval = setInterval(fetchBroadcasts, 5000);
+    // Refresh messages every 5 seconds
+    const interval = setInterval(fetchMessages, 5000);
     
     return () => clearInterval(interval);
   }, []);
 
   const handleFormSubmitted = () => {
-    fetchBroadcasts();
+    fetchMessages();
     // Only refresh logs when a form is actually submitted
     if (activityLogsRef.current) {
       activityLogsRef.current();
@@ -81,7 +128,7 @@ function App() {
         alert('Senaryo başarıyla oluşturuldu!');
         setScenarioModalOpen(false);
         setSelectedBroadcast(null);
-        fetchBroadcasts();
+        fetchMessages();
         if (activityLogsRef.current) {
           activityLogsRef.current();
         }
