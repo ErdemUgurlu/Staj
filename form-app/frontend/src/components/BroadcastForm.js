@@ -882,15 +882,13 @@ const BroadcastForm = ({ onFormSubmitted }) => {
                   <span className={`status-badge ${message.sent ? 'sent' : 'not-sent'}`}>
                     {message.sent ? 'TCP Gönderildi' : 'TCP Gönderilmedi'}
                   </span>
-                  {!message.sent && shouldShowSendButton(message) && (
-                    <button 
-                      className="send-saved-message-btn"
-                      onClick={() => handleSendSavedMessage(message)}
-                      disabled={isSubmitting}
-                    >
-                      Gönder
-                    </button>
-                  )}
+                  <button 
+                    className="send-saved-message-btn"
+                    onClick={() => handleSendSavedMessage(message)}
+                    disabled={isSubmitting}
+                  >
+                    Gönder
+                  </button>
                 </div>
               </div>
             </div>
