@@ -10,4 +10,5 @@ public interface MessageRepository extends JpaRepository<Message, String> {
     List<Message> findByMessageType(String messageType);
     List<Message> findBySent(boolean sent);
     List<Message> findByMessageTypeAndSent(String messageType, boolean sent);
+    List<Message> findBySaved(boolean saved);
 } 

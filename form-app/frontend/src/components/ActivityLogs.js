@@ -83,6 +83,7 @@ const ActivityLogs = ({ onRefreshRequest }) => {
     switch (entityType) {
       case 'BROADCAST': return '📡';
       case 'SCENARIO': return '📋';
+      case 'MESSAGE': return '📨';
       default: return '📄';
     }
   };
@@ -90,8 +91,8 @@ const ActivityLogs = ({ onRefreshRequest }) => {
   const renderEntityData = (entityData) => {
     if (!entityData) return <span className="no-data">Veri bulunamadı</span>;
 
-    // Broadcast parametrelerini mantıklı sırayla göster
-    const fieldOrder = ['name', 'amplitude', 'pri', 'direction', 'pulseWidth', 'active', 'tcpSent'];
+    // Message parametrelerini de dahil et
+    const fieldOrder = ['messageName', 'messageType', 'yayinId', 'amplitude', 'pri', 'direction', 'pulseWidth', 'newDirection', 'newAmplitude', 'saved', 'sent', 'name', 'active', 'tcpSent'];
     const sortedEntries = fieldOrder
       .filter(field => entityData.hasOwnProperty(field))
       .map(field => [field, entityData[field]])
@@ -115,12 +116,20 @@ const ActivityLogs = ({ onRefreshRequest }) => {
     const fieldMap = {
       'id': 'ID',
       'name': 'Yayın Adı',
+      'messageName': 'Mesaj Adı',
+      'messageType': 'Mesaj Tipi',
+      'yayinId': 'Yayın ID',
       'amplitude': 'Genlik',
       'pri': 'PRI',
       'direction': 'Yön (Derece)',
       'pulseWidth': 'Pulse Width',
+      'newDirection': 'Yeni Yön',
+      'newAmplitude': 'Yeni Genlik',
       'active': 'Durum',
       'tcpSent': 'TCP Durumu',
+      'saved': 'Kaydedildi',
+      'sent': 'Gönderildi',
+      'parameters': 'Parametreler',
       'scenarioId': 'Senaryo ID',
       'broadcastId': 'Yayın ID',
       'finalAmplitude': 'Final Genlik',
@@ -136,19 +145,37 @@ const ActivityLogs = ({ onRefreshRequest }) => {
     if (value === null || value === undefined) return '-';
     if (fieldName === 'active') return value ? 'Aktif' : 'Deaktif';
     if (fieldName === 'tcpSent') return value ? 'Gönderildi' : 'Gönderilmedi';
+    if (fieldName === 'saved') return value ? 'Kaydedildi' : 'Kaydedilmedi';
+    if (fieldName === 'sent') return value ? 'Gönderildi' : 'Gönderilmedi';
     if (fieldName === 'inactiveIntervals' && Array.isArray(value)) {
       return value.length > 0 ? value.join(', ') : 'Yok';
     }
     if (fieldName === 'duration') return `${value} saniye`;
     if (fieldName === 'updateFrequency') return `${value} saniye`;
-    if (fieldName === 'direction') return `${value}°`;
-    if (fieldName === 'amplitude' || fieldName === 'pri' || fieldName === 'pulseWidth') {
+    if (fieldName === 'direction' || fieldName === 'newDirection') return `${value}°`;
+    if (fieldName === 'amplitude' || fieldName === 'pri' || fieldName === 'pulseWidth' || fieldName === 'newAmplitude') {
       return `${value}`;
+    }
+    if (fieldName === 'parameters' && typeof value === 'string') {
+      try {
+        const parsed = JSON.parse(value);
+        return Object.entries(parsed).map(([k, v]) => `${k}: ${v}`).join(', ');
+      } catch (e) {
+        return value;
+      }
     }
     if (typeof value === 'string' && value.length > 30) {
       return value.substring(0, 8) + '...';
     }
     return value.toString();
+  };
+
+  // Log başlığını mesaj tipine göre ayarla
+  const getLogTitle = (log) => {
+    if (log.entityType === 'MESSAGE' && log.entityData && log.entityData.messageType) {
+      return log.entityData.messageType;
+    }
+    return log.description || 'Bilinmeyen İşlem';
   };
 
   if (loading) {
@@ -192,7 +219,7 @@ const ActivityLogs = ({ onRefreshRequest }) => {
                   <span className="entity-icon">
                     {getEntityTypeIcon(log.entityType)}
                   </span>
-                  <span className="log-description">{log.description}</span>
+                  <span className="log-description">{getLogTitle(log)}</span>
                 </div>
                 <div className="log-meta">
                   <span className="log-time">{formatDate(log.timestamp)}</span>
@@ -218,9 +245,11 @@ const ActivityLogs = ({ onRefreshRequest }) => {
                 <span className="entity-icon">
                   {getEntityTypeIcon(selectedLog.entityType)}
                 </span>
-                {selectedLog.entityData && selectedLog.entityData.name 
-                  ? `${selectedLog.entityData.name} - Log Detayları`
-                  : `${selectedLog.entityType} Log Detayları`
+                {selectedLog.entityType === 'MESSAGE' && selectedLog.entityData && selectedLog.entityData.messageType
+                  ? `${selectedLog.entityData.messageType} - Log Detayları`
+                  : selectedLog.entityData && selectedLog.entityData.name 
+                    ? `${selectedLog.entityData.name} - Log Detayları`
+                    : `${selectedLog.entityType} Log Detayları`
                 }
               </h3>
               <button className="modal-close-btn" onClick={handleCloseModal}>×</button>
@@ -265,7 +294,7 @@ const ActivityLogs = ({ onRefreshRequest }) => {
                 {selectedLog.entityData && (
                   <div className="detail-section">
                     <h4>
-                      {selectedLog.entityType === 'BROADCAST' ? 'Yayın Parametreleri' : 'Senaryo Parametreleri'}
+                      {selectedLog.entityType === 'BROADCAST' ? 'Yayın Parametreleri' : selectedLog.entityType === 'MESSAGE' ? 'Mesaj Parametreleri' : 'Senaryo Parametreleri'}
                     </h4>
                     {renderEntityData(selectedLog.entityData)}
                   </div>

@@ -29,6 +29,9 @@ public class Message implements Serializable {
     @Column(nullable = false)
     private boolean sent = false; // TCP ile gönderildi mi?
 
+    @Column(nullable = false, name = "saved")
+    private boolean saved = false; // Mesaj veritabanında saklandı mı?
+
     public Message() {
         this.createdAt = LocalDateTime.now();
     }
@@ -89,6 +92,14 @@ public class Message implements Serializable {
         this.sent = sent;
     }
 
+    public boolean isSaved() {
+        return saved;
+    }
+
+    public void setSaved(boolean saved) {
+        this.saved = saved;
+    }
+
     @Override
     public String toString() {
         return "Message{" +
@@ -98,6 +109,7 @@ public class Message implements Serializable {
                 ", parameters='" + parameters + '\'' +
                 ", createdAt=" + createdAt +
                 ", sent=" + sent +
+                ", saved=" + saved +
                 '}';
     }
 } 

@@ -327,14 +327,39 @@ public class FormStorageService {
     // Message methods
     public Message saveMessage(String messageName, String messageType, String parameters) {
         Message message = new Message(messageName, messageType, parameters);
-        return messageRepository.save(message);
+        Message savedMessage = messageRepository.save(message);
+        
+        // Log the activity
+        Map<String, Object> messageData = new HashMap<>();
+        messageData.put("messageName", messageName);
+        messageData.put("messageType", messageType);
+        messageData.put("parameters", parameters);
+        messageData.put("saved", savedMessage.isSaved());
+        messageData.put("sent", savedMessage.isSent());
+        
+        logActivity("CREATE", "MESSAGE", savedMessage.getId(), messageType + " mesajı oluşturuldu", messageData);
+        
+        return savedMessage;
     }
     
     public Message updateMessage(Message message) {
-        return messageRepository.save(message);
+        Message updatedMessage = messageRepository.save(message);
+        
+        // Log the activity
+        Map<String, Object> messageData = new HashMap<>();
+        messageData.put("messageName", message.getMessageName());
+        messageData.put("messageType", message.getMessageType());
+        messageData.put("parameters", message.getParameters());
+        messageData.put("saved", message.isSaved());
+        messageData.put("sent", message.isSent());
+        
+        logActivity("UPDATE", "MESSAGE", message.getId(), message.getMessageType() + " mesajı güncellendi", messageData);
+        
+        return updatedMessage;
     }
     
     public List<Message> getAllMessages() {
+        // Tüm mesajları getir (kaydedilmiş veya sadece gönderilmiş)
         return messageRepository.findAll();
     }
     
@@ -343,6 +368,18 @@ public class FormStorageService {
     }
     
     public void deleteMessage(String id) {
+        // Get message before deletion for logging
+        messageRepository.findById(id).ifPresent(message -> {
+            Map<String, Object> messageData = new HashMap<>();
+            messageData.put("messageName", message.getMessageName());
+            messageData.put("messageType", message.getMessageType());
+            messageData.put("parameters", message.getParameters());
+            messageData.put("saved", message.isSaved());
+            messageData.put("sent", message.isSent());
+            
+            logActivity("DELETE", "MESSAGE", id, message.getMessageType() + " mesajı silindi", messageData);
+        });
+        
         messageRepository.deleteById(id);
     }
     

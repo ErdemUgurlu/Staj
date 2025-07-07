@@ -364,24 +364,118 @@ public class FormController {
             String parameters = formStorageService.convertMapToJson(messageData);
             
             Message message = null;
-            if (saveMessage != null && saveMessage) {
-                // Save message to database
-                message = formStorageService.saveMessage(messageName, messageType, parameters);
-            }
+            // Always create a Message object, even for send-only operations
+            message = formStorageService.saveMessage(messageName, messageType, parameters);
+            
+            // Set appropriate flags based on the operation
+            message.setSaved(saveMessage != null && saveMessage);
+            message.setSent(sendMessage != null && sendMessage);
             
             // Send to TCP if requested
             if (sendMessage != null && sendMessage) {
                 // TODO: Send to TCP (dummy for now)
                 System.out.println("TCP DUMMY: Sending " + messageType + " message: " + messageName);
                 System.out.println("Message parameters: " + parameters);
-                
-                // If message was saved, mark it as sent
-                if (message != null) {
-                    message.setSent(true);
-                    message = formStorageService.updateMessage(message);
-                }
             }
             
+            // Update the message in database
+            message = formStorageService.updateMessage(message);
+            
+            // Antagonist logic: handle counterpart updates when a stop/delete message is SENT
+            if (sendMessage != null && sendMessage) {
+                try {
+                    // Parse parameters JSON to extract yayinId
+                    String yayinId = null;
+                    if (parameters != null && !parameters.isEmpty()) {
+                        com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+                        java.util.Map<String, Object> paramMap = mapper.readValue(parameters, java.util.Map.class);
+                        Object idObj = paramMap.get("yayinId");
+                        if (idObj != null) {
+                            yayinId = idObj.toString();
+                        }
+                    }
+
+                    if (yayinId != null) {
+                        // Determine counterpart type
+                        String counterType = null;
+                        if ("yayinSil".equals(messageType)) counterType = "yayinEkle";
+                        else if ("yayinDurdur".equals(messageType)) counterType = "yayinBaslat";
+
+                        if (counterType != null) {
+                            java.util.List<Message> allMsgs = formStorageService.getAllMessages();
+                            for (Message m : allMsgs) {
+                                if (counterType.equals(m.getMessageType())) {
+                                    try {
+                                        String p = m.getParameters();
+                                        com.fasterxml.jackson.databind.ObjectMapper mp = new com.fasterxml.jackson.databind.ObjectMapper();
+                                        java.util.Map<String, Object> map = mp.readValue(p, java.util.Map.class);
+                                        Object midObj = map.get("yayinId");
+                                        if (midObj != null && yayinId.equals(midObj.toString())) {
+                                            if (m.isSaved()) {
+                                                // Mark as not sent
+                                                m.setSent(false);
+                                                formStorageService.updateMessage(m);
+                                            } else {
+                                                // Remove unsaved counterpart completely
+                                                formStorageService.deleteMessage(m.getId());
+                                            }
+                                        }
+                                    } catch (Exception ex) {
+                                        ex.printStackTrace();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            // Merge logic: if this is a START type (yayinEkle / yayinBaslat) with same yayinId previously saved, update existing instead of duplicate
+            if (sendMessage != null && sendMessage && ("yayinEkle".equals(messageType) || "yayinBaslat".equals(messageType))) {
+                try {
+                    String yayinId = null;
+                    if (parameters != null && !parameters.isEmpty()) {
+                        com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+                        java.util.Map<String, Object> paramMap = mapper.readValue(parameters, java.util.Map.class);
+                        Object idObj = paramMap.get("yayinId");
+                        if (idObj != null) yayinId = idObj.toString();
+                    }
+
+                    if (yayinId != null) {
+                        java.util.List<Message> allMsgs = formStorageService.getAllMessages();
+                        for (Message m : allMsgs) {
+                            if (m.getId().equals(message.getId())) continue; // skip self
+                            if (m.getMessageType().equals(messageType)) {
+                                try {
+                                    java.util.Map<String, Object> map = new com.fasterxml.jackson.databind.ObjectMapper().readValue(m.getParameters(), java.util.Map.class);
+                                    Object midObj = map.get("yayinId");
+                                    if (midObj != null && yayinId.equals(midObj.toString())) {
+                                        // Found existing start message with same id -> update and remove duplicate
+                                        m.setSent(true);
+                                        m.setSaved(m.isSaved() || (saveMessage != null && saveMessage));
+                                        m.setCreatedAt(java.time.LocalDateTime.now());
+                                        formStorageService.updateMessage(m);
+
+                                        // Delete the new duplicate if it wasn't intended to be saved
+                                        if (saveMessage == null || !saveMessage) {
+                                            formStorageService.deleteMessage(message.getId());
+                                            message = m; // set return value
+                                        }
+                                        break;
+                                    }
+                                } catch (Exception ex) {
+                                    ex.printStackTrace();
+                                }
+                            }
+                        }
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+
             return ResponseEntity.ok(message);
         } catch (Exception e) {
             e.printStackTrace();
@@ -414,6 +508,31 @@ public class FormController {
         try {
             formStorageService.deleteMessage(id);
             return ResponseEntity.ok("Message deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+    
+    @PutMapping("/message/{id}")
+    public ResponseEntity<Message> updateMessage(@PathVariable String id, @RequestBody Message messageUpdate) {
+        try {
+            // Get existing message
+            List<Message> allMessages = formStorageService.getAllMessages();
+            Message existingMessage = allMessages.stream()
+                .filter(msg -> msg.getId().equals(id))
+                .findFirst()
+                .orElse(null);
+            
+            if (existingMessage == null) {
+                return ResponseEntity.notFound().build();
+            }
+            
+            // Update the message
+            existingMessage.setSent(messageUpdate.isSent());
+            existingMessage.setSaved(messageUpdate.isSaved());
+            
+            Message updatedMessage = formStorageService.updateMessage(existingMessage);
+            return ResponseEntity.ok(updatedMessage);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }

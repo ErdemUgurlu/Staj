@@ -4,11 +4,75 @@ import './RadarDisplay.css';
 const RadarDisplay = ({ broadcasts = [], onBroadcastUpdated }) => {
   const [hoveredBroadcast, setHoveredBroadcast] = useState(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  
+  // Filter states
+  const [filters, setFilters] = useState({
+    active: true,        // Aktif yayınlar
+    inactive: true,      // Deaktif yayınlar
+    tcpSent: true,       // TCP gönderilmiş
+    tcpNotSent: true     // TCP gönderilmemiş
+  });
 
   // Radar dimensions
   const size = 600;
   const center = size / 2;
-  const radius = (size - 60) / 2;
+  const radius = (size - 120) / 2;
+
+  // Filter broadcasts based on selected filters
+  const filteredBroadcasts = broadcasts.filter(broadcast => {
+    const formData = broadcast.formData;
+    const isActive = formData.active;
+    const isTcpSent = formData.tcpSent;
+    
+    // Check if broadcast matches any selected filter
+    if (isActive && !filters.active) return false;
+    if (!isActive && !filters.inactive) return false;
+    if (isTcpSent && !filters.tcpSent) return false;
+    if (!isTcpSent && !filters.tcpNotSent) return false;
+    
+    return true;
+  });
+
+  const handleFilterChange = (filterKey) => {
+    setFilters(prev => {
+      const newFilters = {
+        ...prev,
+        [filterKey]: !prev[filterKey]
+      };
+      
+      // Eğer TCP gönderilmiş seçiliyorsa, otomatik olarak aktif ve deaktif de seçilsin
+      if (filterKey === 'tcpSent' && !prev[filterKey]) {
+        newFilters.active = true;
+        newFilters.inactive = true;
+      }
+      
+      // Eğer TCP gönderilmemiş seçiliyorsa, otomatik olarak aktif ve deaktif de seçilsin
+      if (filterKey === 'tcpNotSent' && !prev[filterKey]) {
+        newFilters.active = true;
+        newFilters.inactive = true;
+      }
+      
+      return newFilters;
+    });
+  };
+
+  const selectAllFilters = () => {
+    setFilters({
+      active: true,
+      inactive: true,
+      tcpSent: true,
+      tcpNotSent: true
+    });
+  };
+
+  const clearAllFilters = () => {
+    setFilters({
+      active: false,
+      inactive: false,
+      tcpSent: false,
+      tcpNotSent: false
+    });
+  };
 
   // Create concentric circles
   const circles = [0.25, 0.5, 0.75, 1].map((scale, index) => (
@@ -44,25 +108,57 @@ const RadarDisplay = ({ broadcasts = [], onBroadcastUpdated }) => {
     { angle: 270, text: "270°" },
     { angle: 315, text: "315°" }
   ].map(({ angle, text }, index) => {
-    const labelRadius = radius + 30;
+    const labelRadius = radius + 50; // More space for labels
     const x = center + labelRadius * Math.cos((angle * Math.PI) / 180);
     const y = center + labelRadius * Math.sin((angle * Math.PI) / 180);
+    
+    // Adjust text anchor and baseline based on angle for better positioning
+    let textAnchor = "middle";
+    let dominantBaseline = "middle";
+    
+    // Fine-tune position based on angle
+    if (angle === 0) {
+      textAnchor = "start";
+      dominantBaseline = "central";
+    } else if (angle === 180) {
+      textAnchor = "end";
+      dominantBaseline = "central";
+    } else if (angle === 90) {
+      textAnchor = "middle";
+      dominantBaseline = "auto";
+    } else if (angle === 270) {
+      textAnchor = "middle";
+      dominantBaseline = "hanging";
+    } else if (angle > 0 && angle < 90) {
+      textAnchor = "start";
+      dominantBaseline = "auto";
+    } else if (angle > 90 && angle < 180) {
+      textAnchor = "end";
+      dominantBaseline = "auto";
+    } else if (angle > 180 && angle < 270) {
+      textAnchor = "end";
+      dominantBaseline = "hanging";
+    } else if (angle > 270 && angle < 360) {
+      textAnchor = "start";
+      dominantBaseline = "hanging";
+    }
+
     return (
       <text
         key={index}
         x={x}
         y={y}
         className="radar-label"
-        textAnchor="middle"
-        dominantBaseline="middle"
+        textAnchor={textAnchor}
+        dominantBaseline={dominantBaseline}
       >
         {text}
       </text>
     );
   });
 
-  // Calculate broadcast positions
-  const broadcastPoints = broadcasts.map((broadcast) => {
+  // Calculate broadcast positions for filtered broadcasts
+  const broadcastPoints = filteredBroadcasts.map((broadcast) => {
     const formData = broadcast.formData;
     
     // Use direction for angle (0-360 degrees)
@@ -97,6 +193,71 @@ const RadarDisplay = ({ broadcasts = [], onBroadcastUpdated }) => {
 
   return (
     <div className="radar-container">
+      {/* Filter Controls */}
+      <div className="radar-filters">
+        <div className="filter-header">
+          <h4>Radar Filtreleri</h4>
+          <div className="filter-buttons">
+            <button className="filter-btn select-all" onClick={selectAllFilters}>
+              Tümünü Seç
+            </button>
+            <button className="filter-btn clear-all" onClick={clearAllFilters}>
+              Hiçbirini Seçme
+            </button>
+          </div>
+        </div>
+        
+        <div className="filter-options">
+          <label className="filter-option">
+            <input
+              type="checkbox"
+              checked={filters.active}
+              onChange={() => handleFilterChange('active')}
+            />
+            <span className="filter-label active">🟢 Aktif Yayınlar ({broadcasts.filter(b => b.formData.active).length})</span>
+          </label>
+          
+          <label className="filter-option">
+            <input
+              type="checkbox"
+              checked={filters.inactive}
+              onChange={() => handleFilterChange('inactive')}
+            />
+            <span className="filter-label inactive">🔴 Deaktif Yayınlar ({broadcasts.filter(b => !b.formData.active).length})</span>
+          </label>
+          
+          <label className="filter-option">
+            <input
+              type="checkbox"
+              checked={filters.tcpSent}
+              onChange={() => handleFilterChange('tcpSent')}
+            />
+            <span className="filter-label tcp-sent" title="Seçildiğinde otomatik olarak Aktif ve Deaktif yayınlar da seçilir">
+              📤 TCP Gönderilmiş ({broadcasts.filter(b => b.formData.tcpSent).length})
+            </span>
+          </label>
+          
+          <label className="filter-option">
+            <input
+              type="checkbox"
+              checked={filters.tcpNotSent}
+              onChange={() => handleFilterChange('tcpNotSent')}
+            />
+            <span className="filter-label tcp-not-sent" title="Seçildiğinde otomatik olarak Aktif ve Deaktif yayınlar da seçilir">
+              📥 TCP Gönderilmemiş ({broadcasts.filter(b => !b.formData.tcpSent).length})
+            </span>
+          </label>
+        </div>
+        
+        <div className="filter-summary">
+          Toplam: {broadcasts.length} | Görüntülenen: {filteredBroadcasts.length}
+        </div>
+        
+        <div className="filter-info">
+          💡 İpucu: TCP filtreleri seçildiğinde otomatik olarak Aktif/Deaktif filtreler de seçilir
+        </div>
+      </div>
+
       <svg 
         width={size} 
         height={size} 
@@ -117,7 +278,7 @@ const RadarDisplay = ({ broadcasts = [], onBroadcastUpdated }) => {
         {angleLabels}
 
         {/* Center emoji */}
-                  <text
+        <text
           x={center}
           y={center}
           textAnchor="middle"
@@ -180,6 +341,7 @@ const RadarDisplay = ({ broadcasts = [], onBroadcastUpdated }) => {
           <div>PRI: {hoveredBroadcast.formData.pri}</div>
           <div>Pulse Width: {hoveredBroadcast.formData.pulseWidth}</div>
           <div>Durum: {hoveredBroadcast.formData.active ? 'Aktif' : 'Deaktif'}</div>
+          <div>TCP: {hoveredBroadcast.formData.tcpSent ? 'Gönderildi' : 'Gönderilmedi'}</div>
         </div>
       )}
     </div>

@@ -6,7 +6,8 @@ const BroadcastForm = ({ onFormSubmitted }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSendingMultiple, setIsSendingMultiple] = useState(false);
   const [activityLogs, setActivityLogs] = useState([]);
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([]); // saved messages
+  const [allMessages, setAllMessages] = useState([]); // includes unsaved
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   
   // Modal states
@@ -68,10 +69,12 @@ const BroadcastForm = ({ onFormSubmitted }) => {
         const data = await response.json();
         setActivityLogs(data);
       } else {
-        console.error('Error fetching activity logs:', await response.text());
+        console.error('Error fetching activity logs:', response.status, response.statusText);
       }
     } catch (error) {
       console.error('Error fetching activity logs:', error);
+      // Hata durumunda boş array set et
+      setActivityLogs([]);
     }
   };
 
@@ -80,12 +83,16 @@ const BroadcastForm = ({ onFormSubmitted }) => {
       const response = await fetch('http://localhost:8080/api/forms/messages');
       if (response.ok) {
         const data = await response.json();
-        setMessages(data);
+        setAllMessages(data);
+        const savedMessages = data.filter(msg => msg.saved);
+        setMessages(savedMessages);
       } else {
-        console.error('Error fetching messages:', await response.text());
+        console.error('Error fetching messages:', response.status, response.statusText);
       }
     } catch (error) {
       console.error('Error fetching messages:', error);
+      setAllMessages([]);
+      setMessages([]);
     }
   };
 
@@ -120,6 +127,69 @@ const BroadcastForm = ({ onFormSubmitted }) => {
       });
     } catch {
       return 'Bilinmiyor';
+    }
+  };
+
+  // Extract yayinId from message parameters
+  const extractYayinId = (msg) => {
+    if (!msg) return undefined;
+    // Try to parse parameters JSON safely
+    let id;
+    try {
+      if (msg.parameters) {
+        const params = typeof msg.parameters === 'string' ? JSON.parse(msg.parameters) : msg.parameters;
+        id = params?.yayinId ?? params?.yayinID ?? params?.yayinid;
+      }
+    } catch (e) {
+      console.warn('Unable to parse message parameters for yayinId:', e);
+    }
+    // Fallback if backend structure changes in future
+    return id ?? msg.yayinId;
+  };
+
+  // Check for conflicts: duplicate message name OR same type + yayinId
+  const checkMessageNameExists = async (messageName, messageType, yayinId, action) => {
+    // Only relevant when saving the message
+    if (!(action === 'saveAndSend' || action === 'saveOnly')) return true;
+
+    const duplicateByName = messageName?.trim()
+      ? messages.find((msg) => msg.messageName === messageName.trim())
+      : undefined;
+
+    const duplicateById = yayinId?.trim()
+      ? messages.find(
+          (msg) => msg.messageType === messageType && extractYayinId(msg) === yayinId.trim()
+        )
+      : undefined;
+
+    const duplicates = Array.from(new Set([duplicateByName, duplicateById].filter(Boolean)));
+    if (duplicates.length === 0) return true; // no conflicts
+
+    // Build confirmation message
+    let confirmMessage = '';
+    if (duplicateByName) {
+      confirmMessage += `\"${messageName}\" isimli bir mesaj zaten mevcut.`;
+    }
+    if (duplicateById) {
+      confirmMessage += `${confirmMessage ? "\n" : ''}Aynı Yayın ID (${yayinId}) ile kaydedilmiş bir ${messageType} mesajı zaten mevcut.`;
+    }
+    confirmMessage += '\n\nÜzerine yazmak istediğinizden emin misiniz?\nEvet: Mevcut mesaj(lar) silinir ve yeni mesaj kaydedilir\nHayır: İşlem iptal edilir';
+
+    const confirmOverwrite = window.confirm(confirmMessage);
+    if (!confirmOverwrite) return false;
+
+    // Delete duplicates sequentially (could also be Promise.all)
+    try {
+      for (const dup of duplicates) {
+        await fetch(`http://localhost:8080/api/forms/message/${dup.id}`, {
+          method: 'DELETE',
+        });
+      }
+      return true;
+    } catch (error) {
+      console.error('Error deleting existing message(s):', error);
+      alert('Mevcut mesaj(lar) silinirken bir hata oluştu: ' + error.message);
+      return false;
     }
   };
 
@@ -193,9 +263,18 @@ const BroadcastForm = ({ onFormSubmitted }) => {
   const handleYayinEkleSubmit = async (action) => {
     setIsSubmitting(true);
     try {
+      const messageName = yayinEkleFormData.messageName || (action === 'sendOnly' ? `YayinEkle-${Date.now()}` : '');
+      
+      // Check if message name already exists
+      const canProceed = await checkMessageNameExists(messageName, 'yayinEkle', yayinEkleFormData.yayinId, action);
+      if (!canProceed) {
+        setIsSubmitting(false);
+        return;
+      }
+      
       const messageData = {
         type: 'yayinEkle',
-        messageName: yayinEkleFormData.messageName,
+        messageName: messageName,
         yayinId: yayinEkleFormData.yayinId,
         amplitude: yayinEkleFormData.amplitude,
         pri: yayinEkleFormData.pri,
@@ -231,9 +310,7 @@ const BroadcastForm = ({ onFormSubmitted }) => {
         });
         
         // Refresh messages if saved
-        if (action === 'saveAndSend' || action === 'saveOnly') {
-          await fetchMessages();
-        }
+        await fetchMessages();
         
         if (onFormSubmitted) onFormSubmitted();
       } else {
@@ -251,9 +328,18 @@ const BroadcastForm = ({ onFormSubmitted }) => {
   const handleYayinBaslatSubmit = async (action) => {
     setIsSubmitting(true);
     try {
+      const messageName = yayinBaslatFormData.messageName || (action === 'sendOnly' ? `YayinBaslat-${Date.now()}` : '');
+      
+      // Check if message name already exists
+      const canProceed = await checkMessageNameExists(messageName, 'yayinBaslat', yayinBaslatFormData.yayinId, action);
+      if (!canProceed) {
+        setIsSubmitting(false);
+        return;
+      }
+      
       const messageData = {
         type: 'yayinBaslat',
-        messageName: yayinBaslatFormData.messageName,
+        messageName: messageName,
         yayinId: yayinBaslatFormData.yayinId,
         saveMessage: action === 'saveAndSend' || action === 'saveOnly',
         sendMessage: action === 'saveAndSend' || action === 'sendOnly'
@@ -281,9 +367,7 @@ const BroadcastForm = ({ onFormSubmitted }) => {
         });
         
         // Refresh messages if saved
-        if (action === 'saveAndSend' || action === 'saveOnly') {
-          await fetchMessages();
-        }
+        await fetchMessages();
         
         if (onFormSubmitted) onFormSubmitted();
       } else {
@@ -298,14 +382,24 @@ const BroadcastForm = ({ onFormSubmitted }) => {
   };
 
   // Send YayinDurdur message
-  const handleYayinDurdurSubmit = async (saveAndSend) => {
+  const handleYayinDurdurSubmit = async (action) => {
     setIsSubmitting(true);
     try {
+      const messageName = yayinDurdurFormData.messageName || (action === 'sendOnly' ? `YayinDurdur-${Date.now()}` : '');
+      
+      // Check if message name already exists
+      const canProceed = await checkMessageNameExists(messageName, 'yayinDurdur', yayinDurdurFormData.yayinId, action);
+      if (!canProceed) {
+        setIsSubmitting(false);
+        return;
+      }
+      
       const messageData = {
         type: 'yayinDurdur',
-        messageName: yayinDurdurFormData.messageName,
+        messageName: messageName,
         yayinId: yayinDurdurFormData.yayinId,
-        saveMessage: saveAndSend
+        saveMessage: action === 'saveAndSend' || action === 'saveOnly',
+        sendMessage: action === 'saveAndSend' || action === 'sendOnly'
       };
 
       const response = await fetch('http://localhost:8080/api/forms/message', {
@@ -317,7 +411,12 @@ const BroadcastForm = ({ onFormSubmitted }) => {
       });
 
       if (response.ok) {
-        alert(saveAndSend ? 'Mesaj kaydedildi ve gönderildi!' : 'Mesaj gönderildi!');
+        let alertMessage = '';
+        if (action === 'saveAndSend') alertMessage = 'Mesaj kaydedildi ve gönderildi!';
+        else if (action === 'saveOnly') alertMessage = 'Mesaj kaydedildi!';
+        else alertMessage = 'Mesaj gönderildi!';
+        
+        alert(alertMessage);
         setIsYayinDurdurModalOpen(false);
         setYayinDurdurFormData({
           messageName: '',
@@ -325,9 +424,7 @@ const BroadcastForm = ({ onFormSubmitted }) => {
         });
         
         // Refresh messages if saved
-        if (saveAndSend) {
-          await fetchMessages();
-        }
+        await fetchMessages();
         
         if (onFormSubmitted) onFormSubmitted();
       } else {
@@ -342,14 +439,24 @@ const BroadcastForm = ({ onFormSubmitted }) => {
   };
 
   // Send YayinSil message
-  const handleYayinSilSubmit = async (saveAndSend) => {
+  const handleYayinSilSubmit = async (action) => {
     setIsSubmitting(true);
     try {
+      const messageName = yayinSilFormData.messageName || (action === 'sendOnly' ? `YayinSil-${Date.now()}` : '');
+      
+      // Check if message name already exists
+      const canProceed = await checkMessageNameExists(messageName, 'yayinSil', yayinSilFormData.yayinId, action);
+      if (!canProceed) {
+        setIsSubmitting(false);
+        return;
+      }
+      
       const messageData = {
         type: 'yayinSil',
-        messageName: yayinSilFormData.messageName,
+        messageName: messageName,
         yayinId: yayinSilFormData.yayinId,
-        saveMessage: saveAndSend
+        saveMessage: action === 'saveAndSend' || action === 'saveOnly',
+        sendMessage: action === 'saveAndSend' || action === 'sendOnly'
       };
 
       const response = await fetch('http://localhost:8080/api/forms/message', {
@@ -361,7 +468,12 @@ const BroadcastForm = ({ onFormSubmitted }) => {
       });
 
       if (response.ok) {
-        alert(saveAndSend ? 'Mesaj kaydedildi ve gönderildi!' : 'Mesaj gönderildi!');
+        let alertMessage = '';
+        if (action === 'saveAndSend') alertMessage = 'Mesaj kaydedildi ve gönderildi!';
+        else if (action === 'saveOnly') alertMessage = 'Mesaj kaydedildi!';
+        else alertMessage = 'Mesaj gönderildi!';
+        
+        alert(alertMessage);
         setIsYayinSilModalOpen(false);
         setYayinSilFormData({
           messageName: '',
@@ -369,9 +481,7 @@ const BroadcastForm = ({ onFormSubmitted }) => {
         });
         
         // Refresh messages if saved
-        if (saveAndSend) {
-          await fetchMessages();
-        }
+        await fetchMessages();
         
         if (onFormSubmitted) onFormSubmitted();
       } else {
@@ -386,15 +496,25 @@ const BroadcastForm = ({ onFormSubmitted }) => {
   };
 
   // Send YayinYonGuncelle message
-  const handleYayinYonGuncelleSubmit = async (saveAndSend) => {
+  const handleYayinYonGuncelleSubmit = async (action) => {
     setIsSubmitting(true);
     try {
+      const messageName = yayinYonGuncelleFormData.messageName || (action === 'sendOnly' ? `YayinYonGuncelle-${Date.now()}` : '');
+      
+      // Check if message name already exists
+      const canProceed = await checkMessageNameExists(messageName, 'yayinYonGuncelle', yayinYonGuncelleFormData.yayinId, action);
+      if (!canProceed) {
+        setIsSubmitting(false);
+        return;
+      }
+      
       const messageData = {
         type: 'yayinYonGuncelle',
-        messageName: yayinYonGuncelleFormData.messageName,
+        messageName: messageName,
         yayinId: yayinYonGuncelleFormData.yayinId,
         newDirection: yayinYonGuncelleFormData.newDirection,
-        saveMessage: saveAndSend
+        saveMessage: action === 'saveAndSend' || action === 'saveOnly',
+        sendMessage: action === 'saveAndSend' || action === 'sendOnly'
       };
 
       const response = await fetch('http://localhost:8080/api/forms/message', {
@@ -406,7 +526,12 @@ const BroadcastForm = ({ onFormSubmitted }) => {
       });
 
       if (response.ok) {
-        alert(saveAndSend ? 'Mesaj kaydedildi ve gönderildi!' : 'Mesaj gönderildi!');
+        let alertMessage = '';
+        if (action === 'saveAndSend') alertMessage = 'Mesaj kaydedildi ve gönderildi!';
+        else if (action === 'saveOnly') alertMessage = 'Mesaj kaydedildi!';
+        else alertMessage = 'Mesaj gönderildi!';
+        
+        alert(alertMessage);
         setIsYayinYonGuncelleModalOpen(false);
         setYayinYonGuncelleFormData({
           messageName: '',
@@ -415,9 +540,7 @@ const BroadcastForm = ({ onFormSubmitted }) => {
         });
         
         // Refresh messages if saved
-        if (saveAndSend) {
-          await fetchMessages();
-        }
+        await fetchMessages();
         
         if (onFormSubmitted) onFormSubmitted();
       } else {
@@ -432,15 +555,25 @@ const BroadcastForm = ({ onFormSubmitted }) => {
   };
 
   // Send YayinGenlikGuncelle message
-  const handleYayinGenlikGuncelleSubmit = async (saveAndSend) => {
+  const handleYayinGenlikGuncelleSubmit = async (action) => {
     setIsSubmitting(true);
     try {
+      const messageName = yayinGenlikGuncelleFormData.messageName || (action === 'sendOnly' ? `YayinGenlikGuncelle-${Date.now()}` : '');
+      
+      // Check if message name already exists
+      const canProceed = await checkMessageNameExists(messageName, 'yayinGenlikGuncelle', yayinGenlikGuncelleFormData.yayinId, action);
+      if (!canProceed) {
+        setIsSubmitting(false);
+        return;
+      }
+      
       const messageData = {
         type: 'yayinGenlikGuncelle',
-        messageName: yayinGenlikGuncelleFormData.messageName,
+        messageName: messageName,
         yayinId: yayinGenlikGuncelleFormData.yayinId,
         newAmplitude: yayinGenlikGuncelleFormData.newAmplitude,
-        saveMessage: saveAndSend
+        saveMessage: action === 'saveAndSend' || action === 'saveOnly',
+        sendMessage: action === 'saveAndSend' || action === 'sendOnly'
       };
 
       const response = await fetch('http://localhost:8080/api/forms/message', {
@@ -452,7 +585,12 @@ const BroadcastForm = ({ onFormSubmitted }) => {
       });
 
       if (response.ok) {
-        alert(saveAndSend ? 'Mesaj kaydedildi ve gönderildi!' : 'Mesaj gönderildi!');
+        let alertMessage = '';
+        if (action === 'saveAndSend') alertMessage = 'Mesaj kaydedildi ve gönderildi!';
+        else if (action === 'saveOnly') alertMessage = 'Mesaj kaydedildi!';
+        else alertMessage = 'Mesaj gönderildi!';
+        
+        alert(alertMessage);
         setIsYayinGenlikGuncelleModalOpen(false);
         setYayinGenlikGuncelleFormData({
           messageName: '',
@@ -461,9 +599,7 @@ const BroadcastForm = ({ onFormSubmitted }) => {
         });
         
         // Refresh messages if saved
-        if (saveAndSend) {
-          await fetchMessages();
-        }
+        await fetchMessages();
         
         if (onFormSubmitted) onFormSubmitted();
       } else {
@@ -481,8 +617,25 @@ const BroadcastForm = ({ onFormSubmitted }) => {
   const handleSendSavedMessage = async (message) => {
     setIsSubmitting(true);
     try {
+      // First, update the message as sent in the database
+      const updateResponse = await fetch(`http://localhost:8080/api/forms/message/${message.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...message,
+          sent: true
+        }),
+      });
+
+      if (!updateResponse.ok) {
+        throw new Error('Failed to update message status');
+      }
+
+      // Then send the actual message via TCP
       const messageData = {
-        ...JSON.parse(message.parameters),
+        ...JSON.parse(message.parameters || '{}'),
         type: message.messageType,
         messageName: message.messageName,
         saveMessage: false, // Don't save again, just send
@@ -536,6 +689,73 @@ const BroadcastForm = ({ onFormSubmitted }) => {
       alert('Mesajlar silinirken bir hata oluştu: ' + error.message);
     }
     setIsSendingMultiple(false);
+  };
+
+  // Determine if send button should be shown based on antagonist logic
+  const shouldShowSendButton = (msg) => {
+    const pairs = {
+      yayinEkle: { counter: 'yayinSil', isStart: true },
+      yayinSil: { counter: 'yayinEkle', isStart: false },
+      yayinBaslat: { counter: 'yayinDurdur', isStart: true },
+      yayinDurdur: { counter: 'yayinBaslat', isStart: false }
+    };
+
+    const pairInfo = pairs[msg.messageType];
+    if (!pairInfo) {
+      // For message types outside our pairs keep default logic: show if not sent
+      return !msg.sent;
+    }
+
+    // Extract yayinId safely
+    let id;
+    try {
+      id = JSON.parse(msg.parameters || '{}')?.yayinId;
+    } catch {
+      id = undefined;
+    }
+    if (!id) return !msg.sent; // if no id behave default
+
+    // Helper to parse id from any message
+    const getYayinId = (m) => {
+      try {
+        return JSON.parse(m.parameters || '{}')?.yayinId;
+      } catch {
+        return undefined;
+      }
+    };
+
+    // Gather all messages of this pair with same id and sent===true
+    const relevantSent = allMessages.filter(
+      (m) => (m.messageType === msg.messageType || m.messageType === pairInfo.counter) && m.sent && getYayinId(m) === id
+    );
+
+    // Determine the latest sent message among the pair
+    let latestSent = null;
+    for (const m of relevantSent) {
+      if (!latestSent || new Date(m.createdAt) > new Date(latestSent.createdAt)) {
+        latestSent = m;
+      }
+    }
+
+    // Case 1: message not sent yet
+    if (!msg.sent) {
+      if (!latestSent) {
+        // No message sent yet. Allow start type, block stop type
+        return pairInfo.isStart;
+      }
+      // There is a sent counterpart
+      // Allow sending if latest sent is of opposite type to current message
+      return latestSent.messageType !== msg.messageType;
+    }
+
+    // Case 2: message was sent previously
+    if (msg.sent) {
+      if (!latestSent) return true; // Should not happen, but keep safe
+      // Show button if this sent message is NOT the latest one anymore
+      return latestSent.id !== msg.id;
+    }
+
+    return false;
   };
 
   return (
@@ -631,9 +851,10 @@ const BroadcastForm = ({ onFormSubmitted }) => {
 
           let parameters = {};
           try {
-            parameters = JSON.parse(message.parameters);
+            parameters = JSON.parse(message.parameters || '{}');
           } catch (e) {
-            console.error('Error parsing message parameters:', e);
+            console.warn('Error parsing message parameters for message:', message.id, e);
+            parameters = {};
           }
           
           return (
@@ -647,12 +868,12 @@ const BroadcastForm = ({ onFormSubmitted }) => {
                 />
                 <span className="broadcast-name">{message.messageName}</span>
                 <span className="broadcast-params">
-                  Tip: {message.messageType} | 
-                  {parameters.yayinId && `Yayın ID: ${parameters.yayinId}`}
+                  Tip: {message.messageType}
                   {parameters.amplitude && ` | Genlik: ${parameters.amplitude}`}
                   {parameters.pri && ` | PRI: ${parameters.pri}`}
                   {parameters.direction && ` | Yön: ${parameters.direction}`}
                   {parameters.pulseWidth && ` | Pulse Width: ${parameters.pulseWidth}`}
+                  {parameters.yayinId && ` | Yayın ID: ${parameters.yayinId}`}
                   {parameters.newDirection && ` | Yeni Yön: ${parameters.newDirection}`}
                   {parameters.newAmplitude && ` | Yeni Genlik: ${parameters.newAmplitude}`}
                 </span>
@@ -661,7 +882,7 @@ const BroadcastForm = ({ onFormSubmitted }) => {
                   <span className={`status-badge ${message.sent ? 'sent' : 'not-sent'}`}>
                     {message.sent ? 'TCP Gönderildi' : 'TCP Gönderilmedi'}
                   </span>
-                  {!message.sent && (
+                  {!message.sent && shouldShowSendButton(message) && (
                     <button 
                       className="send-saved-message-btn"
                       onClick={() => handleSendSavedMessage(message)}
@@ -766,7 +987,7 @@ const BroadcastForm = ({ onFormSubmitted }) => {
                   type="button"
                   className="send-only-btn"
                   onClick={() => handleYayinEkleSubmit('sendOnly')}
-                  disabled={isSubmitting || !yayinEkleFormData.messageName.trim() || !yayinEkleFormData.yayinId.trim()}
+                  disabled={isSubmitting || !yayinEkleFormData.yayinId.trim()}
                 >
                   {isSubmitting ? 'İşleniyor...' : 'Yalnızca Gönder'}
                 </button>
@@ -840,7 +1061,7 @@ const BroadcastForm = ({ onFormSubmitted }) => {
                   type="button"
                   className="send-only-btn"
                   onClick={() => handleYayinBaslatSubmit('sendOnly')}
-                  disabled={isSubmitting || !yayinBaslatFormData.messageName.trim() || !yayinBaslatFormData.yayinId.trim()}
+                  disabled={isSubmitting || !yayinBaslatFormData.yayinId.trim()}
                 >
                   {isSubmitting ? 'İşleniyor...' : 'Yalnızca Gönder'}
                 </button>
@@ -905,18 +1126,26 @@ const BroadcastForm = ({ onFormSubmitted }) => {
                 <button 
                   type="button"
                   className="save-and-send-btn"
-                  onClick={() => handleYayinDurdurSubmit(true)}
+                  onClick={() => handleYayinDurdurSubmit('saveAndSend')}
                   disabled={isSubmitting || !yayinDurdurFormData.messageName.trim() || !yayinDurdurFormData.yayinId.trim()}
                 >
-                  {isSubmitting ? 'Gönderiliyor...' : 'Kaydet ve Gönder'}
+                  {isSubmitting ? 'İşleniyor...' : 'Kaydet ve Gönder'}
                 </button>
                 <button 
                   type="button"
                   className="send-only-btn"
-                  onClick={() => handleYayinDurdurSubmit(false)}
+                  onClick={() => handleYayinDurdurSubmit('sendOnly')}
+                  disabled={isSubmitting || !yayinDurdurFormData.yayinId.trim()}
+                >
+                  {isSubmitting ? 'İşleniyor...' : 'Yalnızca Gönder'}
+                </button>
+                <button 
+                  type="button"
+                  className="save-only-btn"
+                  onClick={() => handleYayinDurdurSubmit('saveOnly')}
                   disabled={isSubmitting || !yayinDurdurFormData.messageName.trim() || !yayinDurdurFormData.yayinId.trim()}
                 >
-                  {isSubmitting ? 'Gönderiliyor...' : 'Yalnızca Gönder'}
+                  {isSubmitting ? 'İşleniyor...' : 'Yalnızca Kaydet'}
                 </button>
                 <button 
                   type="button"
@@ -971,18 +1200,26 @@ const BroadcastForm = ({ onFormSubmitted }) => {
                 <button 
                   type="button"
                   className="save-and-send-btn"
-                  onClick={() => handleYayinSilSubmit(true)}
+                  onClick={() => handleYayinSilSubmit('saveAndSend')}
                   disabled={isSubmitting || !yayinSilFormData.messageName.trim() || !yayinSilFormData.yayinId.trim()}
                 >
-                  {isSubmitting ? 'Gönderiliyor...' : 'Kaydet ve Gönder'}
+                  {isSubmitting ? 'İşleniyor...' : 'Kaydet ve Gönder'}
                 </button>
                 <button 
                   type="button"
                   className="send-only-btn"
-                  onClick={() => handleYayinSilSubmit(false)}
+                  onClick={() => handleYayinSilSubmit('sendOnly')}
+                  disabled={isSubmitting || !yayinSilFormData.yayinId.trim()}
+                >
+                  {isSubmitting ? 'İşleniyor...' : 'Yalnızca Gönder'}
+                </button>
+                <button 
+                  type="button"
+                  className="save-only-btn"
+                  onClick={() => handleYayinSilSubmit('saveOnly')}
                   disabled={isSubmitting || !yayinSilFormData.messageName.trim() || !yayinSilFormData.yayinId.trim()}
                 >
-                  {isSubmitting ? 'Gönderiliyor...' : 'Yalnızca Gönder'}
+                  {isSubmitting ? 'İşleniyor...' : 'Yalnızca Kaydet'}
                 </button>
                 <button 
                   type="button"
@@ -1047,18 +1284,26 @@ const BroadcastForm = ({ onFormSubmitted }) => {
                 <button 
                   type="button"
                   className="save-and-send-btn"
-                  onClick={() => handleYayinYonGuncelleSubmit(true)}
+                  onClick={() => handleYayinYonGuncelleSubmit('saveAndSend')}
                   disabled={isSubmitting || !yayinYonGuncelleFormData.messageName.trim() || !yayinYonGuncelleFormData.yayinId.trim()}
                 >
-                  {isSubmitting ? 'Gönderiliyor...' : 'Kaydet ve Gönder'}
+                  {isSubmitting ? 'İşleniyor...' : 'Kaydet ve Gönder'}
                 </button>
                 <button 
                   type="button"
                   className="send-only-btn"
-                  onClick={() => handleYayinYonGuncelleSubmit(false)}
+                  onClick={() => handleYayinYonGuncelleSubmit('sendOnly')}
+                  disabled={isSubmitting || !yayinYonGuncelleFormData.yayinId.trim()}
+                >
+                  {isSubmitting ? 'İşleniyor...' : 'Yalnızca Gönder'}
+                </button>
+                <button 
+                  type="button"
+                  className="save-only-btn"
+                  onClick={() => handleYayinYonGuncelleSubmit('saveOnly')}
                   disabled={isSubmitting || !yayinYonGuncelleFormData.messageName.trim() || !yayinYonGuncelleFormData.yayinId.trim()}
                 >
-                  {isSubmitting ? 'Gönderiliyor...' : 'Yalnızca Gönder'}
+                  {isSubmitting ? 'İşleniyor...' : 'Yalnızca Kaydet'}
                 </button>
                 <button 
                   type="button"
@@ -1123,18 +1368,26 @@ const BroadcastForm = ({ onFormSubmitted }) => {
                 <button 
                   type="button"
                   className="save-and-send-btn"
-                  onClick={() => handleYayinGenlikGuncelleSubmit(true)}
+                  onClick={() => handleYayinGenlikGuncelleSubmit('saveAndSend')}
                   disabled={isSubmitting || !yayinGenlikGuncelleFormData.messageName.trim() || !yayinGenlikGuncelleFormData.yayinId.trim()}
                 >
-                  {isSubmitting ? 'Gönderiliyor...' : 'Kaydet ve Gönder'}
+                  {isSubmitting ? 'İşleniyor...' : 'Kaydet ve Gönder'}
                 </button>
                 <button 
                   type="button"
                   className="send-only-btn"
-                  onClick={() => handleYayinGenlikGuncelleSubmit(false)}
+                  onClick={() => handleYayinGenlikGuncelleSubmit('sendOnly')}
+                  disabled={isSubmitting || !yayinGenlikGuncelleFormData.yayinId.trim()}
+                >
+                  {isSubmitting ? 'İşleniyor...' : 'Yalnızca Gönder'}
+                </button>
+                <button 
+                  type="button"
+                  className="save-only-btn"
+                  onClick={() => handleYayinGenlikGuncelleSubmit('saveOnly')}
                   disabled={isSubmitting || !yayinGenlikGuncelleFormData.messageName.trim() || !yayinGenlikGuncelleFormData.yayinId.trim()}
                 >
-                  {isSubmitting ? 'Gönderiliyor...' : 'Yalnızca Gönder'}
+                  {isSubmitting ? 'İşleniyor...' : 'Yalnızca Kaydet'}
                 </button>
                 <button 
                   type="button"

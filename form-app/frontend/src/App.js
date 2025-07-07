@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './App.css';
 import BroadcastForm from './components/BroadcastForm';
 import ActivityLogs from './components/ActivityLogs';
@@ -11,7 +11,7 @@ function App() {
   const [selectedBroadcast, setSelectedBroadcast] = useState(null);
   const activityLogsRef = useRef(null);
 
-  const fetchMessages = async () => {
+  const fetchMessages = useCallback(async () => {
     try {
       const response = await fetch('http://localhost:8080/api/forms/messages');
       if (response.ok) {
@@ -21,18 +21,43 @@ function App() {
         // Convert yayinEkle messages to broadcast format for radar display
         const yayinEkleMessages = data.filter(msg => msg.messageType === 'yayinEkle');
         const yayinBaslatMessages = data.filter(msg => msg.messageType === 'yayinBaslat');
+        const yayinDurdurMessages = data.filter(msg => msg.messageType === 'yayinDurdur');
+        const yayinSilMessages = data.filter(msg => msg.messageType === 'yayinSil');
         
         const broadcastData = yayinEkleMessages
           .map(msg => {
             try {
-              const params = JSON.parse(msg.parameters);
+              const params = JSON.parse(msg.parameters || '{}');
               
               // Check if there's a corresponding yayinBaslat message for this yayinId
               const hasBaslatMessage = yayinBaslatMessages.some(baslatMsg => {
                 try {
-                  const baslatParams = JSON.parse(baslatMsg.parameters);
+                  const baslatParams = JSON.parse(baslatMsg.parameters || '{}');
                   return baslatParams.yayinId === params.yayinId && baslatMsg.sent;
                 } catch (e) {
+                  console.warn('Error parsing baslatMsg parameters for message:', baslatMsg.id, e);
+                  return false;
+                }
+              });
+              
+              // Check if there's a corresponding yayinDurdur message sent for this yayinId
+              const hasDurdurMessage = yayinDurdurMessages.some(stopMsg => {
+                try {
+                  const stopParams = JSON.parse(stopMsg.parameters || '{}');
+                  return stopParams.yayinId === params.yayinId && stopMsg.sent;
+                } catch (e) {
+                  console.warn('Error parsing stopMsg parameters for message:', stopMsg.id, e);
+                  return false;
+                }
+              });
+              
+              // Check if there's a yayinSil message sent for this yayinId
+              const hasSilMessage = yayinSilMessages.some(silMsg => {
+                try {
+                  const silParams = JSON.parse(silMsg.parameters || '{}');
+                  return silParams.yayinId === params.yayinId && silMsg.sent;
+                } catch (e) {
+                  console.warn('Error parsing silMsg parameters for message:', silMsg.id, e);
                   return false;
                 }
               });
@@ -40,29 +65,34 @@ function App() {
               return {
                 id: msg.id,
                 formData: {
-                  id: params.yayinId,
-                  name: msg.messageName,
+                  id: params.yayinId || 'unknown',
+                  name: msg.messageName || 'Unnamed',
                   amplitude: params.amplitude || 0,
                   direction: params.direction || 0,
                   pri: params.pri || 0,
                   pulseWidth: params.pulseWidth || 0,
-                  active: hasBaslatMessage, // Only active if yayinBaslat message exists
+                  active: hasBaslatMessage && !hasDurdurMessage && !hasSilMessage, // active if started and not stopped or sil
                   tcpSent: msg.sent
                 }
               };
             } catch (e) {
-              console.error('Error parsing message parameters:', e);
+              console.warn('Error parsing message parameters for message:', msg.id, e);
               return null;
             }
           })
           .filter(Boolean);
         
         setBroadcasts(broadcastData);
+      } else {
+        console.error('Error fetching messages:', response.status, response.statusText);
       }
     } catch (error) {
       console.error('Error fetching messages:', error);
+      // Hata durumunda boş array'ler set et
+      setMessages([]);
+      setBroadcasts([]);
     }
-  };
+  }, []);
 
   const fetchBroadcasts = async () => {
     // This is kept for backwards compatibility but now uses fetchMessages
@@ -76,7 +106,7 @@ function App() {
     const interval = setInterval(fetchMessages, 5000);
     
     return () => clearInterval(interval);
-  }, []);
+  }, [fetchMessages]);
 
   const handleFormSubmitted = () => {
     fetchMessages();
@@ -177,8 +207,11 @@ function App() {
 
           <div style={{ marginBottom: '20px' }}>
             <h4>Mevcut Değerler:</h4>
+            <p><strong>ID:</strong> {selectedBroadcast.id}</p>
             <p><strong>Genlik:</strong> {selectedBroadcast.amplitude}</p>
             <p><strong>Yön:</strong> {selectedBroadcast.direction}°</p>
+            <p><strong>PRI:</strong> {selectedBroadcast.pri}</p>
+            <p><strong>Pulse Width:</strong> {selectedBroadcast.pulseWidth}</p>
           </div>
 
           <form onSubmit={(e) => {
@@ -319,7 +352,7 @@ function App() {
         </div>
 
         <div className="broadcast-list-section">
-          <h3>Kayıtlı Yayın Listesi</h3>
+          <h3>Var Olan Yayınlar Listesi</h3>
           <div style={{
             border: '2px solid #007bff',
             borderRadius: '8px',
@@ -330,7 +363,7 @@ function App() {
           }}>
             {broadcasts.length === 0 ? (
               <p style={{ textAlign: 'center', color: '#666', margin: 0 }}>
-                Henüz kayıtlı yayın bulunmuyor
+                Henüz var olan yayın bulunmuyor
               </p>
             ) : (
               broadcasts.map((broadcast, index) => {
