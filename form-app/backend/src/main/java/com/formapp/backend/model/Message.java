@@ -1,39 +1,38 @@
 package com.formapp.backend.model;
 
-import jakarta.persistence.*;
-import java.io.Serializable;
+import jakarta.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDateTime;
-import java.util.Map;
 
-@Entity
-@Table(name = "messages")
-public class Message implements Serializable {
-    private static final long serialVersionUID = 1L;
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Message {
+    @XmlElement
     private String id;
-    
-    @Column(nullable = false)
-    private String messageName;
-    
-    @Column(nullable = false)
-    private String messageType; // yayinEkle, yayinBaslat, yayinDurdur, etc.
-    
-    @Column(columnDefinition = "TEXT")
-    private String parameters; // JSON string for message parameters
-    
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
-    
-    @Column(nullable = false)
-    private boolean sent = false; // TCP ile gönderildi mi?
 
-    @Column(nullable = false, name = "saved")
-    private boolean saved = false; // Mesaj veritabanında saklandı mı?
+    @XmlElement
+    private String messageName;
+
+    @XmlElement
+    private String messageType;
+
+    @XmlElement
+    private String parameters;
+
+    @XmlElement
+    private boolean saved;
+
+    @XmlElement
+    private boolean sent;
+
+    @XmlElement
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
+    private LocalDateTime createdAt;
 
     public Message() {
         this.createdAt = LocalDateTime.now();
+        this.saved = false;
+        this.sent = false;
     }
 
     public Message(String messageName, String messageType, String parameters) {
@@ -76,12 +75,12 @@ public class Message implements Serializable {
         this.parameters = parameters;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public boolean isSaved() {
+        return saved;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setSaved(boolean saved) {
+        this.saved = saved;
     }
 
     public boolean isSent() {
@@ -92,24 +91,11 @@ public class Message implements Serializable {
         this.sent = sent;
     }
 
-    public boolean isSaved() {
-        return saved;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setSaved(boolean saved) {
-        this.saved = saved;
-    }
-
-    @Override
-    public String toString() {
-        return "Message{" +
-                "id='" + id + '\'' +
-                ", messageName='" + messageName + '\'' +
-                ", messageType='" + messageType + '\'' +
-                ", parameters='" + parameters + '\'' +
-                ", createdAt=" + createdAt +
-                ", sent=" + sent +
-                ", saved=" + saved +
-                '}';
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 } 

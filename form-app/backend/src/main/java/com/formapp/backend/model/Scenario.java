@@ -1,39 +1,38 @@
 package com.formapp.backend.model;
 
-import jakarta.persistence.*;
+import jakarta.xml.bind.annotation.*;
 
-@Entity
-@Table(name = "scenarios")
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Scenario {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @XmlElement
+    private String id;
 
-    @Column(name = "broadcast_id", nullable = false)
+    @XmlElement
     private String broadcastId;
 
-    @Column(name = "initial_amplitude", nullable = false)
+    @XmlElement
     private Double initialAmplitude;
 
-    @Column(name = "initial_direction", nullable = false)
+    @XmlElement
     private Double initialDirection;
 
-    @Column(name = "final_amplitude", nullable = false)
+    @XmlElement
     private Double finalAmplitude;
 
-    @Column(name = "final_direction", nullable = false)
+    @XmlElement
     private Double finalDirection;
 
-    @Column(name = "duration", nullable = false)
+    @XmlElement
     private Double duration; // in seconds
 
-    @Column(name = "update_frequency", nullable = false)
+    @XmlElement
     private Double updateFrequency; // in seconds
 
-    @Column(name = "is_active", nullable = false)
+    @XmlElement
     private Boolean isActive = true;
 
-    @Column(name = "start_time")
+    @XmlElement
     private Long startTime; // timestamp
 
     // Constructors
@@ -52,11 +51,11 @@ public class Scenario {
     }
 
     // Getters and Setters
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

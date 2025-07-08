@@ -1,9 +1,9 @@
 package com.formapp.backend.controller;
 
-import com.formapp.backend.model.Broadcast;
 import com.formapp.backend.model.FormSubmission;
 import com.formapp.backend.model.Scenario;
 import com.formapp.backend.model.ActivityLog;
+import com.formapp.backend.model.Broadcast;
 import com.formapp.backend.model.Message;
 import com.formapp.backend.service.FormStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,530 +11,268 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.Map;
+import java.util.Optional;
+import java.util.HashMap;
 
 @RestController
-@RequestMapping("/api/forms")
-@CrossOrigin(origins = "http://localhost:3000") // Allow React frontend
+@RequestMapping("/api")
 public class FormController {
 
     @Autowired
     private FormStorageService formStorageService;
 
-    @PostMapping("/broadcast/save")
-    public ResponseEntity<FormSubmission> saveBroadcast(@RequestBody Broadcast broadcast) {
-        // Generate a unique ID if not provided
-        if (broadcast.getId() == null || broadcast.getId().isEmpty()) {
-            broadcast.setId(UUID.randomUUID().toString());
-        }
+    @PostMapping("/forms")
+    public ResponseEntity<FormSubmission> submitForm(@RequestBody Map<String, Object> formData) {
+        String formType = (String) formData.get("formType");
+        Object data = formData.get("data");
         
-        // Sadece kaydet, TCP ile gönderme
-        broadcast.setTcpSent(false);
-        broadcast.setActive(false); // Yeni yayınlar başlangıçta deaktif
+        FormSubmission submission = formStorageService.saveForm(formType, data);
+        return ResponseEntity.ok(submission);
+    }
+
+    @GetMapping("/forms")
+    public ResponseEntity<List<FormSubmission>> getAllForms() {
+        List<FormSubmission> forms = formStorageService.getAllForms();
+        return ResponseEntity.ok(forms);
+    }
+
+    @GetMapping("/forms/{id}")
+    public ResponseEntity<FormSubmission> getFormById(@PathVariable String id) {
+        FormSubmission form = formStorageService.getFormById(id);
+        if (form != null) {
+            return ResponseEntity.ok(form);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/forms/{id}")
+    public ResponseEntity<FormSubmission> updateForm(@PathVariable String id, @RequestBody Map<String, Object> formData) {
+        String formType = (String) formData.get("formType");
+        Object data = formData.get("data");
         
-        FormSubmission savedForm = formStorageService.saveForm("Broadcast", broadcast);
-        System.out.println("Broadcast saved (not sent via TCP): " + broadcast);
-        return ResponseEntity.ok(savedForm);
-    }
-
-    @PostMapping("/broadcast/send")
-    public ResponseEntity<FormSubmission> sendBroadcastTcp(@RequestBody Broadcast broadcast) {
-        // Generate a unique ID if not provided
-        if (broadcast.getId() == null || broadcast.getId().isEmpty()) {
-            broadcast.setId(UUID.randomUUID().toString());
-        }
-        
-        // TCP ile gönder ve kaydet
-        broadcast.setTcpSent(true);
-        broadcast.setActive(false); // TCP'ye gönderildi ama henüz başlatılmadı
-        
-        // TODO: TCP YAYIN EKLE MESAJI - Gerçek TCP gönderim işlemi yapılacak
-        // tcpService.sendBroadcastAdd(broadcast);
-        System.out.println("TCP DUMMY: Broadcasting ADD message for: " + broadcast.getName());
-        
-        FormSubmission savedForm = formStorageService.saveForm("Broadcast", broadcast);
-        System.out.println("Broadcast sent via TCP and saved: " + broadcast);
-        return ResponseEntity.ok(savedForm);
-    }
-
-    @PostMapping("/broadcast/{id}/send")
-    public ResponseEntity<FormSubmission> sendExistingBroadcastTcp(@PathVariable String id) {
-        try {
-            FormSubmission existingForm = formStorageService.getFormById(id);
-            if (existingForm == null) {
-                return ResponseEntity.notFound().build();
-            }
-            
-            Broadcast broadcast = (Broadcast) existingForm.getFormData();
-            broadcast.setTcpSent(true);
-            broadcast.setActive(false); // TCP'ye gönderildi ama henüz başlatılmadı
-            
-            // TODO: TCP YAYIN EKLE MESAJI - Gerçek TCP gönderim işlemi yapılacak
-            // tcpService.sendBroadcastAdd(broadcast);
-            System.out.println("TCP DUMMY: Broadcasting ADD message for existing broadcast: " + broadcast.getName());
-            
-            FormSubmission updatedForm = formStorageService.updateForm(id, "Broadcast", broadcast);
+        FormSubmission updatedForm = formStorageService.updateForm(id, formType, data);
+        if (updatedForm != null) {
             return ResponseEntity.ok(updatedForm);
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
         }
+        return ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/broadcast/{id}/activate")
-    public ResponseEntity<FormSubmission> activateBroadcast(@PathVariable String id) {
-        try {
-            FormSubmission existingForm = formStorageService.getFormById(id);
-            if (existingForm == null) {
-                return ResponseEntity.notFound().build();
-            }
-            
-            Broadcast broadcast = (Broadcast) existingForm.getFormData();
-            
-            // Sadece TCP'ye gönderilmiş yayınlar aktif edilebilir
-            if (!broadcast.isTcpSent()) {
-                return ResponseEntity.badRequest().build();
-            }
-            
-            broadcast.setActive(true);
-            
-            // TODO: TCP YAYIN BAŞLAT MESAJI - Gerçek TCP başlatma işlemi yapılacak
-            // tcpService.sendBroadcastStart(broadcast);
-            System.out.println("TCP DUMMY: Broadcasting START message for: " + broadcast.getName());
-            
-            FormSubmission updatedForm = formStorageService.updateForm(id, "Broadcast", broadcast);
-            return ResponseEntity.ok(updatedForm);
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
-        }
+    @DeleteMapping("/forms/{id}")
+    public ResponseEntity<Void> deleteForm(@PathVariable String id) {
+        formStorageService.deleteForm(id);
+        return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/broadcast/{id}/deactivate")
-    public ResponseEntity<FormSubmission> deactivateBroadcast(@PathVariable String id) {
-        try {
-            FormSubmission existingForm = formStorageService.getFormById(id);
-            if (existingForm == null) {
-                return ResponseEntity.notFound().build();
-            }
-            
-            Broadcast broadcast = (Broadcast) existingForm.getFormData();
-            
-            // Sadece aktif yayınlar deaktif edilebilir
-            if (!broadcast.isActive()) {
-                return ResponseEntity.badRequest().build();
-            }
-            
-            broadcast.setActive(false);
-            
-            // TODO: TCP YAYIN DURDUR MESAJI - Gerçek TCP durdurma işlemi yapılacak
-            // tcpService.sendBroadcastStop(broadcast);
-            System.out.println("TCP DUMMY: Broadcasting STOP message for: " + broadcast.getName());
-            
-            FormSubmission updatedForm = formStorageService.updateForm(id, "Broadcast", broadcast);
-            return ResponseEntity.ok(updatedForm);
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
-        }
+    @GetMapping("/forms/count")
+    public ResponseEntity<Integer> getFormCount() {
+        int count = formStorageService.getFormCount();
+        return ResponseEntity.ok(count);
     }
 
-    @PostMapping("/broadcast")
-    public ResponseEntity<FormSubmission> submitBroadcast(@RequestBody Broadcast broadcast) {
-        return saveBroadcast(broadcast);
+    @GetMapping("/forms/type/{formType}")
+    public ResponseEntity<List<FormSubmission>> getFormsByType(@PathVariable String formType) {
+        List<FormSubmission> forms = formStorageService.getFormsByType(formType);
+        return ResponseEntity.ok(forms);
     }
 
-    @PutMapping("/broadcast/{id}")
-    public ResponseEntity<FormSubmission> updateBroadcast(@PathVariable String id, @RequestBody Broadcast broadcast) {
-        try {
-            FormSubmission existingForm = formStorageService.getFormById(id);
-            if (existingForm == null) {
-                return ResponseEntity.notFound().build();
-            }
-            broadcast.setId(id); // Ensure ID matches path variable
-            FormSubmission updatedForm = formStorageService.updateForm(id, "Broadcast", broadcast);
-            return ResponseEntity.ok(updatedForm);
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
-        }
+    @GetMapping("/activity-logs")
+    public ResponseEntity<List<ActivityLog>> getActivityLogs() {
+        List<ActivityLog> logs = formStorageService.getAllActivityLogs();
+        return ResponseEntity.ok(logs);
     }
 
-    @PutMapping("/broadcast/{id}/toggle-active")
-    public ResponseEntity<FormSubmission> toggleBroadcastActive(@PathVariable String id) {
-        try {
-            FormSubmission existingForm = formStorageService.getFormById(id);
-            if (existingForm == null) {
-                return ResponseEntity.notFound().build();
-            }
-            
-            formStorageService.toggleBroadcastActive(id);
-            FormSubmission updatedForm = formStorageService.getFormById(id);
-            return ResponseEntity.ok(updatedForm);
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
+    @GetMapping("/activity-logs/{id}")
+    public ResponseEntity<ActivityLog> getActivityLogById(@PathVariable String id) {
+        ActivityLog log = formStorageService.getActivityLogById(id);
+        if (log != null) {
+            return ResponseEntity.ok(log);
         }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/broadcasts")
+    public ResponseEntity<Broadcast> createBroadcast(@RequestBody Broadcast broadcast) {
+        Broadcast savedBroadcast = formStorageService.saveBroadcast(broadcast);
+        return ResponseEntity.ok(savedBroadcast);
+    }
+
+    @GetMapping("/broadcasts")
+    public ResponseEntity<List<Broadcast>> getAllBroadcasts() {
+        List<Broadcast> broadcasts = formStorageService.getBroadcasts();
+        return ResponseEntity.ok(broadcasts);
+    }
+
+    @GetMapping("/broadcasts/{id}")
+    public ResponseEntity<Broadcast> getBroadcastById(@PathVariable String id) {
+        Optional<Broadcast> broadcast = formStorageService.getBroadcastById(id);
+        return broadcast.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/broadcasts/{id}")
+    public ResponseEntity<Void> deleteBroadcast(@PathVariable String id) {
+        formStorageService.deleteBroadcast(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/broadcasts/{id}/status")
+    public ResponseEntity<Void> updateBroadcastStatus(@PathVariable String id, @RequestBody Map<String, Boolean> status) {
+        Boolean active = status.get("active");
+        if (active != null) {
+            formStorageService.updateBroadcastStatus(id, active);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @PutMapping("/broadcasts/{id}/tcp-status")
+    public ResponseEntity<Void> updateBroadcastTcpStatus(@PathVariable String id, @RequestBody Map<String, Boolean> status) {
+        Boolean tcpSent = status.get("tcpSent");
+        if (tcpSent != null) {
+            formStorageService.updateBroadcastTcpStatus(id, tcpSent);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @GetMapping("/broadcasts/active")
+    public ResponseEntity<List<Broadcast>> getActiveBroadcasts() {
+        List<Broadcast> broadcasts = formStorageService.getActiveBroadcasts();
+        return ResponseEntity.ok(broadcasts);
+    }
+
+    @GetMapping("/broadcasts/tcp-sent")
+    public ResponseEntity<List<Broadcast>> getTcpSentBroadcasts() {
+        List<Broadcast> broadcasts = formStorageService.getTcpSentBroadcasts();
+        return ResponseEntity.ok(broadcasts);
     }
 
     // Scenario endpoints
-    @PostMapping("/scenario")
+    @PostMapping("/scenarios")
     public ResponseEntity<Scenario> createScenario(@RequestBody Scenario scenario) {
-        try {
-            // Check if broadcast exists
-            FormSubmission broadcast = formStorageService.getFormById(scenario.getBroadcastId());
-            if (broadcast == null) {
-                return ResponseEntity.badRequest().build();
-            }
-            
-            Scenario savedScenario = formStorageService.saveScenario(scenario);
-            
-            return ResponseEntity.ok(savedScenario);
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
-        }
-    }
-
-    @GetMapping("/scenario/broadcast/{broadcastId}")
-    public ResponseEntity<Scenario> getScenarioByBroadcastId(@PathVariable String broadcastId) {
-        try {
-            Scenario scenario = formStorageService.getScenarioByBroadcastId(broadcastId);
-            if (scenario != null) {
-                return ResponseEntity.ok(scenario);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
-        }
-    }
-
-    @GetMapping("/scenario/{id}")
-    public ResponseEntity<Scenario> getScenarioById(@PathVariable Long id) {
-        try {
-            Scenario scenario = formStorageService.getScenarioById(id);
-            if (scenario != null) {
-                return ResponseEntity.ok(scenario);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
-        }
+        Scenario savedScenario = formStorageService.saveScenario(scenario);
+        return ResponseEntity.ok(savedScenario);
     }
 
     @GetMapping("/scenarios")
     public ResponseEntity<List<Scenario>> getAllScenarios() {
-        try {
-            List<Scenario> scenarios = formStorageService.getAllScenarios();
-            return ResponseEntity.ok(scenarios);
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
+        List<Scenario> scenarios = formStorageService.getAllScenarios();
+        return ResponseEntity.ok(scenarios);
+    }
+
+    @GetMapping("/scenarios/{id}")
+    public ResponseEntity<Scenario> getScenarioById(@PathVariable String id) {
+        Scenario scenario = formStorageService.getScenarioById(id);
+        if (scenario != null) {
+            return ResponseEntity.ok(scenario);
         }
+        return ResponseEntity.notFound().build();
     }
 
-    @PutMapping("/scenario/{id}")
-    public ResponseEntity<Scenario> updateScenario(@PathVariable Long id, @RequestBody Scenario scenario) {
-        try {
-            Scenario updatedScenario = formStorageService.updateScenario(id, scenario);
-            if (updatedScenario != null) {
-                return ResponseEntity.ok(updatedScenario);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
+    @GetMapping("/scenarios/broadcast/{broadcastId}")
+    public ResponseEntity<Scenario> getScenarioByBroadcastId(@PathVariable String broadcastId) {
+        Scenario scenario = formStorageService.getScenarioByBroadcastId(broadcastId);
+        if (scenario != null) {
+            return ResponseEntity.ok(scenario);
         }
+        return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/scenario/{id}")
-    public ResponseEntity<String> deleteScenario(@PathVariable Long id) {
-        try {
-            Scenario scenario = formStorageService.getScenarioById(id);
-            if (scenario != null) {
-                formStorageService.deleteScenario(id);
-                return ResponseEntity.ok("Scenario deleted successfully");
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("Error deleting scenario");
+    @PutMapping("/scenarios/{id}")
+    public ResponseEntity<Scenario> updateScenario(@PathVariable String id, @RequestBody Scenario scenario) {
+        Scenario updatedScenario = formStorageService.updateScenario(id, scenario);
+        if (updatedScenario != null) {
+            return ResponseEntity.ok(updatedScenario);
         }
+        return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/list")
-    public ResponseEntity<List<FormSubmission>> listForms() {
-        return ResponseEntity.ok(formStorageService.getAllForms());
-    }
-
-    @GetMapping("/type/{formType}")
-    public ResponseEntity<List<FormSubmission>> getFormsByType(@PathVariable String formType) {
-        try {
-            List<FormSubmission> forms = formStorageService.getFormsByType(formType);
-            return ResponseEntity.ok(forms);
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
-        }
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<FormSubmission> getFormById(@PathVariable String id) {
-        try {
-            FormSubmission form = formStorageService.getFormById(id);
-            if (form != null) {
-                return ResponseEntity.ok(form);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
-        }
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteForm(@PathVariable String id) {
-        try {
-            FormSubmission existingForm = formStorageService.getFormById(id);
-            if (existingForm == null) {
-                return ResponseEntity.notFound().build();
-            }
-
-            // Eğer yayın ise TCP sil mesajı gönder
-            if (existingForm.getFormType().equals("Broadcast")) {
-                Broadcast broadcast = (Broadcast) existingForm.getFormData();
-                
-                // TODO: TCP YAYIN SİL MESAJI - Gerçek TCP silme işlemi yapılacak
-                // tcpService.sendBroadcastDelete(broadcast);
-                System.out.println("TCP DUMMY: Broadcasting DELETE message for: " + broadcast.getName());
-            }
-
-            formStorageService.deleteForm(id);
-            return ResponseEntity.ok("Form deleted successfully");
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
-        }
-    }
-
-    @GetMapping("/count")
-    public ResponseEntity<Integer> getFormCount() {
-        try {
-            int count = formStorageService.getFormCount();
-            return ResponseEntity.ok(count);
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
-        }
-    }
-
-    @GetMapping("/health")
-    public ResponseEntity<String> health() {
-        return ResponseEntity.ok("Form service is running");
-    }
-
-    // Activity Log endpoints
-    @GetMapping("/logs")
-    public ResponseEntity<List<ActivityLog>> getAllActivityLogs() {
-        try {
-            List<ActivityLog> logs = formStorageService.getAllActivityLogs();
-            return ResponseEntity.ok(logs);
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
-        }
-    }
-
-    @GetMapping("/logs/{id}")
-    public ResponseEntity<ActivityLog> getActivityLogById(@PathVariable String id) {
-        try {
-            ActivityLog log = formStorageService.getActivityLogById(id);
-            if (log != null) {
-                return ResponseEntity.ok(log);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
-        }
+    @DeleteMapping("/scenarios/{id}")
+    public ResponseEntity<Void> deleteScenario(@PathVariable String id) {
+        formStorageService.deleteScenario(id);
+        return ResponseEntity.ok().build();
     }
 
     // Message endpoints
-    @PostMapping("/message")
-    public ResponseEntity<Message> saveMessage(@RequestBody Map<String, Object> messageData) {
-        try {
-            String messageName = (String) messageData.get("messageName");
-            String messageType = (String) messageData.get("type");
-            Boolean saveMessage = (Boolean) messageData.get("saveMessage");
-            Boolean sendMessage = (Boolean) messageData.get("sendMessage");
-            
-            // Convert message parameters to JSON string
-            String parameters = formStorageService.convertMapToJson(messageData);
-            
-            Message message = null;
-            // Always create a Message object, even for send-only operations
-            message = formStorageService.saveMessage(messageName, messageType, parameters);
-            
-            // Set appropriate flags based on the operation
-            message.setSaved(saveMessage != null && saveMessage);
-            message.setSent(sendMessage != null && sendMessage);
-            
-            // Send to TCP if requested
-            if (sendMessage != null && sendMessage) {
-                // TODO: Send to TCP (dummy for now)
-                System.out.println("TCP DUMMY: Sending " + messageType + " message: " + messageName);
-                System.out.println("Message parameters: " + parameters);
-            }
-            
-            // Update the message in database
-            message = formStorageService.updateMessage(message);
-            
-            // Antagonist logic: handle counterpart updates when a stop/delete message is SENT
-            if (sendMessage != null && sendMessage) {
-                try {
-                    // Parse parameters JSON to extract yayinId
-                    String yayinId = null;
-                    if (parameters != null && !parameters.isEmpty()) {
-                        com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
-                        java.util.Map<String, Object> paramMap = mapper.readValue(parameters, java.util.Map.class);
-                        Object idObj = paramMap.get("yayinId");
-                        if (idObj != null) {
-                            yayinId = idObj.toString();
-                        }
-                    }
+    @PostMapping({"/messages", "/forms/message"})
+    public ResponseEntity<Message> createMessage(@RequestBody Map<String, Object> messageData) {
+        String messageName = (String) messageData.get("messageName");
+        // Accept both "type" and "messageType"
+        String messageType = (String) (messageData.get("messageType") != null ? messageData.get("messageType") : messageData.get("type"));
 
-                    if (yayinId != null) {
-                        // Determine counterpart type
-                        String counterType = null;
-                        if ("yayinSil".equals(messageType)) counterType = "yayinEkle";
-                        else if ("yayinDurdur".equals(messageType)) counterType = "yayinBaslat";
-
-                        if (counterType != null) {
-                            java.util.List<Message> allMsgs = formStorageService.getAllMessages();
-                            for (Message m : allMsgs) {
-                                if (counterType.equals(m.getMessageType())) {
-                                    try {
-                                        String p = m.getParameters();
-                                        com.fasterxml.jackson.databind.ObjectMapper mp = new com.fasterxml.jackson.databind.ObjectMapper();
-                                        java.util.Map<String, Object> map = mp.readValue(p, java.util.Map.class);
-                                        Object midObj = map.get("yayinId");
-                                        if (midObj != null && yayinId.equals(midObj.toString())) {
-                                            if (m.isSaved()) {
-                                                // Mark as not sent
-                                                m.setSent(false);
-                                                formStorageService.updateMessage(m);
-                                            } else {
-                                                // Remove unsaved counterpart completely
-                                                formStorageService.deleteMessage(m.getId());
-                                            }
-                                        }
-                                    } catch (Exception ex) {
-                                        ex.printStackTrace();
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-
-            // Merge logic: if this is a START type (yayinEkle / yayinBaslat) with same yayinId previously saved, update existing instead of duplicate
-            if (sendMessage != null && sendMessage && ("yayinEkle".equals(messageType) || "yayinBaslat".equals(messageType))) {
-                try {
-                    String yayinId = null;
-                    if (parameters != null && !parameters.isEmpty()) {
-                        com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
-                        java.util.Map<String, Object> paramMap = mapper.readValue(parameters, java.util.Map.class);
-                        Object idObj = paramMap.get("yayinId");
-                        if (idObj != null) yayinId = idObj.toString();
-                    }
-
-                    if (yayinId != null) {
-                        java.util.List<Message> allMsgs = formStorageService.getAllMessages();
-                        for (Message m : allMsgs) {
-                            if (m.getId().equals(message.getId())) continue; // skip self
-                            if (m.getMessageType().equals(messageType)) {
-                                try {
-                                    java.util.Map<String, Object> map = new com.fasterxml.jackson.databind.ObjectMapper().readValue(m.getParameters(), java.util.Map.class);
-                                    Object midObj = map.get("yayinId");
-                                    if (midObj != null && yayinId.equals(midObj.toString())) {
-                                        // Found existing start message with same id -> update and remove duplicate
-                                        m.setSent(true);
-                                        m.setSaved(m.isSaved() || (saveMessage != null && saveMessage));
-                                        m.setCreatedAt(java.time.LocalDateTime.now());
-                                        formStorageService.updateMessage(m);
-
-                                        // Delete the new duplicate if it wasn't intended to be saved
-                                        if (saveMessage == null || !saveMessage) {
-                                            formStorageService.deleteMessage(message.getId());
-                                            message = m; // set return value
-                                        }
-                                        break;
-                                    }
-                                } catch (Exception ex) {
-                                    ex.printStackTrace();
-                                }
-                            }
-                        }
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-
-            return ResponseEntity.ok(message);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().build();
+        // Parse booleans that might come as String or Boolean
+        boolean saveMessage = false;
+        if (messageData.containsKey("saveMessage")) {
+            Object saveObj = messageData.get("saveMessage");
+            saveMessage = !("false".equalsIgnoreCase(String.valueOf(saveObj)) || "0".equals(String.valueOf(saveObj)));
         }
+        
+        boolean sendMessage = false;
+        if (messageData.containsKey("sendMessage")) {
+            Object sendObj = messageData.get("sendMessage");
+            sendMessage = !("false".equalsIgnoreCase(String.valueOf(sendObj)) || "0".equals(String.valueOf(sendObj)));
+        }
+        
+        // Convert all other fields to parameters JSON
+        Map<String, Object> parameters = new HashMap<>();
+        for (Map.Entry<String, Object> entry : messageData.entrySet()) {
+            String key = entry.getKey();
+            if (!"messageName".equals(key) && !"type".equals(key) && 
+                !"messageType".equals(key) && !"saveMessage".equals(key) && !"sendMessage".equals(key)) {
+                parameters.put(key, entry.getValue());
+            }
+        }
+        
+        String parametersJson = formStorageService.convertMapToJson(parameters);
+        
+        Message savedMessage = formStorageService.saveMessage(messageName, messageType, parametersJson, saveMessage, sendMessage);
+        return ResponseEntity.ok(savedMessage);
     }
-    
-    @GetMapping("/messages")
+
+    @PutMapping({"/message/{id}", "/forms/message/{id}"})
+    public ResponseEntity<Message> updateMessage(@PathVariable String id, @RequestBody Message updatedMessage) {
+        Message existingMessage = formStorageService.getMessageById(id);
+        if (existingMessage == null) {
+            return ResponseEntity.notFound().build();
+        }
+        
+        // Update the message (particularly the sent field)
+        existingMessage.setSent(updatedMessage.isSent());
+        // Could also update other fields if needed
+        if (updatedMessage.getMessageName() != null) {
+            existingMessage.setMessageName(updatedMessage.getMessageName());
+        }
+        
+        // Save the updated message
+        Message savedMessage = formStorageService.updateMessage(existingMessage);
+        return ResponseEntity.ok(savedMessage);
+    }
+
+    @GetMapping({"/messages", "/forms/messages"})
     public ResponseEntity<List<Message>> getAllMessages() {
-        try {
-            List<Message> messages = formStorageService.getAllMessages();
-            return ResponseEntity.ok(messages);
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
-        }
+        List<Message> messages = formStorageService.getAllMessages();
+        return ResponseEntity.ok(messages);
     }
-    
-    @GetMapping("/messages/{type}")
-    public ResponseEntity<List<Message>> getMessagesByType(@PathVariable String type) {
-        try {
-            List<Message> messages = formStorageService.getMessagesByType(type);
-            return ResponseEntity.ok(messages);
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
-        }
+
+    @GetMapping({"/messages/type/{messageType}", "/forms/messages/type/{messageType}"})
+    public ResponseEntity<List<Message>> getMessagesByType(@PathVariable String messageType) {
+        List<Message> messages = formStorageService.getMessagesByType(messageType);
+        return ResponseEntity.ok(messages);
     }
-    
-    @DeleteMapping("/message/{id}")
-    public ResponseEntity<String> deleteMessage(@PathVariable String id) {
-        try {
-            formStorageService.deleteMessage(id);
-            return ResponseEntity.ok("Message deleted successfully");
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
+
+    @DeleteMapping({"/messages/{id}", "/forms/message/{id}"})
+    public ResponseEntity<Void> deleteMessage(@PathVariable String id) {
+        boolean deleted = formStorageService.deleteMessage(id);
+        if (deleted) {
+            return ResponseEntity.noContent().build();
         }
+        return ResponseEntity.notFound().build();
     }
-    
-    @PutMapping("/message/{id}")
-    public ResponseEntity<Message> updateMessage(@PathVariable String id, @RequestBody Message messageUpdate) {
-        try {
-            // Get existing message
-            List<Message> allMessages = formStorageService.getAllMessages();
-            Message existingMessage = allMessages.stream()
-                .filter(msg -> msg.getId().equals(id))
-                .findFirst()
-                .orElse(null);
-            
-            if (existingMessage == null) {
-                return ResponseEntity.notFound().build();
-            }
-            
-            // Update the message
-            existingMessage.setSent(messageUpdate.isSent());
-            existingMessage.setSaved(messageUpdate.isSaved());
-            
-            Message updatedMessage = formStorageService.updateMessage(existingMessage);
-            return ResponseEntity.ok(updatedMessage);
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().build();
-        }
+
+    // Compatibility endpoint for frontend
+    @GetMapping("/forms/logs")
+    public ResponseEntity<List<ActivityLog>> getAllActivityLogsCompat() {
+        return getActivityLogs();
     }
 } 

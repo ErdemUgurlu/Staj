@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<broadcastList>
+    <broadcasts>
+        <id>test-broadcast-1</id>
+        <name>Test Yayın 1</name>
+        <amplitude>100</amplitude>
+        <pri>1000</pri>
+        <direction>45</direction>
+        <pulseWidth>2</pulseWidth>
+        <active>false</active>
+        <tcpSent>false</tcpSent>
+    </broadcasts>
+    <broadcasts>
+        <id>test-broadcast-2</id>
+        <name>Test Yayın 2</name>
+        <amplitude>200</amplitude>
+        <pri>2000</pri>
+        <direction>90</direction>
+        <pulseWidth>3</pulseWidth>
+        <active>false</active>
+        <tcpSent>false</tcpSent>
+    </broadcasts>
+</broadcastList>

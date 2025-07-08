@@ -1,52 +1,47 @@
 package com.formapp.backend.model;
 
-import jakarta.persistence.*;
-import java.io.Serializable;
+import jakarta.xml.bind.annotation.*;
+import java.math.BigDecimal;
 
-@Entity
-@Table(name = "broadcasts")
-public class Broadcast implements Serializable {
-    private static final long serialVersionUID = 1L;
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public class Broadcast {
+    @XmlElement
     private String id;
-    
-    @Column(nullable = false)
-    private String name; // Yayın ismi
-    
-    @Column(nullable = false)
-    private Float amplitude;
-    
-    @Column(nullable = false)
-    private Float pri;
-    
-    @Column(nullable = false)
-    private Float direction;
-    
-    @Column(nullable = false)
-    private Float pulseWidth;
-    
-    @Column(nullable = false)
-    private boolean active = true; // Default to active
-    
-    @Column(nullable = false)
-    private boolean tcpSent = false; // TCP ile gönderildi mi?
-    
-    @Column
-    private String scenarioId; // Link to scenario if exists
 
-    public Broadcast() {}
+    @XmlElement
+    private String name;
 
-    public Broadcast(String id, String name, Float amplitude, Float pri, Float direction, Float pulseWidth) {
-        this.id = id;
+    @XmlElement
+    private BigDecimal amplitude;
+
+    @XmlElement
+    private BigDecimal pri;
+
+    @XmlElement
+    private BigDecimal direction;
+
+    @XmlElement
+    private BigDecimal pulseWidth;
+
+    @XmlElement
+    private boolean active;
+
+    @XmlElement
+    private boolean tcpSent;
+
+    public Broadcast() {
+        this.active = false;
+        this.tcpSent = false;
+    }
+
+    public Broadcast(String name, BigDecimal amplitude, BigDecimal pri, BigDecimal direction, BigDecimal pulseWidth) {
+        this();
         this.name = name;
         this.amplitude = amplitude;
         this.pri = pri;
         this.direction = direction;
         this.pulseWidth = pulseWidth;
-        this.active = true;
-        this.tcpSent = false;
     }
 
     // Getters and Setters
@@ -66,35 +61,35 @@ public class Broadcast implements Serializable {
         this.name = name;
     }
 
-    public Float getAmplitude() {
+    public BigDecimal getAmplitude() {
         return amplitude;
     }
 
-    public void setAmplitude(Float amplitude) {
+    public void setAmplitude(BigDecimal amplitude) {
         this.amplitude = amplitude;
     }
 
-    public Float getPri() {
+    public BigDecimal getPri() {
         return pri;
     }
 
-    public void setPri(Float pri) {
+    public void setPri(BigDecimal pri) {
         this.pri = pri;
     }
 
-    public Float getDirection() {
+    public BigDecimal getDirection() {
         return direction;
     }
 
-    public void setDirection(Float direction) {
+    public void setDirection(BigDecimal direction) {
         this.direction = direction;
     }
 
-    public Float getPulseWidth() {
+    public BigDecimal getPulseWidth() {
         return pulseWidth;
     }
 
-    public void setPulseWidth(Float pulseWidth) {
+    public void setPulseWidth(BigDecimal pulseWidth) {
         this.pulseWidth = pulseWidth;
     }
 
@@ -112,28 +107,5 @@ public class Broadcast implements Serializable {
 
     public void setTcpSent(boolean tcpSent) {
         this.tcpSent = tcpSent;
-    }
-
-    public String getScenarioId() {
-        return scenarioId;
-    }
-
-    public void setScenarioId(String scenarioId) {
-        this.scenarioId = scenarioId;
-    }
-
-    @Override
-    public String toString() {
-        return "Broadcast{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", amplitude=" + amplitude +
-                ", pri=" + pri +
-                ", direction=" + direction +
-                ", pulseWidth=" + pulseWidth +
-                ", active=" + active +
-                ", tcpSent=" + tcpSent +
-                ", scenarioId='" + scenarioId + '\'' +
-                '}';
     }
 } 

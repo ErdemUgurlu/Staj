@@ -3,13 +3,25 @@ import './ActivityLogs.css';
 
 const ActivityLogs = ({ onRefreshRequest }) => {
   const [logs, setLogs] = useState([]);
+  const [filteredLogs, setFilteredLogs] = useState([]);
   const [selectedLog, setSelectedLog] = useState(null);
   const [showLogModal, setShowLogModal] = useState(false);
   const [loading, setLoading] = useState(true);
+  
+  // Filter states
+  const [actionFilter, setActionFilter] = useState('ALL');
+  const [messageTypeFilter, setMessageTypeFilter] = useState('ALL');
+  const [dateFilter, setDateFilter] = useState('ALL');
+  const [showFilters, setShowFilters] = useState(false);
 
   useEffect(() => {
     fetchLogs();
   }, []); // Only fetch once on mount
+
+  // Apply filters whenever logs or filter states change
+  useEffect(() => {
+    applyFilters();
+  }, [logs, actionFilter, messageTypeFilter, dateFilter]);
 
   // Listen for refresh requests from parent
   useEffect(() => {
@@ -17,6 +29,90 @@ const ActivityLogs = ({ onRefreshRequest }) => {
       onRefreshRequest(fetchLogs);
     }
   }, [onRefreshRequest]);
+
+  const applyFilters = () => {
+    let filtered = logs;
+
+    // Action filter
+    if (actionFilter !== 'ALL') {
+      filtered = filtered.filter(log => log.action === actionFilter);
+    }
+
+    // Message type filter
+    if (messageTypeFilter !== 'ALL') {
+      filtered = filtered.filter(log => {
+        if (log.entityType === 'MESSAGE' && log.entityData && log.entityData.messageType) {
+          return log.entityData.messageType === messageTypeFilter;
+        }
+        return messageTypeFilter === 'OTHER';
+      });
+    }
+
+    // Date filter
+    if (dateFilter !== 'ALL') {
+      const now = new Date();
+      let filterDate = new Date();
+      
+      switch (dateFilter) {
+        case 'TODAY':
+          filterDate.setHours(0, 0, 0, 0);
+          break;
+        case 'LAST_HOUR':
+          filterDate.setHours(filterDate.getHours() - 1);
+          break;
+        case 'LAST_24H':
+          filterDate.setDate(filterDate.getDate() - 1);
+          break;
+        case 'LAST_WEEK':
+          filterDate.setDate(filterDate.getDate() - 7);
+          break;
+        default:
+          filterDate = null;
+      }
+
+      if (filterDate) {
+        filtered = filtered.filter(log => new Date(log.timestamp) >= filterDate);
+      }
+    }
+
+    // Sort by timestamp (newest first)
+    filtered.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+    setFilteredLogs(filtered);
+  };
+
+  const resetFilters = () => {
+    setActionFilter('ALL');
+    setMessageTypeFilter('ALL');
+    setDateFilter('ALL');
+  };
+
+  const getUniqueActions = () => {
+    const actions = [...new Set(logs.map(log => log.action))];
+    return actions.sort();
+  };
+
+  const getUniqueMessageTypes = () => {
+    const messageTypes = [...new Set(logs
+      .filter(log => log.entityType === 'MESSAGE' && log.entityData && log.entityData.messageType)
+      .map(log => log.entityData.messageType)
+    )];
+    return messageTypes.sort();
+  };
+
+  const getMessageTypeIcon = (messageType) => {
+    switch (messageType) {
+      case 'yayınEkle': return '📡➕';
+      case 'yayınBaslat': return '▶️';
+      case 'yayınDurdur': return '⏹️';
+      case 'yayınYonGuncelle': return '🧭';
+      case 'yayınGenlikGuncelle': return '📶';
+      case 'senaryoEkle': return '📋➕';
+      case 'senaryoBaslat': return '🎬';
+      case 'senaryoDurdur': return '⏸️';
+      default: return '📨';
+    }
+  };
 
   const fetchLogs = async () => {
     try {
@@ -192,20 +288,76 @@ const ActivityLogs = ({ onRefreshRequest }) => {
   return (
     <div className="activity-logs">
       <div className="logs-header">
-        <h3>Sistem Logları ({logs.length})</h3>
-        <div className="refresh-controls">
+        <h3>Sistem Logları ({filteredLogs.length}/{logs.length})</h3>
+        <div className="header-controls">
+          <button 
+            onClick={() => setShowFilters(!showFilters)} 
+            className={`filter-toggle-btn ${showFilters ? 'active' : ''}`}
+            title="Filtreleri Göster/Gizle"
+          >
+            🔍 Filtrele
+          </button>
           <button onClick={fetchLogs} className="refresh-btn" title="Şimdi Yenile">
             ⟳
           </button>
         </div>
       </div>
+
+      {showFilters && (
+        <div className="filters-section">
+          <div className="filters-grid">
+            <div className="filter-group">
+              <label>İşlem Tipi:</label>
+              <select value={actionFilter} onChange={(e) => setActionFilter(e.target.value)}>
+                <option value="ALL">Tümü</option>
+                {getUniqueActions().map(action => (
+                  <option key={action} value={action}>
+                    {getActionIcon(action)} {action}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="filter-group">
+              <label>Mesaj Tipi:</label>
+              <select value={messageTypeFilter} onChange={(e) => setMessageTypeFilter(e.target.value)}>
+                <option value="ALL">Tümü</option>
+                {getUniqueMessageTypes().map(messageType => (
+                  <option key={messageType} value={messageType}>
+                    {getMessageTypeIcon(messageType)} {messageType}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="filter-group">
+              <label>Zaman Aralığı:</label>
+              <select value={dateFilter} onChange={(e) => setDateFilter(e.target.value)}>
+                <option value="ALL">Tüm Zamanlar</option>
+                <option value="LAST_HOUR">Son Saat</option>
+                <option value="TODAY">Bugün</option>
+                <option value="LAST_24H">Son 24 Saat</option>
+                <option value="LAST_WEEK">Son Hafta</option>
+              </select>
+            </div>
+
+            <div className="filter-actions">
+              <button onClick={resetFilters} className="reset-filters-btn" title="Filtreleri Sıfırla">
+                ↺ Sıfırla
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       
       <div className="logs-container">
-        {logs.length === 0 ? (
-          <div className="no-logs">Henüz log kaydı bulunmamaktadır.</div>
+        {filteredLogs.length === 0 ? (
+          <div className="no-logs">
+            {logs.length === 0 ? 'Henüz log kaydı bulunmamaktadır.' : 'Filtrelere uygun log bulunamadı.'}
+          </div>
         ) : (
           <div className="logs-list">
-            {logs.map((log) => (
+            {filteredLogs.map((log) => (
               <div
                 key={log.id}
                 className="log-item"
