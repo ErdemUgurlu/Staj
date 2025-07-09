@@ -1,15 +1,31 @@
 package com.formapp.backend.model;
 
+import jakarta.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Map;
 
+@XmlRootElement(name = "formSubmission")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class FormSubmission implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    @XmlElement
     private String id;
+    
+    @XmlElement
     private String formType;
-    private Object formData;
+    
+    @XmlElement
+    @XmlJavaTypeAdapter(JsonMapConverter.class)
+    private Map<String, Object> formData;
+    
+    @XmlElement
+    @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime submittedAt;
+    
+    @XmlElement
     private String status;
 
     public FormSubmission() {}
@@ -17,9 +33,18 @@ public class FormSubmission implements Serializable {
     public FormSubmission(String id, String formType, Object formData, LocalDateTime submittedAt, String status) {
         this.id = id;
         this.formType = formType;
-        this.formData = formData;
+        this.formData = convertToMap(formData);
         this.submittedAt = submittedAt;
         this.status = status;
+    }
+
+    private Map<String, Object> convertToMap(Object formData) {
+        if (formData instanceof Map) {
+            return (Map<String, Object>) formData;
+        }
+        // For other objects, we can use reflection or manual conversion
+        // For now, keeping it simple
+        return new java.util.HashMap<>();
     }
 
     // Getters and Setters
@@ -44,7 +69,7 @@ public class FormSubmission implements Serializable {
     }
 
     public void setFormData(Object formData) {
-        this.formData = formData;
+        this.formData = convertToMap(formData);
     }
 
     public LocalDateTime getSubmittedAt() {

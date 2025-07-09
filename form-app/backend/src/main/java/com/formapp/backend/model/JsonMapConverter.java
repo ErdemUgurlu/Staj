@@ -44,4 +44,4 @@ public class JsonMapConverter extends XmlAdapter<String, Map<String, Object>> {
             throw new RuntimeException("Error parsing JSON string", e);
         }
     }
-} 
+}

@@ -1,23 +1,73 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <broadcastList>
     <broadcasts>
-        <id>test-broadcast-1</id>
-        <name>Test Yayın 1</name>
-        <amplitude>100</amplitude>
-        <pri>1000</pri>
-        <direction>45</direction>
-        <pulseWidth>2</pulseWidth>
+        <id>1</id>
+        <name>Yayın 1</name>
+        <amplitude>10</amplitude>
+        <pri>0</pri>
+        <direction>33</direction>
+        <pulseWidth>0</pulseWidth>
         <active>false</active>
-        <tcpSent>false</tcpSent>
+        <tcpSent>true</tcpSent>
     </broadcasts>
     <broadcasts>
-        <id>test-broadcast-2</id>
-        <name>Test Yayın 2</name>
-        <amplitude>200</amplitude>
-        <pri>2000</pri>
-        <direction>90</direction>
-        <pulseWidth>3</pulseWidth>
+        <id>2</id>
+        <name>Yayın 2</name>
+        <amplitude>150</amplitude>
+        <pri>600</pri>
+        <direction>120</direction>
+        <pulseWidth>200</pulseWidth>
         <active>false</active>
-        <tcpSent>false</tcpSent>
+        <tcpSent>true</tcpSent>
+    </broadcasts>
+    <broadcasts>
+        <id>17</id>
+        <name>Yayın 17</name>
+        <amplitude>120</amplitude>
+        <pri>0</pri>
+        <direction>190</direction>
+        <pulseWidth>56</pulseWidth>
+        <active>false</active>
+        <tcpSent>true</tcpSent>
+    </broadcasts>
+    <broadcasts>
+        <id>5</id>
+        <name>Yayın 5</name>
+        <amplitude>50</amplitude>
+        <pri>0</pri>
+        <direction>48</direction>
+        <pulseWidth>0</pulseWidth>
+        <active>false</active>
+        <tcpSent>true</tcpSent>
+    </broadcasts>
+    <broadcasts>
+        <id>18</id>
+        <name>Yayın 18</name>
+        <amplitude>19.21239784799445260432548820972442626953125</amplitude>
+        <pri>0</pri>
+        <direction>19.21163531869083129777209251187741756439208984375</direction>
+        <pulseWidth>0</pulseWidth>
+        <active>true</active>
+        <tcpSent>true</tcpSent>
+    </broadcasts>
+    <broadcasts>
+        <id>99</id>
+        <name>Yayın 99</name>
+        <amplitude>90.0450000000000017053025658242404460906982421875</amplitude>
+        <pri>400</pri>
+        <direction>74.0720000000000027284841053187847137451171875</direction>
+        <pulseWidth>80</pulseWidth>
+        <active>true</active>
+        <tcpSent>true</tcpSent>
+    </broadcasts>
+    <broadcasts>
+        <id>100</id>
+        <name>Yayın 100</name>
+        <amplitude>50.0</amplitude>
+        <pri>300</pri>
+        <direction>60.0</direction>
+        <pulseWidth>60</pulseWidth>
+        <active>true</active>
+        <tcpSent>true</tcpSent>
     </broadcasts>
 </broadcastList>

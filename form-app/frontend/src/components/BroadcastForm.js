@@ -880,7 +880,7 @@ const BroadcastForm = ({ onFormSubmitted }) => {
                 <div className="broadcast-status">
                   <span className="broadcast-date">{creationDate}</span>
                   <span className={`status-badge ${message.sent ? 'sent' : 'not-sent'}`}>
-                    {message.sent ? 'TCP Gönderildi' : 'TCP Gönderilmedi'}
+                    
                   </span>
                   <button 
                     className="send-saved-message-btn"

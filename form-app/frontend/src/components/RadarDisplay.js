@@ -18,11 +18,15 @@ const RadarDisplay = ({ broadcasts = [], onBroadcastUpdated }) => {
   const center = size / 2;
   const radius = (size - 120) / 2;
 
+  // Ensure broadcasts is always an array
+  const safeBroadcasts = Array.isArray(broadcasts) ? broadcasts : [];
+
   // Filter broadcasts based on selected filters
-  const filteredBroadcasts = broadcasts.filter(broadcast => {
-    const formData = broadcast.formData;
-    const isActive = formData.active;
-    const isTcpSent = formData.tcpSent;
+  const filteredBroadcasts = safeBroadcasts.filter(broadcast => {
+    // Handle both old formData structure and new direct structure
+    const broadcastData = broadcast.formData || broadcast;
+    const isActive = broadcastData.active;
+    const isTcpSent = broadcastData.tcpSent;
     
     // Check if broadcast matches any selected filter
     if (isActive && !filters.active) return false;
@@ -86,16 +90,24 @@ const RadarDisplay = ({ broadcasts = [], onBroadcastUpdated }) => {
   ));
 
   // Create axis lines
-  const axisLines = [0, 45, 90, 135].map((angle, index) => (
-    <line
-      key={index}
-      x1={center}
-      y1={center}
-      x2={center + radius * Math.cos((angle * Math.PI) / 180)}
-      y2={center + radius * Math.sin((angle * Math.PI) / 180)}
-      className="radar-line"
-    />
-  ));
+  const axisLines = [0, 45, 90, 135, 180, 225, 270, 315].map((angle, index) => {
+    // Convert to radar coordinates where 0° is at top
+    const radarAngle = angle - 90;
+    return (
+      <line
+        key={index}
+        x1={center}
+        y1={center}
+        x2={center + radius * Math.cos((radarAngle * Math.PI) / 180)}
+        y2={center + radius * Math.sin((radarAngle * Math.PI) / 180)}
+        x3={center + radius * Math.cos((radarAngle * Math.PI) / 180)}
+        y3={center + radius * Math.sin((radarAngle * Math.PI) / 180)}
+        x4={center + radius * Math.cos((radarAngle * Math.PI) / 180)}
+        y4={center + radius * Math.sin((radarAngle * Math.PI) / 180)}
+        className="radar-line"
+      />
+    );
+  });
 
   // Create angle labels
   const angleLabels = [
@@ -108,39 +120,41 @@ const RadarDisplay = ({ broadcasts = [], onBroadcastUpdated }) => {
     { angle: 270, text: "270°" },
     { angle: 315, text: "315°" }
   ].map(({ angle, text }, index) => {
-    const labelRadius = radius + 50; // More space for labels
-    const x = center + labelRadius * Math.cos((angle * Math.PI) / 180);
-    const y = center + labelRadius * Math.sin((angle * Math.PI) / 180);
+    const labelRadius = radius + 20; // More space for labels
+    // Convert to radar coordinates where 0° is at top
+    const radarAngle = angle - 90;
+    const x = center + labelRadius * Math.cos((radarAngle * Math.PI) / 180);
+    const y = center + labelRadius * Math.sin((radarAngle * Math.PI) / 180);
     
     // Adjust text anchor and baseline based on angle for better positioning
     let textAnchor = "middle";
     let dominantBaseline = "middle";
     
-    // Fine-tune position based on angle
+    // Fine-tune position based on radar angle (0° at top)
     if (angle === 0) {
-      textAnchor = "start";
-      dominantBaseline = "central";
-    } else if (angle === 180) {
-      textAnchor = "end";
-      dominantBaseline = "central";
-    } else if (angle === 90) {
       textAnchor = "middle";
       dominantBaseline = "auto";
-    } else if (angle === 270) {
+    } else if (angle === 180) {
       textAnchor = "middle";
       dominantBaseline = "hanging";
+    } else if (angle === 90) {
+      textAnchor = "start";
+      dominantBaseline = "central";
+    } else if (angle === 270) {
+      textAnchor = "end";
+      dominantBaseline = "central";
     } else if (angle > 0 && angle < 90) {
       textAnchor = "start";
       dominantBaseline = "auto";
     } else if (angle > 90 && angle < 180) {
-      textAnchor = "end";
-      dominantBaseline = "auto";
+      textAnchor = "start";
+      dominantBaseline = "hanging";
     } else if (angle > 180 && angle < 270) {
       textAnchor = "end";
       dominantBaseline = "hanging";
     } else if (angle > 270 && angle < 360) {
-      textAnchor = "start";
-      dominantBaseline = "hanging";
+      textAnchor = "end";
+      dominantBaseline = "auto";
     }
 
     return (
@@ -159,15 +173,17 @@ const RadarDisplay = ({ broadcasts = [], onBroadcastUpdated }) => {
 
   // Calculate broadcast positions for filtered broadcasts
   const broadcastPoints = filteredBroadcasts.map((broadcast) => {
-    const formData = broadcast.formData;
+    // Handle both old formData structure and new direct structure
+    const broadcastData = broadcast.formData || broadcast;
     
     // Use direction for angle (0-360 degrees)
-    const angleRad = (formData.direction * Math.PI) / 180;
+    // Convert to radar coordinates where 0° is at top (subtract 90°)
+    const angleRad = ((broadcastData.direction - 90) * Math.PI) / 180;
     
     // Use amplitude for distance from center (normalize to 0-1 and scale by radius)
     // Assuming amplitude range 0-100, adjust as needed
     const maxAmplitude = 100;
-    const normalizedAmplitude = Math.min(formData.amplitude / maxAmplitude, 1);
+    const normalizedAmplitude = Math.min(broadcastData.amplitude / maxAmplitude, 1);
     const distance = normalizedAmplitude * radius;
     
     // Calculate x, y coordinates
@@ -179,7 +195,8 @@ const RadarDisplay = ({ broadcasts = [], onBroadcastUpdated }) => {
       x,
       y,
       distance: normalizedAmplitude,
-      angle: formData.direction
+      angle: broadcastData.direction,
+      broadcastData // Store the actual data for easy access
     };
   });
 
@@ -214,7 +231,7 @@ const RadarDisplay = ({ broadcasts = [], onBroadcastUpdated }) => {
               checked={filters.active}
               onChange={() => handleFilterChange('active')}
             />
-            <span className="filter-label active">🟢 Aktif Yayınlar ({broadcasts.filter(b => b.formData.active).length})</span>
+            <span className="filter-label active">🟢 Aktif Yayınlar ({safeBroadcasts.filter(b => (b.formData || b).active).length})</span>
           </label>
           
           <label className="filter-option">
@@ -223,7 +240,7 @@ const RadarDisplay = ({ broadcasts = [], onBroadcastUpdated }) => {
               checked={filters.inactive}
               onChange={() => handleFilterChange('inactive')}
             />
-            <span className="filter-label inactive">🔴 Deaktif Yayınlar ({broadcasts.filter(b => !b.formData.active).length})</span>
+            <span className="filter-label inactive">🔴 Deaktif Yayınlar ({safeBroadcasts.filter(b => !(b.formData || b).active).length})</span>
           </label>
           
           <label className="filter-option">
@@ -233,7 +250,7 @@ const RadarDisplay = ({ broadcasts = [], onBroadcastUpdated }) => {
               onChange={() => handleFilterChange('tcpSent')}
             />
             <span className="filter-label tcp-sent" title="Seçildiğinde otomatik olarak Aktif ve Deaktif yayınlar da seçilir">
-              📤 TCP Gönderilmiş ({broadcasts.filter(b => b.formData.tcpSent).length})
+              📤 TCP Gönderilmiş ({safeBroadcasts.filter(b => (b.formData || b).tcpSent).length})
             </span>
           </label>
           
@@ -244,13 +261,13 @@ const RadarDisplay = ({ broadcasts = [], onBroadcastUpdated }) => {
               onChange={() => handleFilterChange('tcpNotSent')}
             />
             <span className="filter-label tcp-not-sent" title="Seçildiğinde otomatik olarak Aktif ve Deaktif yayınlar da seçilir">
-              📥 TCP Gönderilmemiş ({broadcasts.filter(b => !b.formData.tcpSent).length})
+              📥 TCP Gönderilmemiş ({safeBroadcasts.filter(b => !(b.formData || b).tcpSent).length})
             </span>
           </label>
         </div>
         
         <div className="filter-summary">
-          Toplam: {broadcasts.length} | Görüntülenen: {filteredBroadcasts.length}
+          Toplam: {safeBroadcasts.length} | Görüntülenen: {filteredBroadcasts.length}
         </div>
         
         <div className="filter-info">
@@ -290,9 +307,9 @@ const RadarDisplay = ({ broadcasts = [], onBroadcastUpdated }) => {
 
         {/* Broadcast points */}
         {broadcastPoints.map((broadcast) => {
-          const formData = broadcast.formData;
-          const isActive = formData.active;
-          const isTcpSent = formData.tcpSent;
+          const broadcastData = broadcast.broadcastData || broadcast.formData || broadcast;
+          const isActive = broadcastData.active;
+          const isTcpSent = broadcastData.tcpSent;
           
           let pointClass = 'broadcast-point';
           if (isActive) {
@@ -335,13 +352,20 @@ const RadarDisplay = ({ broadcasts = [], onBroadcastUpdated }) => {
             zIndex: 1000
           }}
         >
-          <div><strong>{hoveredBroadcast.formData.name}</strong></div>
-          <div>Yön: {hoveredBroadcast.formData.direction}°</div>
-          <div>Genlik: {hoveredBroadcast.formData.amplitude}</div>
-          <div>PRI: {hoveredBroadcast.formData.pri}</div>
-          <div>Pulse Width: {hoveredBroadcast.formData.pulseWidth}</div>
-          <div>Durum: {hoveredBroadcast.formData.active ? 'Aktif' : 'Deaktif'}</div>
-          <div>TCP: {hoveredBroadcast.formData.tcpSent ? 'Gönderildi' : 'Gönderilmedi'}</div>
+          {(() => {
+            const data = hoveredBroadcast.broadcastData || hoveredBroadcast.formData || hoveredBroadcast;
+            return (
+              <>
+                <div><strong>{data.name}</strong></div>
+                <div>Yön: {data.direction}°</div>
+                <div>Genlik: {data.amplitude}</div>
+                <div>PRI: {data.pri}</div>
+                <div>Pulse Width: {data.pulseWidth}</div>
+                <div>Durum: {data.active ? 'Aktif' : 'Deaktif'}</div>
+                <div>TCP: {data.tcpSent ? 'Gönderildi' : 'Gönderilmedi'}</div>
+              </>
+            );
+          })()}
         </div>
       )}
     </div>

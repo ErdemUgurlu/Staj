@@ -20,16 +20,17 @@ public class XmlStorageService {
     private static final String MESSAGES_FILE = DATA_DIR + "/messages.xml";
     private static final String SCENARIOS_FILE = DATA_DIR + "/scenarios.xml";
     private static final String ACTIVITY_LOGS_FILE = DATA_DIR + "/activity_logs.xml";
+    private static final String FORM_SUBMISSIONS_FILE = DATA_DIR + "/form_submissions.xml";
 
     public XmlStorageService() {
         // Create data directory if it doesn't exist
         new File(DATA_DIR).mkdirs();
     }
 
-    @XmlRootElement(name = "broadcasts")
+    @XmlRootElement(name = "broadcastList")
     @XmlAccessorType(XmlAccessType.FIELD)
     public static class BroadcastList {
-        @XmlElement(name = "broadcast")
+        @XmlElement(name = "broadcasts")
         private List<Broadcast> broadcasts = new ArrayList<>();
 
         public List<Broadcast> getBroadcasts() {
@@ -41,10 +42,10 @@ public class XmlStorageService {
         }
     }
 
-    @XmlRootElement(name = "messages")
+    @XmlRootElement(name = "messageList")
     @XmlAccessorType(XmlAccessType.FIELD)
     public static class MessageList {
-        @XmlElement(name = "message")
+        @XmlElement(name = "messages")
         private List<Message> messages = new ArrayList<>();
 
         public List<Message> getMessages() {
@@ -56,10 +57,10 @@ public class XmlStorageService {
         }
     }
 
-    @XmlRootElement(name = "scenarios")
+    @XmlRootElement(name = "scenarioList")
     @XmlAccessorType(XmlAccessType.FIELD)
     public static class ScenarioList {
-        @XmlElement(name = "scenario")
+        @XmlElement(name = "scenarios")
         private List<Scenario> scenarios = new ArrayList<>();
 
         public List<Scenario> getScenarios() {
@@ -71,10 +72,10 @@ public class XmlStorageService {
         }
     }
 
-    @XmlRootElement(name = "activityLogs")
+    @XmlRootElement(name = "activityLogList")
     @XmlAccessorType(XmlAccessType.FIELD)
     public static class ActivityLogList {
-        @XmlElement(name = "activityLog")
+        @XmlElement(name = "activityLogs")
         private List<ActivityLog> activityLogs = new ArrayList<>();
 
         public List<ActivityLog> getActivityLogs() {
@@ -83,6 +84,21 @@ public class XmlStorageService {
 
         public void setActivityLogs(List<ActivityLog> activityLogs) {
             this.activityLogs = activityLogs;
+        }
+    }
+
+    @XmlRootElement(name = "formSubmissionList")
+    @XmlAccessorType(XmlAccessType.FIELD)
+    public static class FormSubmissionList {
+        @XmlElement(name = "formSubmissions")
+        private List<FormSubmission> formSubmissions = new ArrayList<>();
+
+        public List<FormSubmission> getFormSubmissions() {
+            return formSubmissions;
+        }
+
+        public void setFormSubmissions(List<FormSubmission> formSubmissions) {
+            this.formSubmissions = formSubmissions;
         }
     }
 
@@ -201,6 +217,36 @@ public class XmlStorageService {
             ActivityLogList list = new ActivityLogList();
             list.setActivityLogs(activityLogs);
             marshaller.marshal(list, new File(ACTIVITY_LOGS_FILE));
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // FormSubmission methods
+    public List<FormSubmission> loadFormSubmissions() {
+        try {
+            File file = new File(FORM_SUBMISSIONS_FILE);
+            if (!file.exists()) {
+                return new ArrayList<>();
+            }
+            JAXBContext context = JAXBContext.newInstance(FormSubmissionList.class);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            FormSubmissionList list = (FormSubmissionList) unmarshaller.unmarshal(file);
+            return list.getFormSubmissions();
+        } catch (JAXBException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    public void saveFormSubmissions(List<FormSubmission> formSubmissions) {
+        try {
+            JAXBContext context = JAXBContext.newInstance(FormSubmissionList.class);
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            FormSubmissionList list = new FormSubmissionList();
+            list.setFormSubmissions(formSubmissions);
+            marshaller.marshal(list, new File(FORM_SUBMISSIONS_FILE));
         } catch (JAXBException e) {
             e.printStackTrace();
         }

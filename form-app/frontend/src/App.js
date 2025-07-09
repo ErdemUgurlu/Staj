@@ -17,72 +17,6 @@ function App() {
       if (response.ok) {
         const data = await response.json();
         setMessages(data);
-        
-        // Convert yayinEkle messages to broadcast format for radar display
-        const yayinEkleMessages = data.filter(msg => msg.messageType === 'yayinEkle');
-        const yayinBaslatMessages = data.filter(msg => msg.messageType === 'yayinBaslat');
-        const yayinDurdurMessages = data.filter(msg => msg.messageType === 'yayinDurdur');
-        const yayinSilMessages = data.filter(msg => msg.messageType === 'yayinSil');
-        
-        const broadcastData = yayinEkleMessages
-          .map(msg => {
-            try {
-              const params = JSON.parse(msg.parameters || '{}');
-              
-              // Check if there's a corresponding yayinBaslat message for this yayinId
-              const hasBaslatMessage = yayinBaslatMessages.some(baslatMsg => {
-                try {
-                  const baslatParams = JSON.parse(baslatMsg.parameters || '{}');
-                  return baslatParams.yayinId === params.yayinId && baslatMsg.sent;
-                } catch (e) {
-                  console.warn('Error parsing baslatMsg parameters for message:', baslatMsg.id, e);
-                  return false;
-                }
-              });
-              
-              // Check if there's a corresponding yayinDurdur message sent for this yayinId
-              const hasDurdurMessage = yayinDurdurMessages.some(stopMsg => {
-                try {
-                  const stopParams = JSON.parse(stopMsg.parameters || '{}');
-                  return stopParams.yayinId === params.yayinId && stopMsg.sent;
-                } catch (e) {
-                  console.warn('Error parsing stopMsg parameters for message:', stopMsg.id, e);
-                  return false;
-                }
-              });
-              
-              // Check if there's a yayinSil message sent for this yayinId
-              const hasSilMessage = yayinSilMessages.some(silMsg => {
-                try {
-                  const silParams = JSON.parse(silMsg.parameters || '{}');
-                  return silParams.yayinId === params.yayinId && silMsg.sent;
-                } catch (e) {
-                  console.warn('Error parsing silMsg parameters for message:', silMsg.id, e);
-                  return false;
-                }
-              });
-              
-              return {
-                id: msg.id,
-                formData: {
-                  id: params.yayinId || 'unknown',
-                  name: msg.messageName || 'Unnamed',
-                  amplitude: params.amplitude || 0,
-                  direction: params.direction || 0,
-                  pri: params.pri || 0,
-                  pulseWidth: params.pulseWidth || 0,
-                  active: hasBaslatMessage && !hasDurdurMessage && !hasSilMessage, // active if started and not stopped or sil
-                  tcpSent: msg.sent
-                }
-              };
-            } catch (e) {
-              console.warn('Error parsing message parameters for message:', msg.id, e);
-              return null;
-            }
-          })
-          .filter(Boolean);
-        
-        setBroadcasts(broadcastData);
       } else {
         console.error('Error fetching messages:', response.status, response.statusText);
       }
@@ -94,22 +28,75 @@ function App() {
     }
   }, []);
 
-  const fetchBroadcasts = async () => {
-    // This is kept for backwards compatibility but now uses fetchMessages
-    await fetchMessages();
-  };
+  const fetchBroadcasts = useCallback(async () => {
+    try {
+      const response = await fetch('http://localhost:8080/api/broadcasts');
+      if (response.ok) {
+        const broadcastsData = await response.json();
+        
+        // XML'den gelen broadcasts'ları doğrudan kullan
+        const xmlBroadcasts = broadcastsData.map(broadcast => ({
+          id: broadcast.id,
+          formData: {
+            id: broadcast.id,
+            name: broadcast.name || `Yayın ${broadcast.id}`,
+            amplitude: broadcast.amplitude || 0,
+            direction: broadcast.direction || 0,
+            pri: broadcast.pri || 0,
+            pulseWidth: broadcast.pulseWidth || 0,
+            active: broadcast.active || false,
+            tcpSent: broadcast.tcpSent || false
+          }
+        }));
+        
+        setBroadcasts(xmlBroadcasts);
+      } else {
+        console.error('Error fetching broadcasts:', response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching broadcasts:', error);
+    }
+  }, []);
+
+
+
+  const fetchActivityLogs = useCallback(async () => {
+    try {
+      const response = await fetch('http://localhost:8080/api/activity-logs');
+      if (response.ok) {
+        const logsData = await response.json();
+        // Assuming activityLogsRef.current is a function that updates the logs state
+        // For now, we'll just log the data, as the original code didn't have a state for logs
+        // If activityLogsRef.current was intended to be a state, it would be set here.
+        console.log('Fetched activity logs:', logsData);
+      } else {
+        console.error('Failed to fetch activity logs');
+      }
+    } catch (error) {
+      console.error('Error fetching activity logs:', error);
+    }
+  }, []);
 
   useEffect(() => {
+    // Initially load messages and broadcasts
     fetchMessages();
+    fetchBroadcasts();
+    fetchActivityLogs();
     
-    // Refresh messages every 5 seconds
-    const interval = setInterval(fetchMessages, 5000);
-    
+    const interval = setInterval(() => {
+      fetchMessages();
+      fetchBroadcasts();
+      fetchActivityLogs();
+    }, 5000);
+
     return () => clearInterval(interval);
-  }, [fetchMessages]);
+  }, []);
+
+
 
   const handleFormSubmitted = () => {
     fetchMessages();
+    fetchBroadcasts();
     // Only refresh logs when a form is actually submitted
     if (activityLogsRef.current) {
       activityLogsRef.current();
@@ -137,7 +124,7 @@ function App() {
     if (!selectedBroadcast) return;
 
     try {
-      const response = await fetch('http://localhost:8080/api/forms/scenario', {
+      const response = await fetch('http://localhost:8080/api/scenarios', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -348,7 +335,7 @@ function App() {
         </div>
 
         <div className="radar-section">
-          <RadarDisplay broadcasts={broadcasts} onBroadcastUpdated={fetchBroadcasts} />
+          <RadarDisplay broadcasts={broadcasts} onBroadcastUpdated={() => { fetchMessages(); fetchBroadcasts(); }} />
         </div>
 
         <div className="broadcast-list-section">

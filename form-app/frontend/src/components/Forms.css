@@ -1137,4 +1137,36 @@ button:disabled {
 .dropdown-item.yayin-genlik-guncelle-color:hover {
   background-color: rgba(32, 201, 151, 0.1);
   color: #20c997;
+}
+
+.dropdown-item.senaryo-color:hover {
+  background-color: rgba(255, 193, 7, 0.1);
+  color: #ffc107;
+}
+
+/* Scenario specific styles */
+.scenario-info {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  padding: 15px;
+  margin: 15px 0;
+}
+
+.scenario-info p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #495057;
+}
+
+.scenario-info strong {
+  color: #212529;
+}
+
+.form-group select {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: white;
 } 

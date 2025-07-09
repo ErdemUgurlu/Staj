@@ -11,6 +11,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.math.BigDecimal;
+import org.springframework.scheduling.annotation.Scheduled;
 
 @Service
 public class FormStorageService {
@@ -33,6 +34,21 @@ public class FormStorageService {
         this.messages = xmlStorageService.loadMessages();
         this.scenarios = xmlStorageService.loadScenarios();
         this.activityLogs = xmlStorageService.loadActivityLogs();
+        
+        // Load FormSubmissions from XML and populate the in-memory storage
+        loadFormSubmissionsFromXml();
+    }
+    
+    private void loadFormSubmissionsFromXml() {
+        List<FormSubmission> formSubmissions = xmlStorageService.loadFormSubmissions();
+        for (FormSubmission submission : formSubmissions) {
+            formStorage.put(submission.getId(), submission);
+        }
+    }
+    
+    private void saveFormSubmissionsToXml() {
+        List<FormSubmission> formSubmissions = new ArrayList<>(formStorage.values());
+        xmlStorageService.saveFormSubmissions(formSubmissions);
     }
 
     public FormSubmission saveForm(String formType, Object formData) {
@@ -48,6 +64,7 @@ public class FormStorageService {
         );
         
         formStorage.put(id, submission);
+        saveFormSubmissionsToXml();
         
         // Log the activity
         logActivity("CREATE", "BROADCAST", id, "Yeni yayın oluşturuldu", convertToMap(formData));
@@ -71,6 +88,7 @@ public class FormStorageService {
         );
         
         formStorage.put(id, updatedSubmission);
+        saveFormSubmissionsToXml();
         
         // Log the activity
         logActivity("UPDATE", "BROADCAST", id, "Yayın parametreleri güncellendi", convertToMap(formData));
@@ -95,6 +113,7 @@ public class FormStorageService {
             );
             
             formStorage.put(id, updatedSubmission);
+            saveFormSubmissionsToXml();
             
             // Log the activity
             String action = !currentActive ? "ACTIVATE" : "DEACTIVATE";
@@ -110,9 +129,9 @@ public class FormStorageService {
         }
         
         // Get current broadcast values to set as initial values
-        FormSubmission broadcastForm = getFormById(scenario.getBroadcastId());
-        if (broadcastForm != null) {
-            Broadcast broadcast = (Broadcast) broadcastForm.getFormData();
+        Optional<Broadcast> broadcastOpt = getBroadcastById(scenario.getBroadcastId());
+        if (broadcastOpt.isPresent()) {
+            Broadcast broadcast = broadcastOpt.get();
             scenario.setInitialAmplitude(broadcast.getAmplitude().doubleValue());
             scenario.setInitialDirection(broadcast.getDirection().doubleValue());
         }
@@ -215,6 +234,7 @@ public class FormStorageService {
         if (submission != null) {
             logActivity("DELETE", "BROADCAST", id, "Yayın silindi", convertToMap(submission.getFormData()));
             formStorage.remove(id);
+            saveFormSubmissionsToXml();
         }
     }
 
@@ -247,6 +267,32 @@ public class FormStorageService {
                 .filter(log -> log.getId().equals(id))
                 .findFirst()
                 .orElse(null);
+    }
+
+    // Activity log filtreleme metodu
+    public List<ActivityLog> getActivityLogsByAction(String action, Integer limit) {
+        return activityLogs.stream()
+                .filter(log -> action == null || action.isEmpty() || log.getAction().equalsIgnoreCase(action))
+                .sorted((a, b) -> b.getTimestamp().compareTo(a.getTimestamp())) // En yeniden eskiye sırala
+                .limit(limit != null && limit > 0 ? limit : activityLogs.size())
+                .collect(Collectors.toList());
+    }
+
+    public List<ActivityLog> getActivityLogsByEntityType(String entityType, Integer limit) {
+        return activityLogs.stream()
+                .filter(log -> entityType == null || entityType.isEmpty() || log.getEntityType().equalsIgnoreCase(entityType))
+                .sorted((a, b) -> b.getTimestamp().compareTo(a.getTimestamp()))
+                .limit(limit != null && limit > 0 ? limit : activityLogs.size())
+                .collect(Collectors.toList());
+    }
+
+    public List<ActivityLog> getActivityLogsWithFilters(String action, String entityType, Integer limit) {
+        return activityLogs.stream()
+                .filter(log -> (action == null || action.isEmpty() || log.getAction().equalsIgnoreCase(action)) &&
+                               (entityType == null || entityType.isEmpty() || log.getEntityType().equalsIgnoreCase(entityType)))
+                .sorted((a, b) -> b.getTimestamp().compareTo(a.getTimestamp()))
+                .limit(limit != null && limit > 0 ? limit : activityLogs.size())
+                .collect(Collectors.toList());
     }
 
     private Map<String, Object> convertToMap(Object obj) {
@@ -321,9 +367,9 @@ public class FormStorageService {
                 .filter(b -> b.getId().equals(id))
                 .findFirst()
                 .ifPresent(broadcast -> {
-                    broadcast.setActive(active);
+            broadcast.setActive(active);
                     xmlStorageService.saveBroadcasts(broadcasts);
-                });
+        });
     }
 
     public void updateBroadcastTcpStatus(String id, boolean tcpSent) {
@@ -331,9 +377,9 @@ public class FormStorageService {
                 .filter(b -> b.getId().equals(id))
                 .findFirst()
                 .ifPresent(broadcast -> {
-                    broadcast.setTcpSent(tcpSent);
+            broadcast.setTcpSent(tcpSent);
                     xmlStorageService.saveBroadcasts(broadcasts);
-                });
+        });
     }
 
     public List<Broadcast> getActiveBroadcasts() {
@@ -350,48 +396,107 @@ public class FormStorageService {
 
     // Message methods
     public Message saveMessage(String messageName, String messageType, String parameters, boolean saveMessage, boolean sendMessage) {
+        String id = UUID.randomUUID().toString();
         Message message = new Message(messageName, messageType, parameters);
-        if (message.getId() == null) {
-            message.setId(UUID.randomUUID().toString());
-        }
-        
-        // Set the saved and sent flags based on parameters
+        message.setId(id);
         message.setSaved(saveMessage);
         message.setSent(sendMessage);
-        
-        // Handle broadcast updates for specific message types
-        if (sendMessage && "yayinYonGuncelle".equals(messageType)) {
-            updateBroadcastDirection(parameters);
-        } else if (sendMessage && "yayinGenlikGuncelle".equals(messageType)) {
-            updateBroadcastAmplitude(parameters);
+
+        // Handle special message types
+        if (sendMessage) {
+            // Dummy TCP message sending
+            System.out.println("Sending TCP message: " + messageType);
+            System.out.println("Parameters: " + parameters);
+            
+            // Update broadcast status based on message type
+            if ("yayinEkle".equals(messageType)) {
+                // Create new broadcast from yayinEkle message parameters
+                try {
+                    Map<String, Object> params = JsonMapConverter.parseJsonString(parameters);
+                    String yayinId = String.valueOf(params.get("yayinId"));
+                    
+                    // Check if broadcast with this ID already exists
+                    boolean exists = broadcasts.stream()
+                        .anyMatch(b -> b.getId().equals(yayinId));
+                    
+                    if (!exists) {
+                        Broadcast newBroadcast = new Broadcast();
+                        newBroadcast.setId(yayinId);
+                        newBroadcast.setName("Yayın " + yayinId);
+                        
+                        // Set parameters from message
+                        newBroadcast.setAmplitude(new BigDecimal(String.valueOf(params.get("amplitude"))));
+                        newBroadcast.setPri(new BigDecimal(String.valueOf(params.get("pri"))));
+                        newBroadcast.setDirection(new BigDecimal(String.valueOf(params.get("direction"))));
+                        newBroadcast.setPulseWidth(new BigDecimal(String.valueOf(params.get("pulseWidth"))));
+                        
+                        // Set initial status
+                        newBroadcast.setActive(false);  // Initially inactive until yayinBaslat is sent
+                        newBroadcast.setTcpSent(true);   // TCP message was sent
+                        
+                        broadcasts.add(newBroadcast);
+                        xmlStorageService.saveBroadcasts(broadcasts);
+                        
+                        // Log the creation
+                        Map<String, Object> broadcastData = new HashMap<>();
+                        broadcastData.put("id", newBroadcast.getId());
+                        broadcastData.put("name", newBroadcast.getName());
+                        broadcastData.put("amplitude", newBroadcast.getAmplitude());
+                        broadcastData.put("pri", newBroadcast.getPri());
+                        broadcastData.put("direction", newBroadcast.getDirection());
+                        broadcastData.put("pulseWidth", newBroadcast.getPulseWidth());
+                        logActivity("CREATE", "BROADCAST", newBroadcast.getId(), "Yayın eklendi", broadcastData);
+                    }
+                } catch (Exception e) {
+                    System.err.println("Error creating broadcast from yayinEkle message: " + e.getMessage());
+                }
+            } else if ("yayinBaslat".equals(messageType)) {
+                updateBroadcastStatus(extractYayinId(parameters), true);
+            } else if ("yayinDurdur".equals(messageType)) {
+                updateBroadcastStatus(extractYayinId(parameters), false);
+            } else if ("yayinSil".equals(messageType)) {
+                // For yayinSil, we need to:
+                // 1. Send TCP message (already done above)
+                // 2. Delete the broadcast
+                String yayinId = extractYayinId(parameters);
+                Optional<Broadcast> broadcast = broadcasts.stream()
+                    .filter(b -> b.getId().equals(yayinId))
+                    .findFirst();
+                
+                if (broadcast.isPresent()) {
+                    broadcasts.remove(broadcast.get());
+                    xmlStorageService.saveBroadcasts(broadcasts);
+                    
+                    // Log the deletion
+                    Map<String, Object> broadcastData = new HashMap<>();
+                    broadcastData.put("id", broadcast.get().getId());
+                    broadcastData.put("name", broadcast.get().getName());
+                    logActivity("DELETE", "BROADCAST", broadcast.get().getId(), "Yayın silindi", broadcastData);
+                }
+            } else if ("yayinYonGuncelle".equals(messageType)) {
+                updateBroadcastDirection(parameters);
+            } else if ("yayinGenlikGuncelle".equals(messageType)) {
+                updateBroadcastAmplitude(parameters);
+            }
         }
-        
-        // Always add to storage
-        messages.add(message);
-        xmlStorageService.saveMessages(messages);
-        
-        // Log the activity
-        Map<String, Object> messageData = new HashMap<>();
-        messageData.put("id", message.getId());
-        messageData.put("messageName", message.getMessageName());
-        messageData.put("messageType", message.getMessageType());
-        messageData.put("parameters", message.getParameters());
-        messageData.put("saved", message.isSaved());
-        messageData.put("sent", message.isSent());
-        
-        ActivityLog log = new ActivityLog();
-        log.setId(UUID.randomUUID().toString());
-        log.setAction("CREATE");
-        log.setEntityType("MESSAGE");
-        log.setEntityId(message.getId());
-        log.setDescription((messageType != null ? messageType : "null") + " mesajı oluşturuldu");
-        log.setEntityData(messageData);
-        log.setTimestamp(LocalDateTime.now());
-        
-        activityLogs.add(log);
-        xmlStorageService.saveActivityLogs(activityLogs);
-        
+
+        if (saveMessage) {
+            messages.add(message);
+            xmlStorageService.saveMessages(messages);
+        }
+
         return message;
+    }
+
+    private String extractYayinId(String parameters) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, Object> paramMap = mapper.readValue(parameters, Map.class);
+            return (String) paramMap.get("yayinId");
+        } catch (Exception e) {
+            System.err.println("Error extracting yayinId from parameters: " + e.getMessage());
+            return null;
+        }
     }
 
     private void updateBroadcastDirection(String parameters) {
@@ -522,6 +627,114 @@ public class FormStorageService {
         } catch (Exception e) {
             e.printStackTrace();
             return "{}";
+        }
+    }
+
+    @Scheduled(fixedDelay = 1000) // Run every second
+    public void processActiveScenarios() {
+        long currentTime = System.currentTimeMillis();
+        
+        for (Scenario scenario : scenarios) {
+            if (scenario.getIsActive() && scenario.getStartTime() != null) {
+                double elapsedTime = (currentTime - scenario.getStartTime()) / 1000.0; // Convert to seconds
+                
+                // Check if scenario has completed
+                if (elapsedTime >= scenario.getDuration()) {
+                    // Set final values exactly as specified before marking as complete
+                    updateBroadcastFromScenario(scenario.getBroadcastId(), 
+                        scenario.getFinalAmplitude(), scenario.getFinalDirection());
+                    sendScenarioUpdateMessages(scenario.getBroadcastId(), 
+                        scenario.getFinalAmplitude(), scenario.getFinalDirection());
+                    
+                    scenario.setIsActive(false);
+                    xmlStorageService.saveScenarios(scenarios);
+                    
+                    // Log scenario completion
+                    Map<String, Object> scenarioData = new HashMap<>();
+                    scenarioData.put("broadcastId", scenario.getBroadcastId());
+                    scenarioData.put("duration", scenario.getDuration());
+                    scenarioData.put("finalAmplitude", scenario.getFinalAmplitude());
+                    scenarioData.put("finalDirection", scenario.getFinalDirection());
+                    logActivity("COMPLETE", "SCENARIO", scenario.getId(), "Senaryo tamamlandı - final değerler uygulandı", scenarioData);
+                    
+                    continue;
+                }
+                
+                // Check if it's time for an update
+                double updateInterval = scenario.getUpdateFrequency();
+                if (updateInterval > 0 && elapsedTime % updateInterval < 1.0) { // Within 1 second tolerance
+                    // Calculate current values based on elapsed time
+                    double progress = elapsedTime / scenario.getDuration();
+                    if (progress > 1.0) progress = 1.0;
+                    
+                    // Linear interpolation
+                    double currentAmplitude = scenario.getInitialAmplitude() + 
+                        (scenario.getFinalAmplitude() - scenario.getInitialAmplitude()) * progress;
+                    double currentDirection = scenario.getInitialDirection() + 
+                        (scenario.getFinalDirection() - scenario.getInitialDirection()) * progress;
+                    
+                    // Update broadcast parameters
+                    updateBroadcastFromScenario(scenario.getBroadcastId(), currentAmplitude, currentDirection);
+                    
+                    // Send update messages
+                    sendScenarioUpdateMessages(scenario.getBroadcastId(), currentAmplitude, currentDirection);
+                }
+            }
+        }
+    }
+    
+    private void updateBroadcastFromScenario(String broadcastId, double amplitude, double direction) {
+        broadcasts.stream()
+            .filter(b -> b.getId().equals(broadcastId))
+            .findFirst()
+            .ifPresent(broadcast -> {
+                broadcast.setAmplitude(BigDecimal.valueOf(amplitude));
+                broadcast.setDirection(BigDecimal.valueOf(direction));
+                xmlStorageService.saveBroadcasts(broadcasts);
+            });
+    }
+    
+    private void sendScenarioUpdateMessages(String broadcastId, double amplitude, double direction) {
+        try {
+            // Send amplitude update message
+            Map<String, Object> amplitudeParams = new HashMap<>();
+            amplitudeParams.put("yayinId", broadcastId);
+            amplitudeParams.put("newAmplitude", amplitude);
+            String amplitudeParamsJson = convertMapToJson(amplitudeParams);
+            
+            Message amplitudeMsg = new Message("Senaryo Genlik Güncelleme", "yayinGenlikGuncelle", amplitudeParamsJson);
+            amplitudeMsg.setId(UUID.randomUUID().toString());
+            amplitudeMsg.setSaved(false);
+            amplitudeMsg.setSent(true);
+            
+            // Send direction update message
+            Map<String, Object> directionParams = new HashMap<>();
+            directionParams.put("yayinId", broadcastId);
+            directionParams.put("newDirection", direction);
+            String directionParamsJson = convertMapToJson(directionParams);
+            
+            Message directionMsg = new Message("Senaryo Yön Güncelleme", "yayinYonGuncelle", directionParamsJson);
+            directionMsg.setId(UUID.randomUUID().toString());
+            directionMsg.setSaved(false);
+            directionMsg.setSent(true);
+            
+            // Add to messages list but don't save to XML (they are auto-generated)
+            // Just process the TCP sending
+            System.out.println("Sending TCP message: yayinGenlikGuncelle");
+            System.out.println("Parameters: " + amplitudeParamsJson);
+            
+            System.out.println("Sending TCP message: yayinYonGuncelle");
+            System.out.println("Parameters: " + directionParamsJson);
+            
+            // Log the update
+            Map<String, Object> updateData = new HashMap<>();
+            updateData.put("broadcastId", broadcastId);
+            updateData.put("amplitude", amplitude);
+            updateData.put("direction", direction);
+            logActivity("UPDATE", "SCENARIO", broadcastId, "Senaryo otomatik güncelleme", updateData);
+            
+        } catch (Exception e) {
+            System.err.println("Error sending scenario update messages: " + e.getMessage());
         }
     }
 } 

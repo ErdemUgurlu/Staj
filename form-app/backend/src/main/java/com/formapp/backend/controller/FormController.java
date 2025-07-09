@@ -43,27 +43,27 @@ public class FormController {
         if (form != null) {
             return ResponseEntity.ok(form);
         }
-        return ResponseEntity.notFound().build();
-    }
-
+                return ResponseEntity.notFound().build();
+            }
+            
     @PutMapping("/forms/{id}")
     public ResponseEntity<FormSubmission> updateForm(@PathVariable String id, @RequestBody Map<String, Object> formData) {
         String formType = (String) formData.get("formType");
         Object data = formData.get("data");
-        
+            
         FormSubmission updatedForm = formStorageService.updateForm(id, formType, data);
         if (updatedForm != null) {
             return ResponseEntity.ok(updatedForm);
         }
-        return ResponseEntity.notFound().build();
-    }
-
+                return ResponseEntity.notFound().build();
+            }
+            
     @DeleteMapping("/forms/{id}")
     public ResponseEntity<Void> deleteForm(@PathVariable String id) {
         formStorageService.deleteForm(id);
         return ResponseEntity.ok().build();
-    }
-
+            }
+            
     @GetMapping("/forms/count")
     public ResponseEntity<Integer> getFormCount() {
         int count = formStorageService.getFormCount();
@@ -88,15 +88,44 @@ public class FormController {
         if (log != null) {
             return ResponseEntity.ok(log);
         }
-        return ResponseEntity.notFound().build();
+                return ResponseEntity.notFound().build();
+            }
+            
+    // Activity log filtreleme endpoint'leri
+    @GetMapping("/activity-logs/filter")
+    public ResponseEntity<List<ActivityLog>> getFilteredActivityLogs(
+            @RequestParam(required = false) String action,
+            @RequestParam(required = false) String entityType,
+            @RequestParam(required = false) Integer limit) {
+        
+        List<ActivityLog> logs = formStorageService.getActivityLogsWithFilters(action, entityType, limit);
+        return ResponseEntity.ok(logs);
     }
 
+    @GetMapping("/activity-logs/action/{action}")
+    public ResponseEntity<List<ActivityLog>> getActivityLogsByAction(
+            @PathVariable String action,
+            @RequestParam(required = false) Integer limit) {
+        
+        List<ActivityLog> logs = formStorageService.getActivityLogsByAction(action, limit);
+        return ResponseEntity.ok(logs);
+    }
+
+    @GetMapping("/activity-logs/entity/{entityType}")
+    public ResponseEntity<List<ActivityLog>> getActivityLogsByEntityType(
+            @PathVariable String entityType,
+            @RequestParam(required = false) Integer limit) {
+        
+        List<ActivityLog> logs = formStorageService.getActivityLogsByEntityType(entityType, limit);
+        return ResponseEntity.ok(logs);
+    }
+            
     @PostMapping("/broadcasts")
     public ResponseEntity<Broadcast> createBroadcast(@RequestBody Broadcast broadcast) {
         Broadcast savedBroadcast = formStorageService.saveBroadcast(broadcast);
         return ResponseEntity.ok(savedBroadcast);
-    }
-
+            }
+            
     @GetMapping("/broadcasts")
     public ResponseEntity<List<Broadcast>> getAllBroadcasts() {
         List<Broadcast> broadcasts = formStorageService.getBroadcasts();
@@ -124,7 +153,7 @@ public class FormController {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.badRequest().build();
-    }
+            }
 
     @PutMapping("/broadcasts/{id}/tcp-status")
     public ResponseEntity<Void> updateBroadcastTcpStatus(@PathVariable String id, @RequestBody Map<String, Boolean> status) {
@@ -140,8 +169,8 @@ public class FormController {
     public ResponseEntity<List<Broadcast>> getActiveBroadcasts() {
         List<Broadcast> broadcasts = formStorageService.getActiveBroadcasts();
         return ResponseEntity.ok(broadcasts);
-    }
-
+            }
+            
     @GetMapping("/broadcasts/tcp-sent")
     public ResponseEntity<List<Broadcast>> getTcpSentBroadcasts() {
         List<Broadcast> broadcasts = formStorageService.getTcpSentBroadcasts();
@@ -151,24 +180,24 @@ public class FormController {
     // Scenario endpoints
     @PostMapping("/scenarios")
     public ResponseEntity<Scenario> createScenario(@RequestBody Scenario scenario) {
-        Scenario savedScenario = formStorageService.saveScenario(scenario);
-        return ResponseEntity.ok(savedScenario);
+            Scenario savedScenario = formStorageService.saveScenario(scenario);
+            return ResponseEntity.ok(savedScenario);
     }
 
     @GetMapping("/scenarios")
     public ResponseEntity<List<Scenario>> getAllScenarios() {
-        List<Scenario> scenarios = formStorageService.getAllScenarios();
-        return ResponseEntity.ok(scenarios);
+            List<Scenario> scenarios = formStorageService.getAllScenarios();
+            return ResponseEntity.ok(scenarios);
     }
 
     @GetMapping("/scenarios/{id}")
     public ResponseEntity<Scenario> getScenarioById(@PathVariable String id) {
-        Scenario scenario = formStorageService.getScenarioById(id);
-        if (scenario != null) {
+            Scenario scenario = formStorageService.getScenarioById(id);
+            if (scenario != null) {
             return ResponseEntity.ok(scenario);
         }
-        return ResponseEntity.notFound().build();
-    }
+                return ResponseEntity.notFound().build();
+            }
 
     @GetMapping("/scenarios/broadcast/{broadcastId}")
     public ResponseEntity<Scenario> getScenarioByBroadcastId(@PathVariable String broadcastId) {
@@ -176,8 +205,8 @@ public class FormController {
         if (scenario != null) {
             return ResponseEntity.ok(scenario);
         }
-        return ResponseEntity.notFound().build();
-    }
+                return ResponseEntity.notFound().build();
+            }
 
     @PutMapping("/scenarios/{id}")
     public ResponseEntity<Scenario> updateScenario(@PathVariable String id, @RequestBody Scenario scenario) {
@@ -185,8 +214,8 @@ public class FormController {
         if (updatedScenario != null) {
             return ResponseEntity.ok(updatedScenario);
         }
-        return ResponseEntity.notFound().build();
-    }
+                return ResponseEntity.notFound().build();
+            }
 
     @DeleteMapping("/scenarios/{id}")
     public ResponseEntity<Void> deleteScenario(@PathVariable String id) {
@@ -212,8 +241,8 @@ public class FormController {
         if (messageData.containsKey("sendMessage")) {
             Object sendObj = messageData.get("sendMessage");
             sendMessage = !("false".equalsIgnoreCase(String.valueOf(sendObj)) || "0".equals(String.valueOf(sendObj)));
-        }
-        
+    }
+
         // Convert all other fields to parameters JSON
         Map<String, Object> parameters = new HashMap<>();
         for (Map.Entry<String, Object> entry : messageData.entrySet()) {
@@ -225,7 +254,7 @@ public class FormController {
         }
         
         String parametersJson = formStorageService.convertMapToJson(parameters);
-        
+            
         Message savedMessage = formStorageService.saveMessage(messageName, messageType, parametersJson, saveMessage, sendMessage);
         return ResponseEntity.ok(savedMessage);
     }
@@ -248,19 +277,19 @@ public class FormController {
         Message savedMessage = formStorageService.updateMessage(existingMessage);
         return ResponseEntity.ok(savedMessage);
     }
-
+    
     @GetMapping({"/messages", "/forms/messages"})
     public ResponseEntity<List<Message>> getAllMessages() {
-        List<Message> messages = formStorageService.getAllMessages();
-        return ResponseEntity.ok(messages);
+            List<Message> messages = formStorageService.getAllMessages();
+            return ResponseEntity.ok(messages);
     }
 
     @GetMapping({"/messages/type/{messageType}", "/forms/messages/type/{messageType}"})
     public ResponseEntity<List<Message>> getMessagesByType(@PathVariable String messageType) {
         List<Message> messages = formStorageService.getMessagesByType(messageType);
-        return ResponseEntity.ok(messages);
+            return ResponseEntity.ok(messages);
     }
-
+    
     @DeleteMapping({"/messages/{id}", "/forms/message/{id}"})
     public ResponseEntity<Void> deleteMessage(@PathVariable String id) {
         boolean deleted = formStorageService.deleteMessage(id);

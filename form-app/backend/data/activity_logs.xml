@@ -1,556 +1,2985 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<activityLogs>
-    <activityLog>
-        <id>b475e562-7f43-4f67-bda8-a19fc65d0c03</id>
-        <action>CREATE</action>
-        <entityType>MESSAGE</entityType>
-        <entityId>38bf97ec-b723-4b7e-88a5-51bc374687e7</entityId>
-        <description>null mesajı oluşturuldu</description>
+<activityLogList>
+    <activityLogs>
+        <id>b1f7fbb3-df24-42c7-accf-e2f1cdb1b3d6</id>
+        <action>DELETE</action>
+        <entityType>BROADCAST</entityType>
+        <entityId>ad3a08fb-8a4c-435c-96d7-112c0804c834</entityId>
+        <description>Yayın silindi</description>
         <entityData>
             <entry>
-                <key>messageName</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">yayinekle1</value>
-            </entry>
-            <entry>
-                <key>messageType</key>
-            </entry>
-            <entry>
-                <key>saved</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">false</value>
-            </entry>
-            <entry>
-                <key>parameters</key>
-            </entry>
-            <entry>
-                <key>sent</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">false</value>
-            </entry>
-        </entityData>
-        <timestamp>2025-07-08T05:50:03.604866</timestamp>
-    </activityLog>
-    <activityLog>
-        <id>40f6128a-42df-46cd-a300-d7fd651d6a81</id>
-        <action>CREATE</action>
-        <entityType>MESSAGE</entityType>
-        <entityId>b4c12029-c36d-4f61-8269-308408854f51</entityId>
-        <description>null mesajı oluşturuldu</description>
-        <entityData>
-            <entry>
-                <key>messageName</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">yayinekle3</value>
-            </entry>
-            <entry>
-                <key>messageType</key>
-            </entry>
-            <entry>
-                <key>saved</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">false</value>
-            </entry>
-            <entry>
-                <key>parameters</key>
-            </entry>
-            <entry>
-                <key>sent</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">false</value>
-            </entry>
-        </entityData>
-        <timestamp>2025-07-08T05:50:03.605995</timestamp>
-    </activityLog>
-    <activityLog>
-        <id>282af2ec-1db5-400e-a092-9dd36ff32c5e</id>
-        <action>CREATE</action>
-        <entityType>MESSAGE</entityType>
-        <entityId>d95f3c18-cdcf-4997-b4fe-55792a8b275a</entityId>
-        <description>null mesajı oluşturuldu</description>
-        <entityData>
-            <entry>
-                <key>messageName</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">yayinekle4</value>
-            </entry>
-            <entry>
-                <key>messageType</key>
-            </entry>
-            <entry>
-                <key>saved</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">false</value>
-            </entry>
-            <entry>
-                <key>parameters</key>
-            </entry>
-            <entry>
-                <key>sent</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">false</value>
-            </entry>
-        </entityData>
-        <timestamp>2025-07-08T05:50:03.606765</timestamp>
-    </activityLog>
-    <activityLog>
-        <id>bc01dc83-c955-4db7-a541-3579cd81aa30</id>
-        <action>CREATE</action>
-        <entityType>MESSAGE</entityType>
-        <entityId>27125bdf-cc7e-461f-9f22-2c865ebb28ac</entityId>
-        <description>null mesajı oluşturuldu</description>
-        <entityData>
-            <entry>
-                <key>messageName</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">testKaydet</value>
-            </entry>
-            <entry>
-                <key>messageType</key>
-            </entry>
-            <entry>
-                <key>saved</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">false</value>
-            </entry>
-            <entry>
-                <key>parameters</key>
-            </entry>
-            <entry>
-                <key>sent</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">false</value>
-            </entry>
-        </entityData>
-        <timestamp>2025-07-08T05:50:03.607428</timestamp>
-    </activityLog>
-    <activityLog>
-        <id>08bd3046-13ed-4c62-a323-449078ec9d84</id>
-        <action>CREATE</action>
-        <entityType>MESSAGE</entityType>
-        <entityId>862d59bd-bf70-4c59-8814-b7ded7943533</entityId>
-        <description>null mesajı oluşturuldu</description>
-        <entityData>
-            <entry>
-                <key>messageName</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">abc</value>
-            </entry>
-            <entry>
-                <key>messageType</key>
-            </entry>
-            <entry>
-                <key>saved</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">false</value>
-            </entry>
-            <entry>
-                <key>parameters</key>
-            </entry>
-            <entry>
-                <key>sent</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">false</value>
-            </entry>
-        </entityData>
-        <timestamp>2025-07-08T05:50:03.608281</timestamp>
-    </activityLog>
-    <activityLog>
-        <id>737bb5a4-bea5-451a-9507-85c6e2a25db2</id>
-        <action>CREATE</action>
-        <entityType>MESSAGE</entityType>
-        <entityId>988955be-3f7e-43f2-9368-ed5fe294c476</entityId>
-        <description>null mesajı oluşturuldu</description>
-        <entityData>
-            <entry>
-                <key>messageName</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">yayinekle4</value>
-            </entry>
-            <entry>
-                <key>messageType</key>
-            </entry>
-            <entry>
-                <key>saved</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">false</value>
-            </entry>
-            <entry>
-                <key>parameters</key>
-            </entry>
-            <entry>
-                <key>sent</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">false</value>
-            </entry>
-        </entityData>
-        <timestamp>2025-07-08T05:50:03.609301</timestamp>
-    </activityLog>
-    <activityLog>
-        <id>24f4230a-00b7-4829-b5ce-02be6a2dee77</id>
-        <action>CREATE</action>
-        <entityType>MESSAGE</entityType>
-        <entityId>b023e610-bd24-4aca-a582-811d7ce49161</entityId>
-        <description>null mesajı oluşturuldu</description>
-        <entityData>
-            <entry>
-                <key>messageName</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">kaydet1</value>
-            </entry>
-            <entry>
-                <key>messageType</key>
-            </entry>
-            <entry>
-                <key>saved</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">false</value>
-            </entry>
-            <entry>
-                <key>parameters</key>
-            </entry>
-            <entry>
-                <key>sent</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">false</value>
-            </entry>
-        </entityData>
-        <timestamp>2025-07-08T05:50:03.609695</timestamp>
-    </activityLog>
-    <activityLog>
-        <id>6b6e41eb-fb14-46da-b988-8b3e2df9f79f</id>
-        <action>CREATE</action>
-        <entityType>MESSAGE</entityType>
-        <entityId>65759f15-39de-4c4d-bc9f-275b5d6a5659</entityId>
-        <description>yayinEkle mesajı oluşturuldu</description>
-        <entityData>
-            <entry>
-                <key>messageName</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">kaydet2</value>
-            </entry>
-            <entry>
-                <key>messageType</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">yayinEkle</value>
-            </entry>
-            <entry>
-                <key>saved</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">false</value>
-            </entry>
-            <entry>
-                <key>parameters</key>
-            </entry>
-            <entry>
-                <key>sent</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">false</value>
-            </entry>
-        </entityData>
-        <timestamp>2025-07-08T05:50:03.610316</timestamp>
-    </activityLog>
-    <activityLog>
-        <id>b72597f7-5dcb-472d-9a89-c6a4914215c8</id>
-        <action>CREATE</action>
-        <entityType>MESSAGE</entityType>
-        <entityId>b2ca10ad-957f-4ae5-8ac6-e2ed3b676a23</entityId>
-        <description>null mesajı oluşturuldu</description>
-        <entityData>
-            <entry>
-                <key>messageName</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">ya1</value>
-            </entry>
-            <entry>
-                <key>messageType</key>
-            </entry>
-            <entry>
-                <key>saved</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">false</value>
-            </entry>
-            <entry>
-                <key>parameters</key>
-            </entry>
-            <entry>
-                <key>sent</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">false</value>
-            </entry>
-        </entityData>
-        <timestamp>2025-07-08T05:50:03.610797</timestamp>
-    </activityLog>
-    <activityLog>
-        <id>81c64446-c48e-4e24-b698-5db94d7b0f73</id>
-        <action>CREATE</action>
-        <entityType>MESSAGE</entityType>
-        <entityId>cfc983ee-e4e6-402a-9c7b-2bea41a996df</entityId>
-        <description>null mesajı oluşturuldu</description>
-        <entityData>
-            <entry>
-                <key>messageName</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">yayinekle4</value>
-            </entry>
-            <entry>
-                <key>messageType</key>
-            </entry>
-            <entry>
-                <key>saved</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">false</value>
-            </entry>
-            <entry>
-                <key>parameters</key>
-            </entry>
-            <entry>
-                <key>sent</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">false</value>
-            </entry>
-        </entityData>
-        <timestamp>2025-07-08T05:50:03.611288</timestamp>
-    </activityLog>
-    <activityLog>
-        <id>ee610064-5d4f-4bad-80fa-9fe5c9db7ee2</id>
-        <action>CREATE</action>
-        <entityType>MESSAGE</entityType>
-        <entityId>735315d7-90ba-4214-8991-4deddee175ac</entityId>
-        <description>null mesajı oluşturuldu</description>
-        <entityData>
-            <entry>
-                <key>messageName</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">yayınekle5</value>
-            </entry>
-            <entry>
-                <key>messageType</key>
-            </entry>
-            <entry>
-                <key>saved</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">false</value>
-            </entry>
-            <entry>
-                <key>parameters</key>
-            </entry>
-            <entry>
-                <key>sent</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">false</value>
-            </entry>
-        </entityData>
-        <timestamp>2025-07-08T05:50:03.611562</timestamp>
-    </activityLog>
-    <activityLog>
-        <id>958a6f3f-8c9f-4ef2-8348-0065f89c363f</id>
-        <action>CREATE</action>
-        <entityType>MESSAGE</entityType>
-        <entityId>ed7ca7a9-c8aa-4d3b-a767-845b7618229a</entityId>
-        <description>yayinEkle mesajı oluşturuldu</description>
-        <entityData>
-            <entry>
-                <key>messageName</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">kaydet-test</value>
-            </entry>
-            <entry>
-                <key>messageType</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">yayinEkle</value>
-            </entry>
-            <entry>
-                <key>saved</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">true</value>
-            </entry>
-            <entry>
-                <key>parameters</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">{"yayinId":11}</value>
-            </entry>
-            <entry>
-                <key>sent</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">false</value>
-            </entry>
-        </entityData>
-        <timestamp>2025-07-08T05:43:55.604292</timestamp>
-    </activityLog>
-    <activityLog>
-        <id>7b2644b7-5ad8-49fe-b03f-4cbd32ac8353</id>
-        <action>CREATE</action>
-        <entityType>MESSAGE</entityType>
-        <entityId>26734fa8-bdd9-4707-ae17-84555b4bb08b</entityId>
-        <description>yayinEkle mesajı oluşturuldu</description>
-        <entityData>
-            <entry>
-                <key>messageName</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">yayinekle11</value>
-            </entry>
-            <entry>
-                <key>messageType</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">yayinEkle</value>
-            </entry>
-            <entry>
-                <key>saved</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">true</value>
-            </entry>
-            <entry>
-                <key>parameters</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">{"amplitude":1,"yayinId":"11","pulseWidth":0,"pri":0,"direction":7}</value>
-            </entry>
-            <entry>
-                <key>sent</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">true</value>
-            </entry>
-        </entityData>
-        <timestamp>2025-07-08T05:45:14.960447</timestamp>
-    </activityLog>
-    <activityLog>
-        <id>9b1fb0b9-ed1e-4df2-a1a3-17246ac263c0</id>
-        <action>CREATE</action>
-        <entityType>MESSAGE</entityType>
-        <entityId>b94513d0-4b21-4d74-be40-5cf04e50b640</entityId>
-        <description>yayinEkle mesajı oluşturuldu</description>
-        <entityData>
-            <entry>
-                <key>messageName</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">kaydet-test</value>
-            </entry>
-            <entry>
-                <key>messageType</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">yayinEkle</value>
-            </entry>
-            <entry>
-                <key>saved</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">false</value>
-            </entry>
-            <entry>
-                <key>parameters</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">{"yayinId":11}</value>
-            </entry>
-            <entry>
-                <key>sent</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">true</value>
-            </entry>
-        </entityData>
-        <timestamp>2025-07-08T05:51:01.976107</timestamp>
-    </activityLog>
-    <activityLog>
-        <id>f316ecf4-0cc7-473d-916b-6742fe4d2d92</id>
-        <action>CREATE</action>
-        <entityType>MESSAGE</entityType>
-        <entityId>87b9cbe1-cbbb-423d-9818-8f622b10a806</entityId>
-        <description>yayinBaslat mesajı oluşturuldu</description>
-        <entityData>
-            <entry>
-                <key>messageName</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">yb1</value>
-            </entry>
-            <entry>
-                <key>messageType</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">yayinBaslat</value>
-            </entry>
-            <entry>
-                <key>saved</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">true</value>
-            </entry>
-            <entry>
-                <key>parameters</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">{"yayinId":"1"}</value>
-            </entry>
-            <entry>
-                <key>sent</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">true</value>
-            </entry>
-        </entityData>
-        <timestamp>2025-07-08T05:51:34.949655</timestamp>
-    </activityLog>
-    <activityLog>
-        <id>5dab750a-5862-4541-a2ac-f7ee14c51a50</id>
-        <action>CREATE</action>
-        <entityType>MESSAGE</entityType>
-        <entityId>497573ce-d68f-4ca3-9774-1eec76a1b137</entityId>
-        <description>yayinBaslat mesajı oluşturuldu</description>
-        <entityData>
-            <entry>
-                <key>messageName</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">yb11</value>
-            </entry>
-            <entry>
-                <key>messageType</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">yayinBaslat</value>
-            </entry>
-            <entry>
-                <key>saved</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">true</value>
-            </entry>
-            <entry>
-                <key>parameters</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">{"yayinId":"11"}</value>
-            </entry>
-            <entry>
-                <key>sent</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">true</value>
-            </entry>
-        </entityData>
-        <timestamp>2025-07-08T05:51:55.990119</timestamp>
-    </activityLog>
-    <activityLog>
-        <id>d4d44c70-84cb-4bd1-bb5a-5f33ebc52c44</id>
-        <action>CREATE</action>
-        <entityType>MESSAGE</entityType>
-        <entityId>a977acf8-a46a-44ae-b8de-1b7e732d6a52</entityId>
-        <description>yayinYonGuncelle mesajı oluşturuldu</description>
-        <entityData>
-            <entry>
-                <key>messageName</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">yayinekle1</value>
-            </entry>
-            <entry>
-                <key>messageType</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">yayinYonGuncelle</value>
-            </entry>
-            <entry>
-                <key>saved</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">true</value>
-            </entry>
-            <entry>
-                <key>parameters</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">{"yayinId":"11","newDirection":20}</value>
-            </entry>
-            <entry>
-                <key>sent</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">true</value>
-            </entry>
-        </entityData>
-        <timestamp>2025-07-08T06:02:28.63385</timestamp>
-    </activityLog>
-    <activityLog>
-        <id>b34dd68b-76ed-491c-95de-83f0b78c0140</id>
-        <action>CREATE</action>
-        <entityType>MESSAGE</entityType>
-        <entityId>5aedb37a-3913-4107-9d5e-dc6c55870045</entityId>
-        <description>yayinGenlikGuncelle mesajı oluşturuldu</description>
-        <entityData>
-            <entry>
-                <key>messageName</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">yg11</value>
-            </entry>
-            <entry>
-                <key>messageType</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">yayinGenlikGuncelle</value>
-            </entry>
-            <entry>
-                <key>saved</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">true</value>
-            </entry>
-            <entry>
-                <key>parameters</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">{"yayinId":"11","newAmplitude":110}</value>
-            </entry>
-            <entry>
-                <key>sent</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">true</value>
-            </entry>
-        </entityData>
-        <timestamp>2025-07-08T06:03:17.467566</timestamp>
-    </activityLog>
-    <activityLog>
-        <id>2f4127bc-d133-4c63-806c-7d694ac2c591</id>
-        <action>CREATE</action>
-        <entityType>MESSAGE</entityType>
-        <entityId>d74644c7-a913-4472-99cb-84cf8a39eb92</entityId>
-        <description>yayinEkle mesajı oluşturuldu</description>
-        <entityData>
-            <entry>
-                <key>messageName</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">yayinekle1</value>
-            </entry>
-            <entry>
-                <key>messageType</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">yayinEkle</value>
-            </entry>
-            <entry>
-                <key>saved</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">true</value>
+                <key>name</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Test Yayın</value>
             </entry>
             <entry>
                 <key>id</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">d74644c7-a913-4472-99cb-84cf8a39eb92</value>
-            </entry>
-            <entry>
-                <key>parameters</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">{"amplitude":0,"yayinId":"1","pulseWidth":-4,"pri":0,"direction":10}</value>
-            </entry>
-            <entry>
-                <key>sent</key>
-                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:boolean">true</value>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">ad3a08fb-8a4c-435c-96d7-112c0804c834</value>
             </entry>
         </entityData>
-        <timestamp>2025-07-08T06:20:10.268323</timestamp>
-    </activityLog>
-</activityLogs>
+        <timestamp>2025-07-09T22:36:13.641572</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>81600248-de9e-4cb8-8ea3-300e879aaa07</id>
+        <action>DELETE</action>
+        <entityType>BROADCAST</entityType>
+        <entityId>f08e075b-2c3e-40f0-8da8-251835b3da09</entityId>
+        <description>Yayın silindi</description>
+        <entityData>
+            <entry>
+                <key>name</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Frontend Test Yayın</value>
+            </entry>
+            <entry>
+                <key>id</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">f08e075b-2c3e-40f0-8da8-251835b3da09</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T22:36:52.115685</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>dd9530d7-6b67-40a7-bd60-a9dae42d2d1b</id>
+        <action>CREATE</action>
+        <entityType>BROADCAST</entityType>
+        <entityId>3</entityId>
+        <description>Yayın eklendi</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">30</value>
+            </entry>
+            <entry>
+                <key>pulseWidth</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">0</value>
+            </entry>
+            <entry>
+                <key>pri</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">0</value>
+            </entry>
+            <entry>
+                <key>name</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Yayın 3</value>
+            </entry>
+            <entry>
+                <key>id</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">3</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">2</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T22:52:47.662947</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>dffd13d6-a99c-4c99-9fa8-a05963762fc2</id>
+        <action>CREATE</action>
+        <entityType>BROADCAST</entityType>
+        <entityId>1</entityId>
+        <description>Yayın eklendi</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">10</value>
+            </entry>
+            <entry>
+                <key>pulseWidth</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">0</value>
+            </entry>
+            <entry>
+                <key>pri</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">0</value>
+            </entry>
+            <entry>
+                <key>name</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Yayın 1</value>
+            </entry>
+            <entry>
+                <key>id</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">1</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">48</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T22:52:52.150401</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>1b54eb78-a248-415c-bf15-80eaa6a1edd3</id>
+        <action>CREATE</action>
+        <entityType>BROADCAST</entityType>
+        <entityId>2</entityId>
+        <description>Yayın eklendi</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">150</value>
+            </entry>
+            <entry>
+                <key>pulseWidth</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">200</value>
+            </entry>
+            <entry>
+                <key>pri</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">600</value>
+            </entry>
+            <entry>
+                <key>name</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Yayın 2</value>
+            </entry>
+            <entry>
+                <key>id</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">2</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">90</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T22:53:21.247171</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>30d5fe6f-45cd-4bfa-850b-38ff216e6a5c</id>
+        <action>CREATE</action>
+        <entityType>BROADCAST</entityType>
+        <entityId>17</entityId>
+        <description>Yayın eklendi</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">120</value>
+            </entry>
+            <entry>
+                <key>pulseWidth</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">56</value>
+            </entry>
+            <entry>
+                <key>pri</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">0</value>
+            </entry>
+            <entry>
+                <key>name</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Yayın 17</value>
+            </entry>
+            <entry>
+                <key>id</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">17</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">190</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T22:54:03.2965</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>95e140f9-ce87-4062-abb1-e4f5a68690df</id>
+        <action>CREATE</action>
+        <entityType>BROADCAST</entityType>
+        <entityId>5</entityId>
+        <description>Yayın eklendi</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">50</value>
+            </entry>
+            <entry>
+                <key>pulseWidth</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">0</value>
+            </entry>
+            <entry>
+                <key>pri</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">0</value>
+            </entry>
+            <entry>
+                <key>name</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Yayın 5</value>
+            </entry>
+            <entry>
+                <key>id</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">5</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">48</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:02:57.493982</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>62ddf86c-c7d5-4f81-9942-aaf6958d9985</id>
+        <action>DELETE</action>
+        <entityType>BROADCAST</entityType>
+        <entityId>5</entityId>
+        <description>Yayın silindi</description>
+        <entityData>
+            <entry>
+                <key>name</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Yayın 5</value>
+            </entry>
+            <entry>
+                <key>id</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">5</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:03:58.27411</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>eeb2a7fb-5483-4a56-a803-1d4b8cadc756</id>
+        <action>CREATE</action>
+        <entityType>BROADCAST</entityType>
+        <entityId>5</entityId>
+        <description>Yayın eklendi</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">50</value>
+            </entry>
+            <entry>
+                <key>pulseWidth</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">0</value>
+            </entry>
+            <entry>
+                <key>pri</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">0</value>
+            </entry>
+            <entry>
+                <key>name</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Yayın 5</value>
+            </entry>
+            <entry>
+                <key>id</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">5</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">48</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:04:13.555673</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>5cecb5b3-5960-47f8-acf9-43a5771ad66d</id>
+        <action>CREATE</action>
+        <entityType>BROADCAST</entityType>
+        <entityId>18</entityId>
+        <description>Yayın eklendi</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">44</value>
+            </entry>
+            <entry>
+                <key>pulseWidth</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">0</value>
+            </entry>
+            <entry>
+                <key>pri</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">0</value>
+            </entry>
+            <entry>
+                <key>name</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Yayın 18</value>
+            </entry>
+            <entry>
+                <key>id</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">45</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:13:45.824451</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>918aff04-7003-45c4-8351-86316d26288c</id>
+        <action>DELETE</action>
+        <entityType>BROADCAST</entityType>
+        <entityId>18</entityId>
+        <description>Yayın silindi</description>
+        <entityData>
+            <entry>
+                <key>name</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Yayın 18</value>
+            </entry>
+            <entry>
+                <key>id</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:14:40.345632</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>78d8c313-bc1b-47e1-b8e6-248367a4b983</id>
+        <action>CREATE</action>
+        <entityType>BROADCAST</entityType>
+        <entityId>18</entityId>
+        <description>Yayın eklendi</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">44</value>
+            </entry>
+            <entry>
+                <key>pulseWidth</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">0</value>
+            </entry>
+            <entry>
+                <key>pri</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">0</value>
+            </entry>
+            <entry>
+                <key>name</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Yayın 18</value>
+            </entry>
+            <entry>
+                <key>id</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">45</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:21:20.761898</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>a407ce57-d5c0-4406-92ad-990bbfb122e4</id>
+        <action>DELETE</action>
+        <entityType>BROADCAST</entityType>
+        <entityId>3</entityId>
+        <description>Yayın silindi</description>
+        <entityData>
+            <entry>
+                <key>name</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Yayın 3</value>
+            </entry>
+            <entry>
+                <key>id</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">3</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:26:53.259919</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>b3206bdd-ff85-4f92-9a5e-528913bf2210</id>
+        <action>UPDATE</action>
+        <entityType>BROADCAST</entityType>
+        <entityId>1</entityId>
+        <description>Yayın yönü güncellendi: 33°</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">10</value>
+            </entry>
+            <entry>
+                <key>name</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Yayın 1</value>
+            </entry>
+            <entry>
+                <key>id</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">1</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">33</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:29:35.317792</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>c91e06cc-ceb6-458a-968e-9e63dd954cd2</id>
+        <action>UPDATE</action>
+        <entityType>BROADCAST</entityType>
+        <entityId>2</entityId>
+        <description>Yayın yönü güncellendi: 270°</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">150</value>
+            </entry>
+            <entry>
+                <key>name</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Yayın 2</value>
+            </entry>
+            <entry>
+                <key>id</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">2</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">270</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:32:37.540291</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>d5ff9ac6-2f7a-4f97-a4f0-ee637c78e957</id>
+        <action>UPDATE</action>
+        <entityType>BROADCAST</entityType>
+        <entityId>2</entityId>
+        <description>Yayın yönü güncellendi: 120°</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">150</value>
+            </entry>
+            <entry>
+                <key>name</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Yayın 2</value>
+            </entry>
+            <entry>
+                <key>id</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">2</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">120</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:33:10.285256</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>4ee10810-c2e6-4aa6-a04b-d76b6ae1ca7f</id>
+        <action>CREATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>ce5c4c46-cb46-4139-b31f-a15c250c7bea</entityId>
+        <description>Yeni senaryo oluşturuldu</description>
+        <entityData>
+            <entry>
+                <key>duration</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">20.0</value>
+            </entry>
+            <entry>
+                <key>finalAmplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">90.0</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">1</value>
+            </entry>
+            <entry>
+                <key>initialAmplitude</key>
+            </entry>
+            <entry>
+                <key>updateFrequency</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">2.0</value>
+            </entry>
+            <entry>
+                <key>initialDirection</key>
+            </entry>
+            <entry>
+                <key>finalDirection</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">135.0</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:40:10.398003</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>0973eb29-3072-4016-9106-5564dafe9bc5</id>
+        <action>COMPLETE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>ce5c4c46-cb46-4139-b31f-a15c250c7bea</entityId>
+        <description>Senaryo tamamlandı</description>
+        <entityData>
+            <entry>
+                <key>duration</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">20.0</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">1</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:41:37.363066</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>4e5bfcae-22fc-49a3-87f0-de94ae46fbea</id>
+        <action>CREATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>9b5071b7-8773-4981-aff9-1f9cb9e49fa3</entityId>
+        <description>Yeni senaryo oluşturuldu</description>
+        <entityData>
+            <entry>
+                <key>duration</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">20.0</value>
+            </entry>
+            <entry>
+                <key>finalAmplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">90.0</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>initialAmplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">44.0</value>
+            </entry>
+            <entry>
+                <key>updateFrequency</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">2.0</value>
+            </entry>
+            <entry>
+                <key>initialDirection</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">45.0</value>
+            </entry>
+            <entry>
+                <key>finalDirection</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">85.0</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:45:39.913856</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>53a94267-3db6-46dd-a0cf-1e631313451d</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">44.8901</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">45.774</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:45:40.302586</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>d2d3c587-7c92-4fd2-8313-9bc2c394d0c7</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">49.5315</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">49.81</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:45:42.321218</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>912bb61e-ab9f-41a2-91f6-053f3bc7b08f</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">54.1798</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">53.852000000000004</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:45:44.34048</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>5c80d356-8c82-4f4f-95be-19acf17a3cc4</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">58.8074</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">57.876</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:45:46.357649</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>9036fc16-58cb-4200-9e68-51fb9bcf70b5</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">63.458</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">61.92</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:45:48.37558</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>a9dd959c-5bcc-4fc8-b7d5-79e25aa452b3</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">68.0971</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">65.95400000000001</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:45:50.39383</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>d4adefb0-087f-45ae-8851-a56bd471da14</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">72.7293</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">69.982</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:45:52.408068</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>5cfa8d29-c7b6-4f3a-959d-673b61e86b70</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">77.373</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">74.02000000000001</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:45:54.428507</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>3fa4e616-2628-4f80-8132-67ad5e52dac4</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">82.0144</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">78.056</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:45:56.446815</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>5b2c2e28-b728-4a7c-836c-009a20453a99</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">86.6558</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">82.092</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:45:58.459924</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>0c612a18-2d60-44f2-b23a-f23e032686ca</id>
+        <action>COMPLETE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>9b5071b7-8773-4981-aff9-1f9cb9e49fa3</entityId>
+        <description>Senaryo tamamlandı</description>
+        <entityData>
+            <entry>
+                <key>duration</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">20.0</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:46:00.471569</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>35c55fea-06d0-4a99-8869-83dd636d2403</id>
+        <action>CREATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>1749974c-f151-43b1-b617-c9f0ad74e9f9</entityId>
+        <description>Yeni senaryo oluşturuldu</description>
+        <entityData>
+            <entry>
+                <key>duration</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">20.0</value>
+            </entry>
+            <entry>
+                <key>finalAmplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">90.0</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>initialAmplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">86.6558</value>
+            </entry>
+            <entry>
+                <key>updateFrequency</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">2.0</value>
+            </entry>
+            <entry>
+                <key>initialDirection</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">82.092</value>
+            </entry>
+            <entry>
+                <key>finalDirection</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">85.0</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:46:04.649222</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>e476104b-38b9-49a5-931f-fcacfc10e56a</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">86.79776129</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">82.2154446</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:46:05.501723</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>2343ef1c-780b-426c-9c05-2e9371954b58</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">87.13502386</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">82.5087164</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:46:07.515828</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>9a0c45f9-3ad4-4d16-bb7a-fce69a738f54</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">87.47195201</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">82.8016974</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:46:09.533807</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>ec0b5bfd-67b3-4ec2-895b-36eb4f28e05f</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">87.81005063</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">83.09569619999999</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:46:11.554415</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>b483eb71-498a-4687-90e8-439572cb6b02</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">88.14714599</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">83.3888226</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:46:13.569214</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>d87494b3-e0f1-4a25-b931-0fce67445909</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">88.48474298</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">83.6823852</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:46:15.587212</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>e898a1ed-c922-438a-9807-8754fb099baa</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">88.82200555</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">83.975657</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:46:17.606609</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>960d0bb5-758d-4643-bc1f-34b23ff5c16f</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">89.15943533</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">84.2690742</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:46:19.625181</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>07a63481-c8b0-41df-a8ed-68318efc0ee4</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">89.49686511</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">84.5624914</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:46:21.640644</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>0dac60a7-f8a4-4141-ae4e-134b85575f9b</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">89.66608163</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">84.7096362</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:46:22.65236</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>b62419fe-d3fb-4cef-a6f7-bc7ff46313d2</id>
+        <action>COMPLETE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>1749974c-f151-43b1-b617-c9f0ad74e9f9</entityId>
+        <description>Senaryo tamamlandı</description>
+        <entityData>
+            <entry>
+                <key>duration</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">20.0</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:46:24.668283</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>c130c06c-37d2-4e98-97b1-9b516749a4f3</id>
+        <action>CREATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>84cf6662-97e8-442e-87a4-3880c29c5d94</entityId>
+        <description>Yeni senaryo oluşturuldu</description>
+        <entityData>
+            <entry>
+                <key>duration</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">20.0</value>
+            </entry>
+            <entry>
+                <key>finalAmplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">20.0</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>initialAmplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">89.66608163</value>
+            </entry>
+            <entry>
+                <key>updateFrequency</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">2.0</value>
+            </entry>
+            <entry>
+                <key>initialDirection</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">84.7096362</value>
+            </entry>
+            <entry>
+                <key>finalDirection</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">20.0</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:46:52.081191</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>2de40cd0-0918-46ba-823b-6ff933d9256c</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">87.1894524280535</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">82.40920863309</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:46:52.79591</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>fab64a1d-8f53-4ee2-8e87-2f3594b972c3</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">80.149694879342</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">75.87029989508001</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:46:54.816092</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>9034f686-3637-4e17-ad90-906fd8046871</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">73.1169039387935</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">69.33786212069</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:46:56.837014</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>6e6b3d28-fc16-4e90-b50d-322aee695390</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">66.0736630860005</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">62.79571790087</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:46:58.853813</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>11584758-e350-442e-b991-a808d683f1e9</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">59.054805361777994</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">56.276222053720005</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:47:00.873182</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>db645948-af07-416d-98e6-b490f9824c6d</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">52.015047813066495</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">49.737313315710004</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:47:02.894249</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>900949ef-0281-45fb-8579-128ac1ff676f</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">44.975290264355</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">43.1984045777</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:47:04.914977</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>6802aa93-12a3-47ce-9afc-fc4e9dbaf51b</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">37.942499323806494</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">36.66596680331</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:47:06.932209</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>d762ac45-1ae4-4dc0-a132-8650f04c908a</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">30.906225079176494</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">30.13029354711</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:47:08.954168</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>c3647698-f2da-4e71-838a-3a8d9b426696</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">23.866467530465002</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">23.5913848091</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:47:10.974372</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>bc3e76cf-acd3-404e-bd4c-4da84d23af5a</id>
+        <action>COMPLETE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>84cf6662-97e8-442e-87a4-3880c29c5d94</entityId>
+        <description>Senaryo tamamlandı</description>
+        <entityData>
+            <entry>
+                <key>duration</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">20.0</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:47:12.994343</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>82a610ed-57d2-46da-9a8b-e7735447e891</id>
+        <action>CREATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>e5bf3f0a-15dd-4304-9347-084208401187</entityId>
+        <description>Yeni senaryo oluşturuldu</description>
+        <entityData>
+            <entry>
+                <key>duration</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">100.0</value>
+            </entry>
+            <entry>
+                <key>finalAmplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">80.0</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>initialAmplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">23.866467530465002</value>
+            </entry>
+            <entry>
+                <key>updateFrequency</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">5.0</value>
+            </entry>
+            <entry>
+                <key>initialDirection</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">23.5913848091</value>
+            </entry>
+            <entry>
+                <key>finalDirection</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">80.0</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:49:29.554439</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>94deced7-0368-4ee3-9527-e8fee29b27b3</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">24.05619887021203</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">23.782045928445243</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:49:29.893639</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>253d6d01-7b20-4917-8bf1-f8926bb358df</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">26.883644900702507</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">26.623347875610875</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:49:34.930743</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>e7a31f05-e4b1-452e-b151-af13e374180f</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">29.707722919244816</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">29.461265305865055</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:49:39.962096</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>1aa96437-8e7e-4294-89fa-db5e1fbbf39b</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">32.52843292583895</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">32.29579821920778</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:49:44.984196</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>d19fce84-7c90-40f0-954e-700effdf5a7b</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">35.351388273731864</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">35.13258747715814</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:49:50.013257</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>d5e4e4a5-61af-409b-b623-e0c3cbae441f</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">38.17602762759886</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">37.97106899356423</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:49:55.043877</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>abe02c14-9090-4ef6-9e75-6f90ad6dbd64</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">40.99729896951769</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">40.80616599305886</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:50:00.069144</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>f00ae70d-b5fd-4a0d-871e-02c7446e5043</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">43.81688630546243</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">43.63957073409777</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:50:05.092024</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>04c67d8b-d746-4052-914e-fb2d86780ebc</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">46.63591230608249</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">46.47241138898477</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:50:10.119617</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>a40deb41-8b68-42d5-9556-6304b17a070d</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">49.45774498332601</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">49.30807247463131</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:50:15.146671</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>8bef7741-78fd-4fc0-a20d-103d32ab412f</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">52.27677098394605</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">52.14091312951831</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:50:20.16771</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>8b915242-e20d-4a70-bab3-16781bd90ec1</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">55.099164996514276</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">54.97713830131676</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:50:25.193333</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>10366955-5e30-4937-bad3-ebb1e3eb2e1e</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">57.92212034440719</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">57.81392755926712</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:50:30.222689</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>64a489ec-459b-480f-b968-7d6ab27167b2</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">60.7450756923001</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">60.65071681721748</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:50:35.250873</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>505b8ff3-22a6-4512-8f19-61f208b36494</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">63.56915371084241</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">63.48863424747166</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:50:40.28114</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>823b15cb-fe2f-4d41-8bc7-f77d5b4ee793</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">66.39098638808593</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">66.32429533311822</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:50:45.311207</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>39e8ec6a-4b54-40b4-a905-7684967cc844</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">69.21618707727762</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">69.1633409356762</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:50:50.342679</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>6a7d1d25-34a2-4496-bc98-514f26d0857d</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">72.03633574854707</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">71.99730976286702</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:50:55.368006</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>5806009f-332e-42b5-8b20-5a976dfed4cf</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">74.86265910838816</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">74.83748353772883</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:51:00.401273</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>92461782-d455-4e3b-8306-8e13902c578d</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">77.68449178563168</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">77.67314462337538</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:51:05.429429</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>4ee8ac85-3145-480b-9831-9cafac49825f</id>
+        <action>COMPLETE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>e5bf3f0a-15dd-4304-9347-084208401187</entityId>
+        <description>Senaryo tamamlandı</description>
+        <entityData>
+            <entry>
+                <key>duration</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">100.0</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:51:10.453705</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>55f41598-e10c-443b-a9d2-607f89ad0d36</id>
+        <action>CREATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>e864fecc-352a-4d90-832f-a22533d45a8d</entityId>
+        <description>Yeni senaryo oluşturuldu</description>
+        <entityData>
+            <entry>
+                <key>duration</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">20.0</value>
+            </entry>
+            <entry>
+                <key>finalAmplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">15.0</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>initialAmplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">77.68449178563168</value>
+            </entry>
+            <entry>
+                <key>updateFrequency</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">2.0</value>
+            </entry>
+            <entry>
+                <key>initialDirection</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">77.67314462337538</value>
+            </entry>
+            <entry>
+                <key>finalDirection</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">15.0</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:59:26.658859</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>4a7f53a7-4d22-4896-927b-30c1145f3c0c</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">76.2020035549015</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">76.19092475303255</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:59:27.127429</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>71afded7-8168-4bae-b8d6-05edf4cb3899</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">69.87713833373125</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">69.86720446053397</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:59:29.145813</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>7c6e5ab8-1f08-452a-9f24-37a1f8c797f1</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">63.53346776502533</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">63.52468222464839</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:59:31.170552</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>6db41be1-e7e1-4b77-af71-ce69ae4dd749</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">57.20860254385509</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">57.20096193214981</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:59:33.186805</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>96c1eb5a-eaa1-49f9-80f6-ed11ef38c3a0</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">50.87746887350629</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">50.8709743251889</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:59:35.207504</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>287ea522-67b9-4ee8-92d2-0561ef7e005f</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">44.543200978568215</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">44.53785306099682</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:59:37.224887</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>a5fbf98e-aa98-45d8-8eff-be6e72a2449b</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">38.2308726557551</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">38.226667397422915</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:59:39.244655</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>4abea255-64a2-4901-b072-09dcfc126473</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">31.884067862459894</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">31.88101150430616</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:59:41.270218</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>3290701b-b906-4ee7-8649-cbbc295f51ba</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">25.534128844575406</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">25.532221953958235</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:59:43.293445</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>5d62b135-1a1f-4e1f-a360-3e0efe85fa48</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>18</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">19.212397847994453</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">19.21163531869083</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:59:45.310559</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>07ccdcff-be76-4d70-ab77-938aa2a6c2d1</id>
+        <action>COMPLETE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>e864fecc-352a-4d90-832f-a22533d45a8d</entityId>
+        <description>Senaryo tamamlandı</description>
+        <entityData>
+            <entry>
+                <key>duration</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">20.0</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">18</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-09T23:59:47.327297</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>5e22110e-51ca-4c5a-a125-9c171f0a01d5</id>
+        <action>CREATE</action>
+        <entityType>BROADCAST</entityType>
+        <entityId>99</entityId>
+        <description>Yayın eklendi</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">50</value>
+            </entry>
+            <entry>
+                <key>pulseWidth</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">80</value>
+            </entry>
+            <entry>
+                <key>pri</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">400</value>
+            </entry>
+            <entry>
+                <key>name</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Yayın 99</value>
+            </entry>
+            <entry>
+                <key>id</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">99</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">10</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:04:56.976776</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>51ad63cf-10cb-475e-87e8-e7b80284f57d</id>
+        <action>CREATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>a9c8aba7-5e60-4b21-94d3-56afbe2dae2a</entityId>
+        <description>Yeni senaryo oluşturuldu</description>
+        <entityData>
+            <entry>
+                <key>duration</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">10.0</value>
+            </entry>
+            <entry>
+                <key>finalAmplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">100.0</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">99</value>
+            </entry>
+            <entry>
+                <key>initialAmplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">50.0</value>
+            </entry>
+            <entry>
+                <key>updateFrequency</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">2.0</value>
+            </entry>
+            <entry>
+                <key>initialDirection</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">10.0</value>
+            </entry>
+            <entry>
+                <key>finalDirection</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">90.0</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:05:09.567269</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>32998b98-78ab-4023-914d-533f1315dde7</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>99</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">54.755</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">99</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">17.607999999999997</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:05:10.519726</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>96c165d0-1132-4b55-87d1-57ccdf84e7c0</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>99</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">64.815</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">99</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">33.704</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:05:12.530872</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>6b378433-3ab1-4373-9c01-7a30fd9842e7</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>99</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">74.88</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">99</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">49.808</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:05:14.547892</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>6833e6e4-ccea-4fd7-9c9e-b62dc2229fa8</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>99</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">90.045</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">99</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">74.072</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:05:17.577382</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>0913f79e-6b4b-446a-a534-57db5edb9583</id>
+        <action>COMPLETE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>a9c8aba7-5e60-4b21-94d3-56afbe2dae2a</entityId>
+        <description>Senaryo tamamlandı</description>
+        <entityData>
+            <entry>
+                <key>duration</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">10.0</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">99</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:05:19.589462</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>1edf45dd-e939-4ad7-97fa-a7ae7d4b5d5f</id>
+        <action>CREATE</action>
+        <entityType>BROADCAST</entityType>
+        <entityId>100</entityId>
+        <description>Yayın eklendi</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">20</value>
+            </entry>
+            <entry>
+                <key>pulseWidth</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">60</value>
+            </entry>
+            <entry>
+                <key>pri</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">300</value>
+            </entry>
+            <entry>
+                <key>name</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Yayın 100</value>
+            </entry>
+            <entry>
+                <key>id</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">5</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:06:48.948642</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>3a77a9ab-94fa-4125-8a12-0e6cf361c8df</id>
+        <action>CREATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>c9ee7345-2c59-4d9c-aab7-dfc1b7f671d6</entityId>
+        <description>Yeni senaryo oluşturuldu</description>
+        <entityData>
+            <entry>
+                <key>duration</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">8.0</value>
+            </entry>
+            <entry>
+                <key>finalAmplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">80.0</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>initialAmplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">20.0</value>
+            </entry>
+            <entry>
+                <key>updateFrequency</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">2.0</value>
+            </entry>
+            <entry>
+                <key>initialDirection</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">5.0</value>
+            </entry>
+            <entry>
+                <key>finalDirection</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">45.0</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:07:01.940247</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>6663102a-e2d7-4287-9a8a-e9eb19930746</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>100</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">25.8125</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">8.875</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:07:02.718659</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>69241296-080f-4bad-957d-abb3d2fc0570</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>100</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">40.917500000000004</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">18.945</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:07:04.731947</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>ab51dcc8-ebd0-4664-8ca0-584c5c9c0a9a</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>100</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">56.037499999999994</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">29.025</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:07:06.749003</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>514ec2b1-9ea4-42db-a5ce-e7f6415fe742</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>100</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">71.16499999999999</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">39.11</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:07:08.76681</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>78788140-e509-40f7-b36d-820a22d403b6</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>100</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">80.0</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">45.0</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:07:10.798735</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>53d99f8f-d1c2-4049-8610-5955990ab68a</id>
+        <action>COMPLETE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>c9ee7345-2c59-4d9c-aab7-dfc1b7f671d6</entityId>
+        <description>Senaryo tamamlandı - final değerler uygulandı</description>
+        <entityData>
+            <entry>
+                <key>duration</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">8.0</value>
+            </entry>
+            <entry>
+                <key>finalAmplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">80.0</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>finalDirection</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">45.0</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:07:10.813014</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>b570f97a-885d-4c2c-88a2-0a525920b27c</id>
+        <action>CREATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>59f47cce-20b5-4e5d-b2d6-792ca14bded9</entityId>
+        <description>Yeni senaryo oluşturuldu</description>
+        <entityData>
+            <entry>
+                <key>duration</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">10.0</value>
+            </entry>
+            <entry>
+                <key>finalAmplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">100.0</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>initialAmplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">80.0</value>
+            </entry>
+            <entry>
+                <key>updateFrequency</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">2.0</value>
+            </entry>
+            <entry>
+                <key>initialDirection</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">45.0</value>
+            </entry>
+            <entry>
+                <key>finalDirection</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">100.0</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:09:58.950888</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>11aad202-b1d7-40e7-9cb6-3c1dbf005ccb</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>100</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">80.478</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">46.3145</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:09:59.190954</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>bed2472c-5102-4539-90a7-6198edf93d56</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>100</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">84.53</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">57.457499999999996</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:10:01.210137</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>a94a17c7-9b3d-49ed-baf9-f0a57d8e6d5b</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>100</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">88.57</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">68.5675</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:10:03.232477</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>0a6e4d69-1d76-4f53-b4a1-4212aa34b1c1</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>100</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">92.618</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">79.6995</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:10:05.253194</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>9def4f44-4039-4e7d-a316-50ac0a8e5c0c</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>100</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">96.67</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">90.8425</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:10:07.282337</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>2cd01de1-f4b2-4c47-8334-c647fa550afb</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>100</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">100.0</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">100.0</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:10:09.306155</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>db08caef-5b11-4fa6-b85b-10970f5b6f57</id>
+        <action>COMPLETE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>59f47cce-20b5-4e5d-b2d6-792ca14bded9</entityId>
+        <description>Senaryo tamamlandı - final değerler uygulandı</description>
+        <entityData>
+            <entry>
+                <key>duration</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">10.0</value>
+            </entry>
+            <entry>
+                <key>finalAmplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">100.0</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>finalDirection</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">100.0</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:10:09.31787</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>b36450c2-8ee2-4b09-9224-09809eb207c9</id>
+        <action>CREATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>c5482c97-ffc4-4372-91a4-ed337a75b14b</entityId>
+        <description>Yeni senaryo oluşturuldu</description>
+        <entityData>
+            <entry>
+                <key>duration</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">20.0</value>
+            </entry>
+            <entry>
+                <key>finalAmplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">50.0</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>initialAmplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">100.0</value>
+            </entry>
+            <entry>
+                <key>updateFrequency</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">2.0</value>
+            </entry>
+            <entry>
+                <key>initialDirection</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">100.0</value>
+            </entry>
+            <entry>
+                <key>finalDirection</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">60.0</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:10:54.821485</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>0394b7e3-62e0-48fc-bc9d-c2d5838dc287</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>100</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">98.33</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">98.664</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:10:55.493447</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>a7ccd6e3-77a8-4a7d-957e-9eb31504c52b</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>100</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">93.265</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">94.612</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:10:57.513236</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>8431551c-6278-4855-913a-0cc7bca57d41</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>100</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">88.23</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">90.584</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:10:59.529036</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>aaacda64-d87c-4aa9-8875-e4c776dc9c0e</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>100</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">83.1775</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">86.542</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:11:01.550408</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>58421360-d80e-49c6-ab98-7b6cd158217e</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>100</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">78.13499999999999</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">82.508</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:11:03.566348</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>a7a967c8-d93a-4df5-932f-388817c7ab72</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>100</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">73.0925</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">78.474</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:11:05.586988</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>a0a03b8e-8eed-4d41-b1d1-9f28c75c9750</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>100</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">68.03999999999999</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">74.432</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:11:07.602976</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>6c7c66c6-656f-42b0-b08f-c5f19ea2385e</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>100</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">63.0</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">70.4</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:11:09.618492</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>37f77ba0-bdd6-47c0-8fe7-4244e3a6c35d</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>100</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">57.96249999999999</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">66.37</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:11:11.64004</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>2000d1f5-f48a-4b41-a287-9a6d9e77b259</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>100</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">52.897499999999994</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">62.318</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:11:13.663662</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>62340f21-2b74-4b1a-a81c-edb0e429d376</id>
+        <action>UPDATE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>100</entityId>
+        <description>Senaryo otomatik güncelleme</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">50.0</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">60.0</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:11:15.681414</timestamp>
+    </activityLogs>
+    <activityLogs>
+        <id>17bb9c54-6a90-4bf3-a050-0dcce9c93b74</id>
+        <action>COMPLETE</action>
+        <entityType>SCENARIO</entityType>
+        <entityId>c5482c97-ffc4-4372-91a4-ed337a75b14b</entityId>
+        <description>Senaryo tamamlandı - final değerler uygulandı</description>
+        <entityData>
+            <entry>
+                <key>duration</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">20.0</value>
+            </entry>
+            <entry>
+                <key>finalAmplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">50.0</value>
+            </entry>
+            <entry>
+                <key>broadcastId</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">100</value>
+            </entry>
+            <entry>
+                <key>finalDirection</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:double">60.0</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T00:11:15.692268</timestamp>
+    </activityLogs>
+</activityLogList>
