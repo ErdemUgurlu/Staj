@@ -1,6 +1,6 @@
 package com.formapp.backend.model;
 
-import jakarta.xml.bind.annotation.*;
+import javax.xml.bind.annotation.*;
 import java.math.BigDecimal;
 
 @XmlRootElement
