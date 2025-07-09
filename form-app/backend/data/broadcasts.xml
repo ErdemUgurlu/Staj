@@ -63,9 +63,9 @@
     <broadcasts>
         <id>100</id>
         <name>Yayın 100</name>
-        <amplitude>50.0</amplitude>
+        <amplitude>10.0</amplitude>
         <pri>300</pri>
-        <direction>60.0</direction>
+        <direction>10.0</direction>
         <pulseWidth>60</pulseWidth>
         <active>true</active>
         <tcpSent>true</tcpSent>

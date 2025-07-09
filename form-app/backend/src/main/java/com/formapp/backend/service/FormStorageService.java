@@ -286,13 +286,101 @@ public class FormStorageService {
                 .collect(Collectors.toList());
     }
 
-    public List<ActivityLog> getActivityLogsWithFilters(String action, String entityType, Integer limit) {
+    // Mesaj tipine göre filtreleme
+    public List<ActivityLog> getActivityLogsByMessageType(String messageType, Integer limit) {
         return activityLogs.stream()
-                .filter(log -> (action == null || action.isEmpty() || log.getAction().equalsIgnoreCase(action)) &&
-                               (entityType == null || entityType.isEmpty() || log.getEntityType().equalsIgnoreCase(entityType)))
+                .filter(log -> {
+                    if (messageType == null || messageType.isEmpty()) {
+                        return true;
+                    }
+                    // Log'un description'ında mesaj tipini ara
+                    String description = log.getDescription().toLowerCase();
+                    String targetType = messageType.toLowerCase();
+                    
+                    // Çeşitli mesaj tipleri için kontrol
+                    if ("yayinekle".equals(targetType) || "yayin_ekle".equals(targetType)) {
+                        return description.contains("yayın eklendi") || description.contains("broadcast create");
+                    } else if ("yayinbaslat".equals(targetType) || "yayin_baslat".equals(targetType)) {
+                        return description.contains("yayın başlat") || description.contains("broadcast start");
+                    } else if ("yayindurdur".equals(targetType) || "yayin_durdur".equals(targetType)) {
+                        return description.contains("yayın durdur") || description.contains("broadcast stop");
+                    } else if ("yayinsil".equals(targetType) || "yayin_sil".equals(targetType)) {
+                        return description.contains("yayın silindi") || description.contains("broadcast delete");
+                    } else if ("senaryo".equals(targetType)) {
+                        return description.contains("senaryo") || description.contains("scenario");
+                    } else if ("yayinguncelle".equals(targetType) || "yayin_guncelle".equals(targetType)) {
+                        return description.contains("yayın genlik") || description.contains("yayın yön") || 
+                               description.contains("senaryo otomatik güncelleme") || description.contains("güncellendi");
+                    } else {
+                        return description.contains(targetType);
+                    }
+                })
                 .sorted((a, b) -> b.getTimestamp().compareTo(a.getTimestamp()))
                 .limit(limit != null && limit > 0 ? limit : activityLogs.size())
                 .collect(Collectors.toList());
+    }
+
+    // Gelişmiş filtreleme - tüm filtreler dahil
+    public List<ActivityLog> getActivityLogsWithAllFilters(String action, String entityType, String messageType, Integer limit) {
+        return activityLogs.stream()
+                .filter(log -> {
+                    // Action filtresi
+                    if (action != null && !action.isEmpty() && !log.getAction().equalsIgnoreCase(action)) {
+                        return false;
+                    }
+                    
+                    // EntityType filtresi
+                    if (entityType != null && !entityType.isEmpty() && !log.getEntityType().equalsIgnoreCase(entityType)) {
+                        return false;
+                    }
+                    
+                    // MessageType filtresi
+                    if (messageType != null && !messageType.isEmpty()) {
+                        String description = log.getDescription().toLowerCase();
+                        String targetType = messageType.toLowerCase();
+                        
+                        if ("yayinekle".equals(targetType) || "yayin_ekle".equals(targetType)) {
+                            if (!description.contains("yayın eklendi") && !description.contains("broadcast create")) {
+                                return false;
+                            }
+                        } else if ("yayinbaslat".equals(targetType) || "yayin_baslat".equals(targetType)) {
+                            if (!description.contains("yayın başlat") && !description.contains("broadcast start")) {
+                                return false;
+                            }
+                        } else if ("yayindurdur".equals(targetType) || "yayin_durdur".equals(targetType)) {
+                            if (!description.contains("yayın durdur") && !description.contains("broadcast stop")) {
+                                return false;
+                            }
+                        } else if ("yayinsil".equals(targetType) || "yayin_sil".equals(targetType)) {
+                            if (!description.contains("yayın silindi") && !description.contains("broadcast delete")) {
+                                return false;
+                            }
+                        } else if ("senaryo".equals(targetType)) {
+                            if (!description.contains("senaryo") && !description.contains("scenario")) {
+                                return false;
+                            }
+                        } else if ("yayinguncelle".equals(targetType) || "yayin_guncelle".equals(targetType)) {
+                            if (!description.contains("yayın genlik") && !description.contains("yayın yön") && 
+                                !description.contains("senaryo otomatik güncelleme") && !description.contains("güncellendi")) {
+                                return false;
+                            }
+                        } else {
+                            if (!description.contains(targetType)) {
+                                return false;
+                            }
+                        }
+                    }
+                    
+                    return true;
+                })
+                .sorted((a, b) -> b.getTimestamp().compareTo(a.getTimestamp()))
+                .limit(limit != null && limit > 0 ? limit : activityLogs.size())
+                .collect(Collectors.toList());
+    }
+
+    // Eski metod için backward compatibility
+    public List<ActivityLog> getActivityLogsWithFilters(String action, String entityType, Integer limit) {
+        return getActivityLogsWithAllFilters(action, entityType, null, limit);
     }
 
     private Map<String, Object> convertToMap(Object obj) {

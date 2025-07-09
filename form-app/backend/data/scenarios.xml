@@ -118,4 +118,16 @@
         <isActive>false</isActive>
         <startTime>1752095454816</startTime>
     </scenarios>
+    <scenarios>
+        <id>d991d3f5-c3dd-454b-ab99-439009362c89</id>
+        <broadcastId>100</broadcastId>
+        <initialAmplitude>50.0</initialAmplitude>
+        <initialDirection>60.0</initialDirection>
+        <finalAmplitude>10.0</finalAmplitude>
+        <finalDirection>10.0</finalDirection>
+        <duration>10.0</duration>
+        <updateFrequency>1.0</updateFrequency>
+        <isActive>false</isActive>
+        <startTime>1752098740345</startTime>
+    </scenarios>
 </scenarioList>

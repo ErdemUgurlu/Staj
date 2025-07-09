@@ -96,9 +96,11 @@ public class FormController {
     public ResponseEntity<List<ActivityLog>> getFilteredActivityLogs(
             @RequestParam(required = false) String action,
             @RequestParam(required = false) String entityType,
+            @RequestParam(required = false) String messageType,
             @RequestParam(required = false) Integer limit) {
         
-        List<ActivityLog> logs = formStorageService.getActivityLogsWithFilters(action, entityType, limit);
+        // Mesaj tipine göre filtreleme dahil gelişmiş filtreleme
+        List<ActivityLog> logs = formStorageService.getActivityLogsWithAllFilters(action, entityType, messageType, limit);
         return ResponseEntity.ok(logs);
     }
 
@@ -117,6 +119,16 @@ public class FormController {
             @RequestParam(required = false) Integer limit) {
         
         List<ActivityLog> logs = formStorageService.getActivityLogsByEntityType(entityType, limit);
+        return ResponseEntity.ok(logs);
+    }
+
+    // Mesaj tipine göre filtreleme endpoint'i
+    @GetMapping("/activity-logs/message-type/{messageType}")
+    public ResponseEntity<List<ActivityLog>> getActivityLogsByMessageType(
+            @PathVariable String messageType,
+            @RequestParam(required = false) Integer limit) {
+        
+        List<ActivityLog> logs = formStorageService.getActivityLogsByMessageType(messageType, limit);
         return ResponseEntity.ok(logs);
     }
             

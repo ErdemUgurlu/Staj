@@ -18,10 +18,23 @@ const ActivityLogs = ({ onRefreshRequest }) => {
     fetchLogs();
   }, []); // Only fetch once on mount
 
-  // Apply filters whenever logs or filter states change
+  // Apply filters whenever filter states change (not logs)
   useEffect(() => {
-    applyFilters();
-  }, [logs, actionFilter, messageTypeFilter, dateFilter]);
+    if (logs.length > 0) {
+      applyFilters();
+    } else {
+      setFilteredLogs([]);
+    }
+  }, [actionFilter, messageTypeFilter, dateFilter]);
+
+  // Apply filters when logs change (initial load)
+  useEffect(() => {
+    if (logs.length > 0) {
+      applyFilters();
+    } else {
+      setFilteredLogs([]);
+    }
+  }, [logs]);
 
   // Listen for refresh requests from parent
   useEffect(() => {
@@ -30,22 +43,85 @@ const ActivityLogs = ({ onRefreshRequest }) => {
     }
   }, [onRefreshRequest]);
 
-  const applyFilters = () => {
+  const applyFilters = async () => {
+    if (logs.length === 0) {
+      setFilteredLogs([]);
+      return;
+    }
+
+    try {
+      let apiUrl = 'http://localhost:8080/api/activity-logs';
+      const params = new URLSearchParams();
+      
+      // Backend API parametrelerine göre filtreleme
+      if (actionFilter !== 'ALL') {
+        params.append('action', actionFilter);
+      }
+      
+      if (messageTypeFilter !== 'ALL') {
+        params.append('messageType', messageTypeFilter);
+      }
+      
+      // Limit ekle - çok fazla veri dönmesin
+      params.append('limit', '100');
+      
+      if (params.toString()) {
+        apiUrl += '/filter?' + params.toString();
+      }
+      
+      const response = await fetch(apiUrl);
+      if (response.ok) {
+        let filtered = await response.json();
+        
+        // Date filter'ı frontend'de uygula
+        if (dateFilter !== 'ALL') {
+          const now = new Date();
+          let filterDate = new Date();
+          
+          switch (dateFilter) {
+            case 'TODAY':
+              filterDate.setHours(0, 0, 0, 0);
+              break;
+            case 'LAST_HOUR':
+              filterDate.setHours(filterDate.getHours() - 1);
+              break;
+            case 'LAST_24H':
+              filterDate.setDate(filterDate.getDate() - 1);
+              break;
+            case 'LAST_WEEK':
+              filterDate.setDate(filterDate.getDate() - 7);
+              break;
+            default:
+              filterDate = null;
+          }
+
+          if (filterDate) {
+            filtered = filtered.filter(log => new Date(log.timestamp) >= filterDate);
+          }
+        }
+        
+        // Sort by timestamp (newest first)
+        filtered.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        
+        setFilteredLogs(filtered);
+      } else {
+        console.error('Failed to fetch filtered logs');
+        // Fallback to client-side filtering
+        clientSideFilter();
+      }
+    } catch (error) {
+      console.error('Error fetching filtered logs:', error);
+      // Fallback to client-side filtering
+      clientSideFilter();
+    }
+  };
+
+  const clientSideFilter = () => {
     let filtered = logs;
 
     // Action filter
     if (actionFilter !== 'ALL') {
       filtered = filtered.filter(log => log.action === actionFilter);
-    }
-
-    // Message type filter
-    if (messageTypeFilter !== 'ALL') {
-      filtered = filtered.filter(log => {
-        if (log.entityType === 'MESSAGE' && log.entityData && log.entityData.messageType) {
-          return log.entityData.messageType === messageTypeFilter;
-        }
-        return messageTypeFilter === 'OTHER';
-      });
     }
 
     // Date filter
@@ -93,31 +169,45 @@ const ActivityLogs = ({ onRefreshRequest }) => {
   };
 
   const getUniqueMessageTypes = () => {
-    const messageTypes = [...new Set(logs
-      .filter(log => log.entityType === 'MESSAGE' && log.entityData && log.entityData.messageType)
-      .map(log => log.entityData.messageType)
-    )];
-    return messageTypes.sort();
+    // Statik mesaj tipi seçenekleri - backend'deki mesaj tiplerine uygun
+    return [
+      'yayinekle',
+      'yayinbaslat', 
+      'yayindurdur',
+      'yayinguncelle',
+      'yayinsil',
+      'senaryo'
+    ];
   };
 
   const getMessageTypeIcon = (messageType) => {
     switch (messageType) {
-      case 'yayınEkle': return '📡➕';
-      case 'yayınBaslat': return '▶️';
-      case 'yayınDurdur': return '⏹️';
-      case 'yayınYonGuncelle': return '🧭';
-      case 'yayınGenlikGuncelle': return '📶';
-      case 'senaryoEkle': return '📋➕';
-      case 'senaryoBaslat': return '🎬';
-      case 'senaryoDurdur': return '⏸️';
+      case 'yayinekle': return '📡➕';
+      case 'yayinbaslat': return '▶️';
+      case 'yayindurdur': return '⏹️';
+      case 'yayinguncelle': return '📶';
+      case 'yayinsil': return '🗑️';
+      case 'senaryo': return '🎬';
       default: return '📨';
+    }
+  };
+
+  const getMessageTypeDisplayName = (messageType) => {
+    switch (messageType) {
+      case 'yayinekle': return 'Yayın Ekle';
+      case 'yayinbaslat': return 'Yayın Başlat';
+      case 'yayindurdur': return 'Yayın Durdur';
+      case 'yayinguncelle': return 'Yayın Güncelle';
+      case 'yayinsil': return 'Yayın Sil';
+      case 'senaryo': return 'Senaryo';
+      default: return messageType;
     }
   };
 
   const fetchLogs = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:8080/api/forms/logs');
+      const response = await fetch('http://localhost:8080/api/activity-logs');
       if (response.ok) {
         const data = await response.json();
         setLogs(data);
@@ -324,7 +414,7 @@ const ActivityLogs = ({ onRefreshRequest }) => {
                 <option value="ALL">Tümü</option>
                 {getUniqueMessageTypes().map(messageType => (
                   <option key={messageType} value={messageType}>
-                    {getMessageTypeIcon(messageType)} {messageType}
+                    {getMessageTypeIcon(messageType)} {getMessageTypeDisplayName(messageType)}
                   </option>
                 ))}
               </select>
