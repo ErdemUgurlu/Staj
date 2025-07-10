@@ -413,6 +413,38 @@ button:disabled {
   max-width: 150px;
 }
 
+.broadcast-name.clickable-message {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.broadcast-name.clickable-message:hover {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.edit-message-btn {
+  background-color: #ffc107;
+  color: #212529;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+  margin-right: 8px;
+}
+
+.edit-message-btn:hover {
+  background-color: #e0a800;
+}
+
+.edit-message-btn:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
 .broadcast-params {
   font-size: 0.8rem;
   color: #6c757d;

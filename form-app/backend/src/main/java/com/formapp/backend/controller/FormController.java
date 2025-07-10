@@ -272,21 +272,65 @@ public class FormController {
     }
 
     @PutMapping({"/message/{id}", "/forms/message/{id}"})
-    public ResponseEntity<Message> updateMessage(@PathVariable String id, @RequestBody Message updatedMessage) {
+    public ResponseEntity<Message> updateMessage(@PathVariable String id, @RequestBody Map<String, Object> messageData) {
         Message existingMessage = formStorageService.getMessageById(id);
         if (existingMessage == null) {
             return ResponseEntity.notFound().build();
         }
         
-        // Update the message (particularly the sent field)
-        existingMessage.setSent(updatedMessage.isSent());
-        // Could also update other fields if needed
-        if (updatedMessage.getMessageName() != null) {
-            existingMessage.setMessageName(updatedMessage.getMessageName());
+        // Update message name if provided
+        if (messageData.containsKey("messageName")) {
+            existingMessage.setMessageName((String) messageData.get("messageName"));
+        }
+        
+        // Update message type if provided
+        if (messageData.containsKey("messageType") || messageData.containsKey("type")) {
+            String messageType = (String) (messageData.get("messageType") != null ? messageData.get("messageType") : messageData.get("type"));
+            existingMessage.setMessageType(messageType);
+        }
+        
+        // Parse booleans for saveMessage and sendMessage
+        if (messageData.containsKey("saveMessage")) {
+            Object saveObj = messageData.get("saveMessage");
+            boolean saveMessage = !("false".equalsIgnoreCase(String.valueOf(saveObj)) || "0".equals(String.valueOf(saveObj)));
+            // Note: saveMessage is typically not updated after creation
+        }
+        
+        if (messageData.containsKey("sendMessage")) {
+            Object sendObj = messageData.get("sendMessage");
+            boolean sendMessage = !("false".equalsIgnoreCase(String.valueOf(sendObj)) || "0".equals(String.valueOf(sendObj)));
+            existingMessage.setSent(sendMessage);
+        }
+        
+        // Update parameters if provided
+        Map<String, Object> parameters = new HashMap<>();
+        for (Map.Entry<String, Object> entry : messageData.entrySet()) {
+            String key = entry.getKey();
+            if (!"id".equals(key) && !"messageName".equals(key) && !"type".equals(key) && 
+                !"messageType".equals(key) && !"saveMessage".equals(key) && !"sendMessage".equals(key) &&
+                !"timestamp".equals(key) && !"sent".equals(key)) {
+                parameters.put(key, entry.getValue());
+            }
+        }
+        
+        if (!parameters.isEmpty()) {
+            String parametersJson = formStorageService.convertMapToJson(parameters);
+            existingMessage.setParameters(parametersJson);
         }
         
         // Save the updated message
         Message savedMessage = formStorageService.updateMessage(existingMessage);
+        
+        // If sendMessage is true, send TCP message with updated parameters
+        if (messageData.containsKey("sendMessage")) {
+            Object sendObj = messageData.get("sendMessage");
+            boolean sendMessage = !("false".equalsIgnoreCase(String.valueOf(sendObj)) || "0".equals(String.valueOf(sendObj)));
+            if (sendMessage && !parameters.isEmpty()) {
+                System.out.println("Sending updated TCP message: " + savedMessage.getMessageType());
+                System.out.println("Updated Parameters: " + parameters);
+            }
+        }
+        
         return ResponseEntity.ok(savedMessage);
     }
     

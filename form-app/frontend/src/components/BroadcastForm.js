@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Forms.css';
+import MessageEditPopup from './MessageEditPopup';
 
 const BroadcastForm = ({ onFormSubmitted }) => {
   const [selectedBroadcasts, setSelectedBroadcasts] = useState([]);
@@ -9,6 +10,10 @@ const BroadcastForm = ({ onFormSubmitted }) => {
   const [messages, setMessages] = useState([]); // saved messages
   const [allMessages, setAllMessages] = useState([]); // includes unsaved
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  
+  // MessageEditPopup states
+  const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
+  const [selectedMessage, setSelectedMessage] = useState(null);
   
   // Modal states
   const [isYayinEkleModalOpen, setIsYayinEkleModalOpen] = useState(false);
@@ -693,9 +698,11 @@ const BroadcastForm = ({ onFormSubmitted }) => {
 
   // Determine if send button should be shown based on antagonist logic
   const shouldShowSendButton = (msg) => {
+    // Don't show if it was manually hidden due to pairs logic (or if not sent that's fine)
+    if (!msg || !msg.messageType) return !msg.sent;
+
+    // We handle pairs: yayinBaslat <-> yayinDurdur
     const pairs = {
-      yayinEkle: { counter: 'yayinSil', isStart: true },
-      yayinSil: { counter: 'yayinEkle', isStart: false },
       yayinBaslat: { counter: 'yayinDurdur', isStart: true },
       yayinDurdur: { counter: 'yayinBaslat', isStart: false }
     };
@@ -756,6 +763,45 @@ const BroadcastForm = ({ onFormSubmitted }) => {
     }
 
     return false;
+  };
+
+  // Handle message edit click
+  const handleMessageEdit = (message) => {
+    setSelectedMessage(message);
+    setIsEditPopupOpen(true);
+  };
+
+  // Handle message edit save
+  const handleMessageEditSave = async (messageId, updateData) => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/forms/message/${messageId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updateData),
+      });
+
+      if (response.ok) {
+        alert('Mesaj başarıyla güncellendi!');
+        setIsEditPopupOpen(false);
+        setSelectedMessage(null);
+        await fetchMessages(); // Refresh messages
+        if (onFormSubmitted) onFormSubmitted();
+      } else {
+        const errorText = await response.text();
+        alert('Mesaj güncellenirken bir hata oluştu: ' + errorText);
+      }
+    } catch (error) {
+      console.error('Error updating message:', error);
+      alert('Mesaj güncellenirken bir hata oluştu: ' + error.message);
+    }
+  };
+
+  // Handle message edit close
+  const handleMessageEditClose = () => {
+    setIsEditPopupOpen(false);
+    setSelectedMessage(null);
   };
 
   return (
@@ -866,7 +912,13 @@ const BroadcastForm = ({ onFormSubmitted }) => {
                   checked={selectedBroadcasts.includes(message.id)}
                   onChange={() => handleCheckboxChange(message.id)}
                 />
-                <span className="broadcast-name">{message.messageName}</span>
+                <span 
+                  className="broadcast-name clickable-message"
+                  onClick={() => handleMessageEdit(message)}
+                  title="Düzenlemek için tıklayın"
+                >
+                  {message.messageName}
+                </span>
                 <span className="broadcast-params">
                   Tip: {message.messageType}
                   {parameters.amplitude && ` | Genlik: ${parameters.amplitude}`}
@@ -879,9 +931,16 @@ const BroadcastForm = ({ onFormSubmitted }) => {
                 </span>
                 <div className="broadcast-status">
                   <span className="broadcast-date">{creationDate}</span>
-                  <span className={`status-badge ${message.sent ? 'sent' : 'not-sent'}`}>
-                    
-                  </span>
+
+                  <button 
+                    className="edit-message-btn"
+                    onClick={() => handleMessageEdit(message)}
+                    disabled={isSubmitting}
+                    title="Mesajı düzenle"
+                  >
+                    ✏️ Düzenle
+                  </button>
+
                   <button 
                     className="send-saved-message-btn"
                     onClick={() => handleSendSavedMessage(message)}
@@ -1399,6 +1458,14 @@ const BroadcastForm = ({ onFormSubmitted }) => {
           </div>
         </div>
       )}
+
+      {/* Message Edit Popup */}
+      <MessageEditPopup
+        message={selectedMessage}
+        isOpen={isEditPopupOpen}
+        onClose={handleMessageEditClose}
+        onSave={handleMessageEditSave}
+      />
     </div>
   );
 };
