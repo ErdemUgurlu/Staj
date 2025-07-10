@@ -180,4 +180,22 @@
         <sent>true</sent>
         <createdAt>2025-07-10T00:06:48.936698</createdAt>
     </messages>
+    <messages>
+        <id>7286a9e8-2d01-4792-9d8c-a8cb6419eb50</id>
+        <messageName>44</messageName>
+        <messageType>yayinEkle</messageType>
+        <parameters>{"amplitude":0,"yayinId":"44","pulseWidth":0,"pri":0,"direction":0}</parameters>
+        <saved>true</saved>
+        <sent>true</sent>
+        <createdAt>2025-07-10T05:58:42.758507</createdAt>
+    </messages>
+    <messages>
+        <id>4c5960fd-b5fc-4e5e-b05e-170ea832c5cf</id>
+        <messageName>b44</messageName>
+        <messageType>yayinBaslat</messageType>
+        <parameters>{"yayinId":"44"}</parameters>
+        <saved>true</saved>
+        <sent>true</sent>
+        <createdAt>2025-07-10T05:58:56.928462</createdAt>
+    </messages>
 </messageList>

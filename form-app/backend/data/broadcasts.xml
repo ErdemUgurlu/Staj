@@ -70,4 +70,14 @@
         <active>true</active>
         <tcpSent>true</tcpSent>
     </broadcasts>
+    <broadcasts>
+        <id>44</id>
+        <name>Yayın 44</name>
+        <amplitude>0</amplitude>
+        <pri>0</pri>
+        <direction>0</direction>
+        <pulseWidth>0</pulseWidth>
+        <active>true</active>
+        <tcpSent>true</tcpSent>
+    </broadcasts>
 </broadcastList>

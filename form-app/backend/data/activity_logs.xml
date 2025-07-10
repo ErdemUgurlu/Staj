@@ -3288,4 +3288,38 @@
         </entityData>
         <timestamp>2025-07-10T01:05:50.995154</timestamp>
     </activityLogs>
+    <activityLogs>
+        <id>a2f3bf6c-bb50-4a42-86ad-da117bbd254b</id>
+        <action>CREATE</action>
+        <entityType>BROADCAST</entityType>
+        <entityId>44</entityId>
+        <description>Yayın eklendi</description>
+        <entityData>
+            <entry>
+                <key>amplitude</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">0</value>
+            </entry>
+            <entry>
+                <key>pulseWidth</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">0</value>
+            </entry>
+            <entry>
+                <key>pri</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">0</value>
+            </entry>
+            <entry>
+                <key>name</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">Yayın 44</value>
+            </entry>
+            <entry>
+                <key>id</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">44</value>
+            </entry>
+            <entry>
+                <key>direction</key>
+                <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:decimal">0</value>
+            </entry>
+        </entityData>
+        <timestamp>2025-07-10T05:58:42.77394</timestamp>
+    </activityLogs>
 </activityLogList>
